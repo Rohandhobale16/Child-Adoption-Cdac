@@ -1,0 +1,71 @@
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { feedback } from "../../services/admin_services";
+import AdminNavbar from "./adminNavbar";
+// import './card.css'; // Optional: For styling
+
+const Feedback = () => {
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        {/* Sidebar */}
+        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
+          <nav className="nav flex-column">
+            <Link className="nav-link active" to="/admin">
+              Admin
+            </Link>
+            <Link className="nav-link" to="/admin/deleteparent">
+              Delete Parent
+            </Link>
+            <Link className="nav-link" to="/admin/deletechild">
+              Delete Child
+            </Link>
+          </nav>
+        </aside>
+
+        <main className="col-10 ms-auto p-4">
+          <section>
+            <Content />
+          </section>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+const Content = () => {
+  return (
+    <div>
+      <AdminNavbar />
+      <main className="col-10 ms-auto ">
+        <section>
+          <CardComponent />
+        </section>
+      </main>
+    </div>
+  );
+};
+const CardComponent = () => {
+  const [items, setItems] = useState([]);
+  const { id } = useParams();
+  const onLoadItems = async () => {
+    const result = await feedback(id);
+    if (result["status"] === "success") {
+      setItems(result["users"]);
+    } else {
+      toast.error(result["error"]);
+    }
+  };
+  useEffect(() => {
+    onLoadItems();
+  }, []);
+  return (
+    <div className="card ">
+      <h2>Request ID: {items.fname}</h2>
+      <p>Description: {items.description}</p>
+    </div>
+  );
+};
+
+export default Feedback;
