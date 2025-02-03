@@ -1,0 +1,30 @@
+package com.app.pojos;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+@Setter
+@Getter
+@NoArgsConstructor
+@Entity
+@ToString
+public class User extends  BaseEntity{
+private String fName;
+private String lName;
+private String mobile;
+private String email;
+private String password;
+@Enumerated(EnumType.STRING)
+private UserRole role;
+@ManyToOne
+@JoinColumn(name="address",nullable=false)
+private Address address;
+private boolean status;
+}
