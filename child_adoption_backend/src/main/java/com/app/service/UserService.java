@@ -71,8 +71,8 @@ public class UserService {
 		User user=new User();
 		user.setAddress(a);
 		user.setEmail(dto.getEmail());
-		user.setFName(dto.getFName());
-		user.setLName(dto.getLName());
+		user.setFname(dto.getFname());
+		user.setLname(dto.getLname());
 		user.setMobile(dto.getMobile());
 		user.setPassword(dto.getPassword());
 		user.setRole(dto.getRole());
@@ -86,6 +86,7 @@ public class UserService {
 		 return new ApiResponse("added order with ID " + obj.getId());
 	}
 	public ApiResponse addParentDto(AddParentRequestDto dto) {
+		System.out.println(dto);
 		Address a=new Address();
 		a.setCity(dto.getCity());
 		a.setDistrict(dto.getDistrict());
@@ -98,8 +99,8 @@ public class UserService {
 		User user=new User();
 		user.setAddress(a);
 		user.setEmail(dto.getEmail());
-		user.setFName(dto.getFName());
-		user.setLName(dto.getLName());
+		user.setFname(dto.getFname());
+		user.setLname(dto.getLname());
 		user.setMobile(dto.getMobile());
 		user.setPassword(dto.getPassword());
 		user.setRole(dto.getRole());

@@ -15,8 +15,8 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 public class AddParentRequestDto {
-	private String fName;
-	private String lName;
+	private String fname;
+	private String lname;
 	private String mobile;
 	private String email;
 	private String password;
