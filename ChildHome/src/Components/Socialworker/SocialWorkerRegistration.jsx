@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "../Registration/Registration.css";
-import SocialworkerSlider from "./Socialworker_Slider";
+import ChildhomeSlider from "../ChildHome/Childhome_Slider";
 
 const SocialWorkerRegistration = () => {
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-2">
-          <SocialworkerSlider />
+          <ChildhomeSlider />
         </div>
         <div className="col-10 ms-auto p-4">
           <Content />
