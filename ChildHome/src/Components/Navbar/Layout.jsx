@@ -1,12 +1,14 @@
 import React from "react";
 import Navbar from "./Navbar";
- // Adjust the path based on your folder structure
+import Footer from "../Footer/Footer";
+// Adjust the path based on your folder structure
 
 const Layout = ({ children }) => {
   return (
     <>
-      <Navbar /> 
+      <Navbar />
       <main>{children}</main>
+      <Footer />
     </>
   );
 };

@@ -1,55 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { FaUser, FaLock } from "react-icons/fa"; // Import FontAwesome icons
+import "./Login.css"; // Custom CSS
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const getData = (e) => {
+  const handleLogin = (e) => {
     console.log(email, password);
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ height: '100vh', marginTop: '0' }}>
-      <div className="card shadow-sm" style={{ width: '100%', maxWidth: '400px' }}>
-        <div className="card-body">
-          <h1 className="text-center mb-4">Login</h1>
-          <hr />
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">Username</label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              name="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Enter your email"
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="Enter your password"
-            />
-          </div>
-          <div className="d-flex justify-content-between">
-            <label>
-              Don't have an account? <a href="/">Register</a>
-            </label>
-            <label>
-              <a href="/">Forgot password?</a>
-            </label>
-          </div>
-          <button className="btn btn-primary w-100 mt-3" onClick={getData}>
-            Login
-          </button>
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Admin / Parent Login</h2>
+        <div className="input-group">
+          <FaUser className="icon" />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
+        <div className="input-group">
+          <FaLock className="icon" />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="login-options">
+          <a href="/">Forgot Password?</a>
+          <a href="/">Register</a>
+        </div>
+        <button className="login-btn" onClick={handleLogin}>
+          Login
+        </button>
       </div>
     </div>
   );

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import techConfImg from "../images/kids-in-computer-class-with-teacher-P5Q6T8H-840x462.jpg";
-import musicFestImg from "../images/image.jpg";
-import artExhibitImg from "../images/Vier-jouw-verjaardag-bij-het-Cobra-Museum.jpg";
+
 const Events = () => {
   const [events, setEvents] = useState([
     {
@@ -9,21 +7,21 @@ const Events = () => {
       title: "Tech Conference 2025",
       date: "March 15, 2025",
       description: "A conference on emerging technologies and innovations.",
-      image: techConfImg,
+      image: "/images/Kids.jpg",
     },
     {
       id: 2,
       title: "Music Fest 2025",
       date: "April 10, 2025",
       description: "An exciting festival featuring top artists and bands.",
-      image: musicFestImg,
+      image: "/images/image.jpg",
     },
     {
       id: 3,
       title: "Art Exhibition 2025",
       date: "May 20, 2025",
       description: "A showcase of modern and classic artworks.",
-      image: artExhibitImg,
+      image: "/images/Children_img_event.jpg",
     },
   ]);
 
@@ -38,6 +36,7 @@ const Events = () => {
                 src={event.image}
                 className="card-img-top"
                 alt={event.title}
+                onError={(e) => (e.target.src = "/images/default.jpg")} // Fallback image
               />
               <div className="card-body">
                 <h5 className="card-title">{event.title}</h5>

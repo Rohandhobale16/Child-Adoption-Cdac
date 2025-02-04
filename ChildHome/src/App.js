@@ -3,11 +3,11 @@ import { Routes, Route } from "react-router-dom";
 
 import Login from "./Components/Login/Login";
 // import Applicantreg from './Components/Registration/Applicantreg'
-import Childhhomereg from "./Components/ChildHome/Childhhomereg";
+import Childhhomereg from "./Components/ChildHome/ChildHomereg";
 import RazorpayPayment from "./Components/Donation/RazorpayPayment";
 import Layout from "./Components/Navbar/Layout";
-import Home from "./Components/Navbar/Home";
-import ContactUs from "./Components/Login/ContactUs";
+import Home from "./Components/Home/Home";
+import ContactUs from "./Components/ContactUs/ContactUs";
 import AddChildForm from "./Components/ChildHome/AddChildForm";
 import ChildHomeTable from "./Components/ChildHome/ChildHomeTable";
 import ParentRegistration from "./Components/Registration/ParentRegistration";
@@ -21,22 +21,23 @@ import AdminHome from "./Components/Admin/admin_home";
 import AdminChild from "./Components/Admin/delete_child";
 import AdminParent from "./Components/Admin/delete_parent";
 import InitiateAdoptionRequest from "./Components/ChildHome/InitiateAdoptionRequest";
-import SocialWorkerRegistration from "./Components/ChildHome/SocialWorkerRegistration";
+import SocialWorkerRegistration from "./Components/Socialworker/SocialWorkerRegistration";
 import UploadCertificate from "./Components/ChildHome/UploadCertificate";
 import ChildHomeEvents from "./Components/ChildHome/ChildHomeEvents";
 import EditHomeProfile from "./Components/ChildHome/EditProfile";
-import ChildHomeProfile from "./Components/Navbar/ChildHomeProfile";
+import ChildHomeProfile from "./Components/ChildHome/ChildHomeProfile";
 import SocialWorkerEdit from "./Components/Socialworker/SocialWorkerEdit";
 import EditRequestStatus from "./Components/Socialworker/EditRequestStatus.jsx";
-import SocialWorkerProfile from "./Components/Navbar/SocialWorkerProfile";
-import Events from "./Components/Navbar/Events.jsx";
-import ParentFeedback from "./Components/Parent/Feedback";
+import SocialWorkerProfile from "./Components/Socialworker/SocialWorkerProfile";
+import Events from "./Components/Event/Events.jsx";
+import ParentFeedback from "./Components/Feedback/Feedback";
 import Feedback from "./Components/Admin/Feedback.jsx";
 
 function App() {
   return (
     <>
       <Layout>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Applicantreg" element={<ParentRegistration />} />
