@@ -3,6 +3,7 @@ import "./Registration.css";
 // import { register } from "../../Routes/Applicationrouter";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+// import { FaUser, FaLock } from "react-icons/fa";
 
 const ParentRegistration = () => {
   const navigate = useNavigate();
@@ -235,19 +236,17 @@ const ParentRegistration = () => {
   );
 
   return (
-    <div className="container my-2 mx-auto">
-      <h1>Parent Registration</h1>
-      <hr />
+    <div className="container_background">
+      <div className="registration-container">
+        <h1 className="form-title text-primary">Parent Registration</h1>
 
-      <form>
-        <div className="row mb-3">
+        <form>
           <h3>Marital Detail </h3>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>Material Status :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <select
               onChange={(e) => {
                 setMaterial(e.target.value);
@@ -266,10 +265,10 @@ const ParentRegistration = () => {
             </select>
           </div>
 
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>Applicant Gender :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <select
               onChange={(e) => {
                 setGender(e.target.value);
@@ -284,33 +283,35 @@ const ParentRegistration = () => {
               <option value="Female">Female</option>
             </select>
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <h3>
               Personal Information :{Gender === "Male" ? "Male" : "Female"}
             </h3>
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>First Name :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setfname(e.target.value);
               }}
               type="text"
               name="first_name"
               id="first_name"
+              placeholder="First Name"
             />
           </div>
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>Last Name :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setlname(e.target.value);
               }}
@@ -319,12 +320,11 @@ const ParentRegistration = () => {
               id="last_name"
             />
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>Nationality :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <select
               onChange={(e) => {
                 setNationality(e.target.value);
@@ -337,11 +337,12 @@ const ParentRegistration = () => {
               <option value="NRI">NRI</option>
             </select>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>Age :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setAge(e.target.value);
               }}
@@ -350,13 +351,13 @@ const ParentRegistration = () => {
               id="age"
             />
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>Date Of Birth :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               name="date"
               id="date"
               onChange={(e) => {
@@ -365,10 +366,10 @@ const ParentRegistration = () => {
               type="date"
             />
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>Occupation :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <select
               onChange={(e) => {
                 setOccupation(e.target.value);
@@ -550,13 +551,13 @@ const ParentRegistration = () => {
               </optgroup>
             </select>
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>Adhar Card No :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setAdhar(e.target.value);
               }}
@@ -565,11 +566,12 @@ const ParentRegistration = () => {
               id="adhar"
             ></input>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>Mobile No :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setMobile(e.target.value);
               }}
@@ -578,120 +580,121 @@ const ParentRegistration = () => {
               id="mobile"
             ></input>
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>Email ID :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
               type="email"
             ></input>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>Annual Income :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setIncome(e.target.value);
               }}
               type="text"
             ></input>
           </div>
-        </div>
-        <div className="row mb-3">
+
           <h3>Address :</h3>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>House No :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setHouse(e.target.value);
               }}
               type="text"
             ></input>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>Street :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setStreet(e.target.value);
               }}
               type="text"
             ></input>
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>District :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setDistrict(e.target.value);
               }}
               type="text"
             ></input>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>City :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setCity(e.target.value);
               }}
               type="text"
             ></input>
           </div>
-        </div>
-        <div className="row mb-3">
-          <div className="col-12 col-md-6 mb-2">
+
+          <div className="form-group">
             <label>State :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setState(e.target.value);
               }}
               type="text"
             ></input>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="form-group">
             <label>Pincode :</label>
           </div>
-          <div className="col-12 col-md-6 mb-2">
+          <div className="input-group">
             <input
+              className="form-control"
               onChange={(e) => {
                 setPincode(e.target.value);
               }}
               type="text"
             ></input>
           </div>
-        </div>
 
-        {material === "Married" ? (
-          <div>
-            <div className="row mb-3">
+          {material === "Married" ? (
+            <div>
               <h3>
                 Personal Information :{Gender === "Male" ? "Female" : "Male"}
               </h3>
-            </div>
-            <div className="row mb-3">
-              <div className="col-12 col-md-6 mb-2">
+
+              <div className="form-group">
                 <label>First Name</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartnerfname(e.target.value);
                   }}
@@ -700,11 +703,12 @@ const ParentRegistration = () => {
                   id="first_name"
                 />
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <label>Last Name</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartnerlname(e.target.value);
                   }}
@@ -713,12 +717,11 @@ const ParentRegistration = () => {
                   id="last_name"
                 />
               </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-12 col-md-6 mb-2">
+
+              <div className="form-group">
                 <label>Nationality :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <select
                   onChange={(e) => {
                     setNationality(e.target.value);
@@ -732,11 +735,12 @@ const ParentRegistration = () => {
                 </select>
               </div>
 
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <label>Age :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartnerage(e.target.value);
                   }}
@@ -745,23 +749,23 @@ const ParentRegistration = () => {
                   id="age"
                 />
               </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-12 col-md-6 mb-2">
+
+              <div className="form-group">
                 <label>Date Of Birth :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartnerdob(e.target.value);
                   }}
                   type="date"
                 ></input>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <label>Occupation :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <select
                   onChange={(e) => {
                     setPartneroccupation(e.target.value);
@@ -953,13 +957,13 @@ const ParentRegistration = () => {
                   </optgroup>
                 </select>
               </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-12 col-md-6 mb-2">
+
+              <div className="form-group">
                 <label>Adhar Card No :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartneradhar_no(e.target.value);
                   }}
@@ -968,11 +972,12 @@ const ParentRegistration = () => {
                   id="adhar"
                 ></input>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <label>Mobile No :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartnermobile(e.target.value);
                   }}
@@ -981,24 +986,25 @@ const ParentRegistration = () => {
                   id="mobile"
                 ></input>
               </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-12 col-md-6 mb-2">
+
+              <div className="form-group">
                 <label>Email ID :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartneremail(e.target.value);
                   }}
                   type="email"
                 ></input>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <label>Annual Income :</label>
               </div>
-              <div className="col-12 col-md-6 mb-2">
+              <div className="form-group">
                 <input
+                  className="form-control"
                   onChange={(e) => {
                     setPartnerincome(e.target.value);
                   }}
@@ -1006,18 +1012,20 @@ const ParentRegistration = () => {
                 ></input>
               </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
 
-        <div className="row mb-3">
           {/* <div className="col" rowspan="2" style={{ textAlign: "center" }}> */}
-          <div className="col">
-            <button onClick={onRegister} type="submit" class="btn btn-primary">
+          <center>
+            <button
+              onClick={onRegister}
+              type="submit"
+              className="submit-button"
+            >
               Submit
             </button>
-          </div>
-        </div>
-      </form>
+          </center>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { FaHome, FaUserAlt, FaRegHeart } from "react-icons/fa";
+import "../Navbar/Navbar.css";
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -13,15 +14,14 @@ const Navbar = () => {
             <Link
               className="navbar-brand d-flex align-items-center me-4"
               to="/"
-              style={{ gap: "10px" }}
             >
               <img
                 id="home_logo"
                 src="/logo.jpg"
                 alt="logo"
-                style={{ height: "40px" }}
+                className="logo-img"
               />
-              <span>HomeForHeart</span>
+              <span className="navbar-brand-text">HomeForHeart</span>
             </Link>
 
             {/* Toggle Button for Mobile */}
@@ -40,25 +40,18 @@ const Navbar = () => {
             {/* Navigation Links */}
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto align-items-center">
-                {/* Dropdown for Resources */}
                 <li className="nav-item dropdown">
                   <button
                     className="btn nav-link dropdown-toggle"
                     id="resourcesDropdown"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    style={{
-                      background: "none",
-                      border: "none",
-                      padding: 0,
-                    }}
                   >
                     Resources
                   </button>
                   <ul
                     className="dropdown-menu"
                     aria-labelledby="resourcesDropdown"
-                    style={{ top: "100%" }}
                   >
                     <li>
                       <Link
@@ -122,18 +115,12 @@ const Navbar = () => {
                     id="registrationDropdown"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    style={{
-                      background: "none",
-                      border: "none",
-                      padding: 0,
-                    }}
                   >
                     Registration
                   </button>
                   <ul
                     className="dropdown-menu"
                     aria-labelledby="registrationDropdown"
-                    style={{ top: "100%" }}
                   >
                     <li>
                       <Link className="dropdown-item" to="/Applicantreg">
@@ -151,9 +138,7 @@ const Navbar = () => {
                 {/* Login Button */}
                 <li className="nav-item">
                   <button
-                    onClick={() => {
-                      navigate("/login");
-                    }}
+                    onClick={() => navigate("/login")}
                     className="btn btn-primary ms-lg-3"
                   >
                     Login

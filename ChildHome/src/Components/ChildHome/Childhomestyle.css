@@ -1,19 +1,12 @@
 /* General Styles */
-
-.container_background{
-    /* background: linear-gradient(135deg, #ffffff, #ff6a88, #ff99ac); */
-    background-color: white;
-    padding: 20px;
-  }
 .registration-container {
     max-width: 800px;
     margin: 20px auto;
-    padding: 50px;
-    background-color: #ffffff;
+    padding: 20px;
+    background-color: #f4f4f9;
     border-radius: 10px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-    background: white;  
-}
+  }
   
   h1.form-title {
     text-align: center;
@@ -31,7 +24,7 @@
   }
   
   h3 {
-    color: #8c9094;
+    color: #5f6368;
     font-size: 1.1rem;
     margin-bottom: 15px;
   }
@@ -50,7 +43,7 @@
     width: 100%;
     padding: 8px;
     margin-top: 5px;
-    border: 1px solid #000000;
+    border: 1px solid #ccc;
     border-radius: 5px;
   }
   
@@ -66,7 +59,7 @@
   
   .submit-button {
     padding: 12px 20px;
-    background-color: #0a53be;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
@@ -76,9 +69,7 @@
   }
   
   .submit-button:hover {
-    background-color: #ffffff;
-    color:black;
-    border: 1px solid #0a53be;
+    background-color: #218838;
   }
   
   hr {
@@ -95,6 +86,4 @@
       margin-bottom: 15px;
     }
   }
-  
-
   

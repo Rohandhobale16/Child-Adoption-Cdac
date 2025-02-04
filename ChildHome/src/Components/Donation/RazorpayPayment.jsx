@@ -1,12 +1,12 @@
 import React, { useState } from "react";
- // Import Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./RazorpayPayment.css"; // Custom CSS for additional styling
 
 const RazorpayPayment = () => {
   const [amount, setAmount] = useState("");
 
   const payNow = async () => {
     try {
-      // Create order by calling the server endpoint
       const response = await fetch("http://localhost:5000/create-order", {
         method: "POST",
         headers: {
@@ -22,15 +22,14 @@ const RazorpayPayment = () => {
 
       const order = await response.json();
 
-      // Open Razorpay Checkout
       const options = {
-        key: "rzp_test_wBrQr87m3vtD3z", // Replace with your Razorpay key_id
+        key: "rzp_test_wBrQr87m3vtD3z",
         amount: order.amount,
         currency: order.currency,
-        name: "Your Company Name",
-        description: "Test Transaction",
-        order_id: order.id, // This is the order_id created in the backend
-        callback_url: "http://localhost:5000/payment-success", // Your success URL
+        name: "Child Home Adoption",
+        description: "Donation for Child Home Adoption",
+        order_id: order.id,
+        callback_url: "http://localhost:5000/payment-success",
         prefill: {
           name: "Your Name",
           email: "your.email@example.com",
@@ -75,13 +74,18 @@ const RazorpayPayment = () => {
 
   return (
     <div className="container mt-5">
-      <div className="card shadow-sm">
+      <div className="card shadow-sm payment-card">
         <div className="card-body">
-          <h1 className="card-title text-center mb-4">Razorpay Payment Gateway</h1>
+          <h1 className="card-title text-center mb-4">
+            Support a Child's Future
+          </h1>
+          <p className="text-center text-muted">
+            Your contribution can make a difference.
+          </p>
           <form id="payment-form">
             <div className="mb-3">
               <label htmlFor="amount" className="form-label">
-                Amount:
+                Amount (INR):
               </label>
               <input
                 type="number"
@@ -98,9 +102,9 @@ const RazorpayPayment = () => {
               <button
                 type="button"
                 onClick={payNow}
-                className="btn btn-primary btn-lg w-100"
+                className="btn btn-primary btn-lg w-100 pay-button"
               >
-                Pay Now
+                Donate Now
               </button>
             </div>
           </form>
