@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import SocialworkerSlider from "./Socialworker_Slider";
 
 const EditRequestStatus = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/social">
-              Requests
-            </Link>
-            <Link className="nav-link" to="/social/edit">
-              Edit Profile
-            </Link>
-          </nav>
-        </aside>
-
-        <main className="col-10 ms-auto p-4">
-          <section>
-            <Content />
-          </section>
-        </main>
+        <div className="col-2">
+          <SocialworkerSlider />
+        </div>
+        <div className="col-10 ms-auto p-4">
+          <Content />
+        </div>
       </div>
     </div>
   );

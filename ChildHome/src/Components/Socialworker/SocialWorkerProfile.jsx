@@ -1,14 +1,15 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
+import SocialworkerSlider from "./Socialworker_Slider";
 
 export default function SocialWorkerProfile() {
   return (
-    <div className="col-3 d-flex flex-column vh-100 bg-light p-3">
-    <h4 className="mb-4">Social Worker Dashboard</h4>
-    <nav className="nav flex-column">
-      <Link className="nav-link" to="/socialWorkerEdit">social Worker Edit</Link>
-      <Link className="nav-link" to="/editRequestStatus">EditRequest Status</Link>
-    </nav>
-  </div>
-  )
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-2">
+          <SocialworkerSlider />
+        </div>
+      </div>
+    </div>
+  );
 }

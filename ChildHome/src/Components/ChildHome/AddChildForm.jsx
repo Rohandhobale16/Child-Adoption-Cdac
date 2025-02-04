@@ -1,44 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import ChildhomeSlider from "./Childhome_Slider";
 
 const AddChildForm = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/childhome">
-              Initiate Request
-            </Link>
-            <Link className="nav-link" to="/childhome/addchild">
-              Add Child
-            </Link>
-            <Link className="nav-link" to="/childhome/addevent">
-              Add Event
-            </Link>
-            <Link className="nav-link" to="/childhome/edit">
-              Edit Profile
-            </Link>
-            <Link className="nav-link" to="/childhome/registerSocialWorker">
-              Register Social Worker
-            </Link>
-            <Link className="nav-link" to="/childhome/uploadcertifiacte">
-              Upload Adoption Certificate
-            </Link>
-          </nav>
-        </aside>
-
-        <main className="col-10 ms-auto p-4">
+        <div className="col-2">
+          <ChildhomeSlider />
+        </div>
+        <div className="col-10 ms-auto p-4">
           <section>
             <Content />
           </section>
-        </main>
+        </div>
       </div>
     </div>
   );
 };
-
 
 // AddChildForm Component
 const Content = () => {
