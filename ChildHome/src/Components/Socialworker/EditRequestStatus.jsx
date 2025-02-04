@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import AdminNavbar from "../Admin/adminNavbar";
 
 const EditRequestStatus = () => {
   return (
@@ -75,7 +74,6 @@ const Content = () => {
 
   return (
     <div className="card shadow-lg p-4 rounded-lg">
-      <AdminNavbar />
       <h2 className="text-center mb-4 text-primary">Edit Request Status</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

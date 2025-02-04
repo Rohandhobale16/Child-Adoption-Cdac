@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import AdminNavbar from "../Admin/adminNavbar";
 
 const SocialWorkerEdit = () => {
   return (
@@ -70,7 +69,6 @@ const Content = () => {
 
   return (
     <div>
-      <AdminNavbar />
       <h2 className="text-center text-primary mb-4">
         Edit Social Worker Details
       </h2>

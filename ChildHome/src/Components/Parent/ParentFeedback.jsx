@@ -1,34 +1,17 @@
-import { Link } from "react-router-dom";
+import Parent_Slider from "./Parent_Slider";
 import { useState } from "react";
-import AdminNavbar from "../Admin/adminNavbar";
+import "../Parent/Parent_Slider.css";
 
 const ParentFeedback = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/parent">
-              Book Slot
-            </Link>
-            <Link className="nav-link" to="/parent/edit">
-              Edit Profile
-            </Link>
-            <Link className="nav-link" to="/parent/feedback">
-              Feedback
-            </Link>
-            <Link className="nav-link" to="/parent/status">
-              Booking Status
-            </Link>
-          </nav>
-        </aside>
-
-        <main className="col-10 ms-auto p-4">
-          <section>
-            <Content />
-          </section>
-        </main>
+        <div className="col-2 ">
+          <Parent_Slider />
+        </div>
+        <div className="col-10 ms-auto p-4">
+          <Content />
+        </div>
       </div>
     </div>
   );
@@ -50,7 +33,6 @@ const Content = () => {
 
   return (
     <div>
-      <AdminNavbar />
       <h1>
         <center>Feedback</center>
       </h1>
