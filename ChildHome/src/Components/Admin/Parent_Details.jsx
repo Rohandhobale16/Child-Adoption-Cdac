@@ -2,33 +2,21 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deletes, homeC } from "../../services/admin_services";
-import AdminNavbar from "./adminNavbar";
+import Admin_Sidebar from "./Admin_Sidebar";
+import "../Admin/Admin_Slider.css";
 // import AdminNavbar from "./adminNavbar";
 // import './card.css'; // Optional: For styling
 const AdminParent = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/admin">
-              Admin
-            </Link>
-            <Link className="nav-link" to="/admin/deleteparent">
-              Delete Parent
-            </Link>
-            <Link className="nav-link" to="/admin/deletechild">
-              Delete Child
-            </Link>
-          </nav>
-        </aside>
+        <div className="col-2 ">
+          <Admin_Sidebar />
+        </div>
 
-        <main className="col-10 ms-auto p-4">
-          <section>
-            <ParentDetails />
-          </section>
-        </main>
+        <div className="col-10 ms-auto p-4">
+          <ParentDetails />
+        </div>
       </div>
     </div>
   );
@@ -57,10 +45,9 @@ function ParentDetails() {
   };
   return (
     <div>
-      <AdminNavbar />
-      <center>
-        <h2 className="heading">Parent Details</h2>
-      </center>
+      <div>
+        <h1 className="form-title text-primary">Parent Details</h1>
+      </div>
       {
         <table className="table table-hover">
           <thead>

@@ -42,33 +42,19 @@ import { child, deleteChild } from "../../services/admin_services";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { viewSucess } from "../../services/admin_services";
-import AdminNavbar from "./adminNavbar";
+import Admin_Sidebar from "./Admin_Sidebar";
+import "../Admin/Admin_Slider.css";
 
 const AdminChild = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/admin">
-              Admin
-            </Link>
-            <Link className="nav-link" to="/admin/deleteparent">
-              Delete Parent
-            </Link>
-            <Link className="nav-link" to="/admin/deletechild">
-              Delete Child
-            </Link>
-          </nav>
-        </aside>
-
-        <main className="col-10 ms-auto p-4">
-          <section>
-            <ChildHomeDetails />
-          </section>
-        </main>
+        <div className="col-2">
+          <Admin_Sidebar />
+        </div>
+        <div className="col-10 ms-auto p-4">
+          <ChildHomeDetails />
+        </div>
       </div>
     </div>
   );
@@ -98,11 +84,10 @@ function ChildHomeDetails() {
     }
   };
   return (
-    <div>
-      <AdminNavbar />
-      <center>
-        <h2 className="heading">child home Details</h2>
-      </center>
+    <div className="container">
+      <div>
+        <h1 className="form-title text-primary">child home Details</h1>
+      </div>
       {
         <table className="table table-hover">
           <thead>

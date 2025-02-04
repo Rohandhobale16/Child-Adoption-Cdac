@@ -24,7 +24,7 @@
   }
   
   .nav-item .nav-link {
-    color: #000000 !important; /* Set text color to white for visibility */
+    color: #000000 !important; 
     font-size: 1rem;
     font-weight: 500;
     text-transform: capitalize;
@@ -32,21 +32,21 @@
   }
   
   .nav-item .nav-link:hover {
-    color: #ff99ac !important; /* Light pink color on hover */
+    color: #ff99ac !important;
   }
   
   /* Dropdown */
   .navbar-nav .dropdown-menu {
-    background-color: rgb(255 227 227); /* Light pink background for dropdown */
+    background-color: rgb(255 227 227); 
     border-radius: 5px;
   }
   
   .navbar-nav .dropdown-menu .dropdown-item {
-    color: #000000 !important; /* White text for dropdown items */
+    color: #000000 !important;
   }
   
   .navbar-nav .dropdown-menu .dropdown-item:hover {
-    background-color: rgb(255, 175, 175) !important; /* Darker pink on hover */
+    background-color: rgb(255, 175, 175) !important; 
     color: #000000 !important;
   }
   

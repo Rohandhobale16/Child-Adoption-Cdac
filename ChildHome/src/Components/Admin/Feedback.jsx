@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { feedback } from "../../services/admin_services";
-import AdminNavbar from "./adminNavbar";
+import "../Admin/Admin_Slider.css";
 // import './card.css'; // Optional: For styling
 
 const Feedback = () => {
@@ -37,7 +37,6 @@ const Feedback = () => {
 const Content = () => {
   return (
     <div>
-      <AdminNavbar />
       <main className="col-10 ms-auto ">
         <section>
           <CardComponent />

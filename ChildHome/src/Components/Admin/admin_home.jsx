@@ -2,32 +2,22 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { viewSucess } from "../../services/admin_services";
-import AdminNavbar from "./adminNavbar";
+import Admin_Sidebar from "./Admin_Sidebar";
+import "../Admin/Admin_Slider.css";
 
 const AdminHome = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/admin">
-              Admin
-            </Link>
-            <Link className="nav-link" to="/admin/deleteparent">
-              Delete Parent
-            </Link>
-            <Link className="nav-link" to="/admin/deletechild">
-              Delete Child
-            </Link>
-          </nav>
-        </aside>
+        <div className="col-2">
+          <Admin_Sidebar />
+        </div>
 
-        <main className="col-10 ms-auto p-4">
+        <div className="col-10 ms-auto p-4">
           <section>
             <SucessTable />
           </section>
-        </main>
+        </div>
       </div>
     </div>
   );
@@ -53,10 +43,9 @@ function SucessTable() {
   }, []);
   return (
     <div>
-      <AdminNavbar />
-      <center>
-        <h2>Request Details</h2>
-      </center>
+      <div>
+        <h1 className="form-title text-primary">Request Details</h1>
+      </div>
       {
         <table className="table table-hover">
           <thead>

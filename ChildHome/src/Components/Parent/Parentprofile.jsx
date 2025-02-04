@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import AdminNavbar from "../Admin/adminNavbar";
+import Parent_Slider from "./Parent_Slider";
+import "../Parent/Parent_Slider.css";
 
 const AdminProfile = () => {
   const [selectedChildHome, setSelectedChildHome] = useState(null);
@@ -16,28 +16,12 @@ const AdminProfile = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/parent">
-              Book Slot
-            </Link>
-            <Link className="nav-link" to="/parent/edit">
-              Edit Profile
-            </Link>
-            <Link className="nav-link" to="/parent/feedback">
-              Feedback
-            </Link>
-            <Link className="nav-link" to="/parent/status">
-              Booking Status
-            </Link>
-          </nav>
-        </aside>
-
-        <main className="col-10 ms-auto p-4">
-          <section>
-            <BookSlotTable onBookSlot={openModal} />
-          </section>
-        </main>
+        <div className="col-2 ">
+          <Parent_Slider />
+        </div>
+        <div className="col-10 ms-auto p-4">
+          <BookSlotTable onBookSlot={openModal} />
+        </div>
       </div>
 
       {/* Bootstrap Modal */}
@@ -49,7 +33,6 @@ const AdminProfile = () => {
 const BookSlotTable = ({ onBookSlot }) => {
   return (
     <div>
-      <AdminNavbar />
       <table className="table table-bordered text-center">
         <thead className="table-dark">
           <tr>

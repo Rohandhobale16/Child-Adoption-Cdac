@@ -1,7 +1,30 @@
 import React from "react";
-
-const admin_Sidebar = () => {
-  return <div>admin_Sidebar</div>;
+import { Link, useNavigate } from "react-router-dom";
+import "../Admin/Admin_Slider.css";
+const Admin_Sidebar = () => {
+  return (
+    <div>
+      <div className="nav-items" style={{ borderRadius: "2px" }}>
+        <Link id="admin_slider_link" className="nav-link active" to="/admin">
+          Admin Dashboard
+        </Link>
+        <Link
+          id="admin_slider_link"
+          className="nav-link"
+          to="/admin/parentdetails"
+        >
+          All Parents Detail
+        </Link>
+        <Link
+          id="admin_slider_link"
+          className="nav-link"
+          to="/admin/childhomedetails"
+        >
+          All Child Detail
+        </Link>
+      </div>
+    </div>
+  );
 };
 
-export default admin_Sidebar;
+export default Admin_Sidebar;
