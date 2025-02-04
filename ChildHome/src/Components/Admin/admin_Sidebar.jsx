@@ -13,14 +13,14 @@ const Admin_Sidebar = () => {
           className="nav-link"
           to="/admin/parentdetails"
         >
-          All Parents Detail
+          Parents Detail
         </Link>
         <Link
           id="admin_slider_link"
           className="nav-link"
           to="/admin/childhomedetails"
         >
-          All Child Detail
+          ChildHome Detail
         </Link>
       </div>
     </div>

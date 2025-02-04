@@ -1,18 +1,18 @@
-/* Ensure the body has proper spacing to accommodate the fixed navbar */
+
 body {
     margin: 0;
     padding: 0;
   }
   
   main {
-    padding-top: 80px; /* Adjust this value based on the height of your Navbar */
+    padding-top: 80px; 
   }
   
   .navbar {
-    position: fixed; /* Fix the Navbar to the top */
+    position: fixed; 
     top: 0;
     width: 100%;
-    z-index: 1000; /* Ensure it stays above all content */
+    z-index: 1000; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   

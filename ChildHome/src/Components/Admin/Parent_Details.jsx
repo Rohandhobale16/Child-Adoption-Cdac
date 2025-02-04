@@ -52,11 +52,11 @@ function ParentDetails() {
         <table className="table table-hover">
           <thead>
             <tr>
-              <th>id</th>
-              <th>fname</th>
-              <th>lname</th>
-              <th>email</th>
-              <th>mobile</th>
+              <th>Id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email id</th>
+              <th>Mobile</th>
               <th>Actions</th>
             </tr>
           </thead>
