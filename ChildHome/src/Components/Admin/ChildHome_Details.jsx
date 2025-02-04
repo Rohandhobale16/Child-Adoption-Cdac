@@ -40,7 +40,6 @@ import { child, deleteChild } from "../../services/admin_services";
 // export default AdminChild;
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Admin_Sidebar from "./Admin_Sidebar";
 import "../Admin/Admin_Slider.css";
@@ -92,11 +91,11 @@ function ChildHomeDetails() {
         <table className="table table-hover">
           <thead>
             <tr>
-              <th>id</th>
-              <th>name</th>
-              <th>lname</th>
-              <th>email</th>
-              <th>mobile</th>
+              <th>Id</th>
+              <th>ChildHome Name</th>
+              <th>Manager Name</th>
+              <th>Email id</th>
+              <th>Mobile</th>
               <th>Actions</th>
             </tr>
           </thead>

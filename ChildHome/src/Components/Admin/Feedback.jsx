@@ -3,32 +3,20 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { feedback } from "../../services/admin_services";
 import "../Admin/Admin_Slider.css";
+import Admin_Sidebar from "./Admin_Sidebar";
+
 // import './card.css'; // Optional: For styling
 
 const Feedback = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
-        <aside className="col-2 bg-light shadow-lg position-fixed h-100 top-1">
-          <nav className="nav flex-column">
-            <Link className="nav-link active" to="/admin">
-              Admin
-            </Link>
-            <Link className="nav-link" to="/admin/deleteparent">
-              Delete Parent
-            </Link>
-            <Link className="nav-link" to="/admin/deletechild">
-              Delete Child
-            </Link>
-          </nav>
-        </aside>
-
-        <main className="col-10 ms-auto p-4">
-          <section>
-            <Content />
-          </section>
-        </main>
+        <div className="col-2">
+          <Admin_Sidebar />
+        </div>
+        <div className="col-10 ms-auto p-4">
+          <Content />
+        </div>
       </div>
     </div>
   );
