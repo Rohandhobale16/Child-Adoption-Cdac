@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import ChildhomeSlider from "./Childhome_Slider";
+import axios from "axios";
 
 const ChildHomeEvents = () => {
   return (
@@ -22,17 +23,25 @@ const ChildHomeEvents = () => {
 
 const Content = () => {
   const [eventData, setEventData] = useState({
-    title: "",
-    date: "",
-    description: "",
+    eventName: "",
+    eventDate: "",
+    eventDescription: "",
+    chId: 1, // Replace with the actual ChildHome ID
   });
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch("/api/events")
-      .then((response) => response.json())
-      .then((data) => setEvents(data))
-      .catch(() => toast.error("Failed to fetch events"));
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get("/api/events");
+        setEvents(response.data);
+      } catch (error) {
+        toast.error("Failed to fetch events");
+        console.error("Error fetching events:", error); // Log the error for debugging
+      }
+    };
+
+    fetchEvents();
   }, []);
 
   const handleChange = (e) => {
@@ -41,21 +50,30 @@ const Content = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch("/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(eventData),
-      });
-      if (response.ok) {
+      const response = await axios.post(
+        "http://localhost:8080/api/addevents",
+        eventData
+      ); // Send eventData directly
+
+      if (response.status === 200) {
+        // Check for 200 OK status
         toast.success("Event added successfully!");
-        setEvents([...events, eventData]);
-        setEventData({ title: "", date: "", description: "" });
+        setEvents([...events, response.data]); // Add the newly created event (from the server response)
+        setEventData({
+          eventName: "",
+          eventDate: "",
+          eventDescription: "",
+          chId: 1,
+        }); // Clear form and reset chId
       } else {
         toast.error("Failed to add event");
+        console.error("Error adding event:", response.data); // Log the error from the server
       }
     } catch (error) {
       toast.error("Error adding event");
+      console.error("Error adding event:", error); // Log the error
     }
   };
 
@@ -64,6 +82,7 @@ const Content = () => {
       <h2 className="text-center mb-4 text-primary">Manage Events</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
+          <input type="hidden" name="chId" value={eventData.chId} />
           <label htmlFor="title" className="form-label">
             Event Title:
           </label>

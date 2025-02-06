@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { viewSucess } from "../../services/admin_services";
-import Admin_Sidebar from "./Admin_Sidebar";
+
 import "../Admin/Admin_Slider.css";
+import AdminSidebar from "./AdminSidebar";
 
 const AdminHome = () => {
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-2">
-          <Admin_Sidebar />
+          <AdminSidebar/>
         </div>
 
         <div className="col-10 ms-auto p-4">
