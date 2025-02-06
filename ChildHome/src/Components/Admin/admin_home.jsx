@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { viewSucess } from "../../services/admin_services";
 
@@ -34,13 +34,20 @@ function SucessTable() {
       setItems(result["users"]);
     } else {
       toast.error(result["error"]);
-    }
-  };
+    }};
+  
   const book = async (id) => {
     navigate(`/feedback/${id}`);
   };
   useEffect(() => {
-    onLoadItems();
+     onLoadItems();
+    // const result = await viewSucess();
+    // if (result["status"] === "success") {
+    //   setItems(result["users"]);
+    // } else {
+    //   toast.error(result["error"]);
+    // }
+    console.log("calling");
   }, []);
   return (
     <div>
@@ -83,6 +90,7 @@ function SucessTable() {
       }
     </div>
   );
-}
+};
+
 
 export default AdminHome;

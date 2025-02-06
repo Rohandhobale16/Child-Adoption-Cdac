@@ -62,22 +62,28 @@ const AdminChild = () => {
 // Separated Form Component
 function ChildHomeDetails() {
   const [items, setItems] = useState([]);
-  const onLoadItems = async () => {
-    const result = await child();
-    if (result["status"] === "success") {
-      setItems(result["users"]);
-    } else {
-      toast.error(result["error"]);
-    }
-  };
+
   useEffect(() => {
+    const onLoadItems = async () => {
+      const result = await child();
+      if (result["status"] === "success") {
+        setItems(result["users"]);
+      } else {
+        toast.error(result["error"]);
+      }
+    };
     onLoadItems();
   }, []);
   const del = async (id) => {
     const result = await deleteChild(id);
     if (result["status"] === "success") {
       toast.success("deleted");
-      onLoadItems();
+      const result = await child();
+      if (result["status"] === "success") {
+        setItems(result["users"]);
+      } else {
+        toast.error(result["error"]);
+      }
     } else {
       toast.error(result["error"]);
     }

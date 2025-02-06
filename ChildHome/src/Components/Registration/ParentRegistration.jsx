@@ -3,6 +3,7 @@ import "./Registration.css";
 // import { register } from "../../Routes/Applicationrouter";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { register1, register2 } from "../../services/registration";
 // import { FaUser, FaLock } from "react-icons/fa";
 
 const ParentRegistration = () => {
@@ -11,229 +12,228 @@ const ParentRegistration = () => {
   const [material, setMaterial] = useState("");
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
-  const [Gender, setGender] = useState("");
-  const [Nationality, setNationality] = useState("");
-  const [Age, setAge] = useState("");
-  const [Dob, setDob] = useState("");
-  const [Occupation, setOccupation] = useState("");
-  const [Adhar, setAdhar] = useState("");
-  const [Mobile, setMobile] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Income, setIncome] = useState("");
-  const [Houseno, setHouse] = useState("");
-  const [Street, setStreet] = useState("");
-  const [District, setDistrict] = useState("");
-  const [City, setCity] = useState("");
-  const [State, setState] = useState("");
-  const [Pincode, setPincode] = useState("");
-  const [Partnerfname, setPartnerfname] = useState("");
-  const [Partnerlname, setPartnerlname] = useState("");
-  const [Partnergender, setPartnergender] = useState("");
-  const [Partnerdob, setPartnerdob] = useState("");
-  const [Partneradhar_no, setPartneradhar_no] = useState("");
-  const [Partnermobile, setPartnermobile] = useState("");
-  const [Partneremail, setPartneremail] = useState("");
-  const [Partnerincome, setPartnerincome] = useState("");
-  const [Partneroccupation, setPartneroccupation] = useState("");
-  const [Partnernationality, setPartnernationality] = useState("");
+  const [gender, setGender] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [password, setAge] = useState("");
+  const [dob, setDob] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [aadhar, setAdhar] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
+  const [income, setIncome] = useState("");
+  const [houseNo, setHouse] = useState("");
+  const [street, setStreet] = useState("");
+  const [district, setDistrict] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [partnerfname, setPartnerfname] = useState("");
+  const [partnerlname, setPartnerlname] = useState("");
+  const [partnergender, setPartnergender] = useState("");
+  const [partnerdob, setPartnerdob] = useState("");
+  const [partneraadhar, setPartneradhar_no] = useState("");
+  const [partnermobile, setPartnermobile] = useState("");
+  const [partneremail, setPartneremail] = useState("");
+  const [partnerincome, setPartnerincome] = useState("");
+  const [partneroccupation, setPartneroccupation] = useState("");
+  const [partnernationality, setPartnernationality] = useState("");
   const [Partnerage, setPartnerage] = useState("");
 
   const onRegister = async () => {
     if (material.length === 0) {
       toast.warning("Please select material");
     } else if (material === "Married") {
-      setPartnergender(Gender === "Male" ? "Female" : "Male");
+      setPartnergender(gender === "Male" ? "Female" : "Male");
       if (fname.length === 0) {
         toast.warning("Please enter first name");
       } else if (lname.length === 0) {
         toast.warning("Please enter last name");
-      } else if (Gender.length === 0) {
+      } else if (gender.length === 0) {
         toast.warning("Please Select Gender");
-      } else if (Nationality.length === 0) {
+      } else if (nationality.length === 0) {
         toast.warning("Please enter Nationality");
-      } else if (Age.length === 0) {
+      } else if (password.length === 0) {
         toast.warning("Please enter Age");
-      } else if (Dob.length === 0) {
+      } else if (dob.length === 0) {
         toast.warning("Please enter  Birth Date");
-      } else if (Occupation.length === 0) {
+      } else if (occupation.length === 0) {
         toast.warning("Please enter Occupation");
-      } else if (Adhar.length === 0) {
+      } else if (aadhar.length === 0) {
         toast.warning("Please enter Adhar no");
-      } else if (Mobile.length === 0) {
+      } else if (mobile.length === 0) {
         toast.warning("Please enter Mobile NO");
-      } else if (Email.length === 0) {
+      } else if (email.length === 0) {
         toast.warning("Please enter Email");
-      } else if (Income.length === 0) {
+      } else if (income.length === 0) {
         toast.warning("Please enter Income");
-      } else if (Houseno.length === 0) {
+      } else if (houseNo.length === 0) {
         toast.warning("Please enter Houseno");
-      } else if (Street.length === 0) {
+      } else if (street.length === 0) {
         toast.warning("Please enter Street");
-      } else if (District.length === 0) {
+      } else if (district.length === 0) {
         toast.warning("Please enter District");
-      } else if (City.length === 0) {
+      } else if (city.length === 0) {
         toast.warning("Please enter City");
-      } else if (State.length === 0) {
+      } else if (state.length === 0) {
         toast.warning("Please enter State");
-      } else if (Pincode.length === 0) {
+      } else if (pincode.length === 0) {
         toast.warning("Please enter pincode");
-      } else if (Partnerfname.length === 0) {
+      } else if (partnerfname.length === 0) {
         toast.warning("Please enter Partner last name");
-      } else if (Partnerlname.length === 0) {
+      } else if (partnerlname.length === 0) {
         toast.warning("Please enter Partner last name");
-      } else if (Partneradhar_no.length === 0) {
+      } else if (partneraadhar.length === 0) {
         toast.warning("Please enter Partner Adhar No");
-      } else if (Partnerdob.length === 0) {
+      } else if (partnerdob.length === 0) {
         toast.warning("Please enter Partner Birth Date");
-      } else if (Partnermobile.length === 0) {
+      } else if (partnermobile.length === 0) {
         toast.warning("Please enter Partner Mobile No ");
-      } else if (Partneremail.length === 0) {
+      } else if (partneremail.length === 0) {
         toast.warning("Please enter Partner Email");
-      } else if (Partnerincome.length === 0) {
+      } else if (partnerincome.length === 0) {
         toast.warning("Please enter Partner  Income");
-      } else if (Partneroccupation.length === 0) {
+      } else if (partneroccupation.length === 0) {
         toast.warning("Please select Partner Occupation");
-      } else if (Partnernationality.length === 0) {
+      } else if (partnernationality.length === 0) {
         toast.warning("Please select Partner Nationality");
-      } else if (Partneradhar_no.length === 0) {
+      } else if (partneraadhar.length === 0) {
         toast.warning("Please enter Partner Adhar No");
       } else {
         // call register function to consume register API
-        // const result = await register(
-        //   material,
-        //   fname,
-        //   lname,
-        //   Gender,
-        //   Nationality,
-        //   Age,
-        //   Dob,
-        //   Occupation,
-        //   Adhar,
-        //   Mobile,
-        //   Email,
-        //   Income,
-        //   Houseno,
-        //   Street,
-        //   District,
-        //   City,
-        //   State,
-        //   Pincode,
-        //   Partnerfname,
-        //   Partnerlname,
-        //   Partnergender,
-        //   Partnerdob,
-        //   Partneradhar_no,
-        //   Partnermobile,
-        //   Partneremail,
-        //   Partnerincome,
-        //   Partneroccupation,
-        //   Partnerage,
-        //   Partnernationality
-        // );
-        // if (result) {
-        //   toast.success("Registration Successfull");
-        //   nevigate("/");
-        // } else {
-        //   toast.error("Registration Failed");
-        // }
+        const result = await register1(
+          material,
+          fname,
+          lname,
+          gender,
+          nationality,
+          dob,
+          occupation,
+          aadhar,
+          mobile,
+          email,
+          income,
+          houseNo,
+          street,
+          district,
+          city,
+          state,
+          pincode,
+          partnerfname,
+          partnerlname,
+          partnergender,
+          partnerdob,
+          partneraadhar,
+          partnermobile,
+          partneremail,
+          partnerincome,
+          partneroccupation,
+          partnernationality,
+          password
+        );
+        if (result.message="success") {
+          toast.success("Registration Successfull");
+          navigate("/");
+        } else {
+          toast.error("Registration Failed");
+        }
       }
     } else {
       if (fname.length === 0) {
         toast.warning("Please enter first name");
       } else if (lname.length === 0) {
         toast.warning("Please enter last name");
-      } else if (Gender.length === 0) {
+      } else if (gender.length === 0) {
         toast.warning("Please Select Gender");
-      } else if (Nationality.length === 0) {
+      } else if (nationality.length === 0) {
         toast.warning("Please enter Nationality");
-      } else if (Age.length === 0) {
+      } else if (password.length === 0) {
         toast.warning("Please enter Age");
-      } else if (Dob.length === 0) {
+      } else if (dob.length === 0) {
         toast.warning("Please enter  Birth Date");
-      } else if (Occupation.length === 0) {
+      } else if (occupation.length === 0) {
         toast.warning("Please enter Occupation");
-      } else if (Adhar.length === 0) {
+      } else if (aadhar.length === 0) {
         toast.warning("Please enter Adhar no");
-      } else if (Mobile.length === 0) {
+      } else if (mobile.length === 0) {
         toast.warning("Please enter Mobile NO");
-      } else if (Email.length === 0) {
+      } else if (email.length === 0) {
         toast.warning("Please enter Email");
-      } else if (Income.length === 0) {
+      } else if (income.length === 0) {
         toast.warning("Please enter Income");
-      } else if (Houseno.length === 0) {
+      } else if (houseNo.length === 0) {
         toast.warning("Please enter Houseno");
-      } else if (Street.length === 0) {
+      } else if (street.length === 0) {
         toast.warning("Please enter Street");
-      } else if (District.length === 0) {
+      } else if (district.length === 0) {
         toast.warning("Please enter District");
-      } else if (City.length === 0) {
+      } else if (city.length === 0) {
         toast.warning("Please enter City");
-      } else if (State.length === 0) {
+      } else if (state.length === 0) {
         toast.warning("Please enter State");
-      } else if (Pincode.length === 0) {
+      } else if (pincode.length === 0) {
         toast.warning("Please enter pincode");
       } else {
-        // const result = await register(
-        //   material,
-        //   fname,
-        //   lname,
-        //   Gender,
-        //   Nationality,
-        //   Age,
-        //   Dob,
-        //   Occupation,
-        //   Adhar,
-        //   Mobile,
-        //   Email,
-        //   Income,
-        //   Houseno,
-        //   Street,
-        //   District,
-        //   City,
-        //   State,
-        //   Pincode
-        // );
-        // if (result) {
-        //   toast.success("Registration Successfull");
-        //   nevigate("/");
-        // } else {
-        //   toast.error("Registration Failed");
-        // }
+        const result = await register2(
+          material,
+          fname,
+          lname,
+          gender,
+          nationality,
+          dob,
+          occupation,
+          aadhar,
+          mobile,
+          email,
+          income,
+          houseNo,
+          street,
+          district,
+          city,
+          state,
+          pincode,
+          password,
+        );
+        if (result.message="success") {
+          toast.success("Registration Successfull");
+          navigate("/");
+        } else {
+          toast.error("Registration Failed");
+        }
       }
     }
   };
 
-  console.log(
-    material,
-    fname,
-    lname,
-    Gender,
-    Nationality,
-    Age,
-    Dob,
-    Occupation,
-    Adhar,
-    Mobile,
-    Email,
-    Income,
-    Houseno,
-    Street,
-    District,
-    City,
-    State,
-    Pincode,
-    Partnerfname,
-    Partnerlname,
-    Partnergender,
-    Partnerdob,
-    Partneradhar_no,
-    Partnermobile,
-    Partneremail,
-    Partnerincome,
-    Partneroccupation,
-    Partnerage,
-    Partnernationality
-  );
+  // console.log(
+  //   material,
+  //   fname,
+  //   lname,
+  //   Gender,
+  //   Nationality,
+  //   Age,
+  //   Dob,
+  //   Occupation,
+  //   Adhar,
+  //   Mobile,
+  //   Email,
+  //   Income,
+  //   Houseno,
+  //   Street,
+  //   District,
+  //   City,
+  //   State,
+  //   Pincode,
+  //   Partnerfname,
+  //   Partnerlname,
+  //   Partnergender,
+  //   Partnerdob,
+  //   Partneradhar_no,
+  //   Partnermobile,
+  //   Partneremail,
+  //   Partnerincome,
+  //   Partneroccupation,
+  //   Partnerage,
+  //   Partnernationality
+  // );
 
   return (
     <div className="container_background">
@@ -286,7 +286,7 @@ const ParentRegistration = () => {
 
           <div className="form-group">
             <h3>
-              Personal Information :{Gender === "Male" ? "Male" : "Female"}
+              Personal Information :{gender === "Male" ? "Male" : "Female"}
             </h3>
           </div>
 
@@ -338,7 +338,7 @@ const ParentRegistration = () => {
             </select>
           </div>
           <div className="form-group">
-            <label>Age :</label>
+            <label>Password :</label>
           </div>
           <div className="input-group">
             <input
@@ -346,7 +346,7 @@ const ParentRegistration = () => {
               onChange={(e) => {
                 setAge(e.target.value);
               }}
-              type="number"
+              type="text"
               name="age"
               id="age"
             />
@@ -686,7 +686,7 @@ const ParentRegistration = () => {
           {material === "Married" ? (
             <div>
               <h3>
-                Personal Information :{Gender === "Male" ? "Female" : "Male"}
+                Personal Information :{gender === "Male" ? "Female" : "Male"}
               </h3>
 
               <div className="form-group">
@@ -697,6 +697,7 @@ const ParentRegistration = () => {
                   className="form-control"
                   onChange={(e) => {
                     setPartnerfname(e.target.value);
+                    setPartnergender(gender === "Male" ? "Female" : "Male")
                   }}
                   type="text"
                   name="first_name"
@@ -724,7 +725,7 @@ const ParentRegistration = () => {
               <div className="form-group">
                 <select
                   onChange={(e) => {
-                    setNationality(e.target.value);
+                    setPartnernationality(e.target.value);
                   }}
                   name="nationality"
                   id="nationality"
@@ -1018,8 +1019,10 @@ const ParentRegistration = () => {
           <center>
             <button
               onClick={onRegister}
-              type="submit"
-              className="submit-button"
+
+              type="button
+              "
+              className="btn  btn-primary"
             >
               Submit
             </button>

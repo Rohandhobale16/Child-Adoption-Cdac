@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deletes, homeC } from "../../services/admin_services";
-import AdminSidebar from "./AdminSidebar";
 import "../Admin/Admin_Slider.css";
+import AdminSidebar from "./AdminSidebar";
 // import AdminNavbar from "./adminNavbar";
 // import './card.css'; // Optional: For styling
 const AdminParent = () => {
@@ -22,8 +21,10 @@ const AdminParent = () => {
   );
 };
 function ParentDetails() {
+  console.log("parent details calling")
   const [items, setItems] = useState([]);
   const onLoadItems = async () => {
+    console.log("parent details calling")
     const result = await homeC();
     if (result["status"] == "success") {
       setItems(result["users"]);

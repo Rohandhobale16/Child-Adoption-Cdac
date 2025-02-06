@@ -3,7 +3,11 @@ import "../Registration/Registration.css";
 import { FaPhoneAlt, FaEnvelope, FaLock, FaUserAlt } from "react-icons/fa";
 
 const ChildHomeReg = () => {
-  const [homeName, setHomeName] = useState("");
+  const [home, setHome] = useState({
+    houseName:"",
+    inHome:"",
+    adoptable:""
+  });
   const [address, setAddress] = useState({
     houseNo: "",
     street: "",

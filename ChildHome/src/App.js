@@ -1,37 +1,37 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
 
 import Login from "./Components/Login/Login";
 // import Applicantreg from './Components/Registration/Applicantreg'
-import Childhhomereg from "./Components/ChildHome/ChildHomereg";
-import RazorpayPayment from "./Components/Donation/RazorpayPayment";
-import Layout from "./Components/Navbar/Layout";
-import Home from "./Components/Home/Home";
-import ContactUs from "./Components/ContactUs/ContactUs";
+import AdminHome from "./Components/Admin/admin_home";
+import AdminChild from "./Components/Admin/ChildHome_Details.jsx";
+import Feedback from "./Components/Admin/Feedback.jsx";
+import AdminParent from "./Components/Admin/Parent_Details";
 import AddChildForm from "./Components/ChildHome/AddChildForm";
+import ChildHomeEvents from "./Components/ChildHome/ChildHomeEvents";
+import ChildHomeProfile from "./Components/ChildHome/ChildHomeProfile";
+import Childhhomereg from "./Components/ChildHome/ChildHomereg";
 import ChildHomeTable from "./Components/ChildHome/ChildHomeTable";
-import ParentRegistration from "./Components/Registration/ParentRegistration";
-import SchemesAndGuidelinesPage from "./Components/Resources/SchemesAndGuidelinesPage";
-import ImportantCourtOrdersPage from "./Components/Resources/ImportantCourtOrdersPage";
-import AnnualReportPage from "./Components/Resources/AnnualReportPage";
-import ParentProfile from "./Components/Parent/Parentprofile";
+import EditHomeProfile from "./Components/ChildHome/EditProfile";
+import InitiateAdoptionRequest from "./Components/ChildHome/InitiateAdoptionRequest";
+import UploadCertificate from "./Components/ChildHome/UploadCertificate";
+import ContactUs from "./Components/ContactUs/ContactUs";
+import RazorpayPayment from "./Components/Donation/RazorpayPayment";
+import Events from "./Components/Event/Events.jsx";
+import Home from "./Components/Home/Home";
+import Layout from "./Components/Navbar/Layout";
 import BookingStatus from "./Components/Parent/BookingStatus";
 import EditProfile from "./Components/Parent/EditProfile";
-import AdminHome from "./Components/Admin/admin_home";
-import ChildHomeDetails from "./Components/Admin/ChildHome_Details.jsx";
-import ParentDetials from "./Components/Admin/Parent_Details";
-import InitiateAdoptionRequest from "./Components/ChildHome/InitiateAdoptionRequest";
-import SocialWorkerRegistration from "./Components/Socialworker/SocialWorkerRegistration";
-import UploadCertificate from "./Components/ChildHome/UploadCertificate";
-import ChildHomeEvents from "./Components/ChildHome/ChildHomeEvents";
-import EditHomeProfile from "./Components/ChildHome/EditProfile";
-import ChildHomeProfile from "./Components/ChildHome/ChildHomeProfile";
-import SocialWorkerEdit from "./Components/Socialworker/SocialWorkerEdit";
-import EditRequestStatus from "./Components/Socialworker/EditRequestStatus.jsx";
-import SocialWorkerProfile from "./Components/Socialworker/SocialWorkerProfile";
-import Events from "./Components/Event/Events.jsx";
 import ParentFeedback from "./Components/Parent/ParentFeedback.jsx";
-import Feedback from "./Components/Admin/Feedback.jsx";
+import ParentProfile from "./Components/Parent/Parentprofile";
+import ParentRegistration from "./Components/Registration/ParentRegistration";
+import AnnualReportPage from "./Components/Resources/AnnualReportPage";
+import ImportantCourtOrdersPage from "./Components/Resources/ImportantCourtOrdersPage";
+import SchemesAndGuidelinesPage from "./Components/Resources/SchemesAndGuidelinesPage";
+import EditRequestStatus from "./Components/Socialworker/EditRequestStatus.jsx";
+import SocialWorkerEdit from "./Components/Socialworker/SocialWorkerEdit";
+import SocialWorkerProfile from "./Components/Socialworker/SocialWorkerProfile";
+import SocialWorkerRegistration from "./Components/Socialworker/SocialWorkerRegistration";
 
 function App() {
   return (
@@ -63,8 +63,8 @@ function App() {
           <Route path="/parent/edit" element={<EditProfile />} />
 
           <Route path="/admin" element={<AdminHome />} />
-          <Route path="/admin/parentdetails" element={<ParentDetials />} />
-          <Route path="/admin/childhomedetails" element={<ChildHomeDetails />} />
+          <Route path="/admin/parentdetails" element={<AdminParent />} />
+          <Route path="/admin/childhomedetails" element={<AdminChild />} />
           <Route path="/admin/feedback/:id" element={<Feedback />} />
 
           <Route path="/childhome" element={<InitiateAdoptionRequest />} />
