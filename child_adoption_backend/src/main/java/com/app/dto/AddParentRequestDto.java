@@ -32,5 +32,104 @@ public class AddParentRequestDto {
 	private String nationality;
 	private String dob;
 	private String occupation;
-	private Long annualIncome;
+	private Long income;
+	private String aadhar;
+	private String partneraadhar;
+	private String partnerdob;
+	private String partneremail;
+	private String partnerfname;
+	private Long partnerincome;
+	private String partnerlname;
+	private String partnermobile;
+	private String partnernationality;
+	private String partneroccupation;
+	private Gender partnergender;
 }
+
+
+/*
+ aadhar
+: 
+"22"
+city
+: 
+"a"
+district
+: 
+"a"
+dob
+: 
+"2025-02-06"
+email
+: 
+"a"
+fname
+: 
+"a"
+gender
+: 
+"Male"
+houseNo
+: 
+"a"
+income
+: 
+"a"
+lname
+: 
+"a"
+material
+: 
+"Married"
+mobile
+: 
+"20"
+nationality
+: 
+"Indian"
+occupation
+: 
+"15"
+partneraadhar
+: 
+"22"
+partnerdob
+: 
+"2025-02-06"
+partneremail
+: 
+"b@gmail.com"
+partnerfname
+: 
+"a"
+partnergender
+: 
+"Female"
+partnerincome
+: 
+"22"
+partnerlname
+: 
+"a"
+partnermobile
+: 
+"19"
+partnernationality
+: 
+"Indian"
+partneroccupation
+: 
+"16"
+password
+: 
+"a"
+pincode
+: 
+"a"
+state
+: 
+"a"
+street
+: 
+"a"
+ */

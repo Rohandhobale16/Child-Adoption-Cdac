@@ -21,15 +21,14 @@ public class Parent extends BaseEntity {
 	private String nationality;
 	private String dob;
 	private String occupation;
-	private Long income;//changed now from annualIncome
-	@OneToOne
-	@JoinColumn(name="pc",nullable=true)
-	private ParentCouple pc;
+	private Long annualIncome;
+//	@OneToOne
+//	@JoinColumn(name="p",nullable=true)
+//	private Parent p;
 //	@OneToOne(mappedBy="p",cascade=CascadeType.ALL)
 //	private Parent child;
 	@OneToOne
 	@JoinColumn(name="u",nullable=false)
 	private User u;
 	private boolean status;
-	private String aadhar;
 }

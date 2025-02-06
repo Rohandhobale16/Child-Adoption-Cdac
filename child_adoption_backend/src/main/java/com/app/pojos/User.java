@@ -1,5 +1,6 @@
 package com.app.pojos;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,6 +20,7 @@ public class User extends  BaseEntity{
 private String fname;
 private String lname;
 private String mobile;
+@Column(unique=true,nullable=false)
 private String email;
 private String password;
 @Enumerated(EnumType.STRING)

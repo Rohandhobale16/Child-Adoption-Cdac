@@ -9,19 +9,22 @@ import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.ToString;
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
-public class Child extends BaseEntity{
-	private String name;
-	private int age;
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
-	@ManyToOne
-	@JoinColumn(name="ch")
-	private ChildHome ch;
-	private boolean status;
-	
+@ToString
+public class User extends  BaseEntity{
+private String fname;
+private String lname;
+private String mobile;
+private String email;
+private String password;
+@Enumerated(EnumType.STRING)
+private UserRole role;
+@ManyToOne
+@JoinColumn(name="address",nullable=false)
+private Address address;
+private boolean status;
 }
