@@ -41,15 +41,15 @@ import { child, deleteChild } from "../../services/admin_services";
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Admin_Sidebar from "./Admin_Sidebar";
 import "../Admin/Admin_Slider.css";
+import AdminSidebar from "./AdminSidebar";
 
 const AdminChild = () => {
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-2">
-          <Admin_Sidebar />
+          <AdminSidebar />
         </div>
         <div className="col-10 ms-auto p-4">
           <ChildHomeDetails />

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Admin/Admin_Slider.css";
-const Admin_Sidebar = () => {
+const AdminSidebar = () => {
   return (
     <div>
       <div className="nav-items" style={{ borderRadius: "2px" }}>
@@ -27,4 +27,4 @@ const Admin_Sidebar = () => {
   );
 };
 
-export default Admin_Sidebar;
+export default AdminSidebar;

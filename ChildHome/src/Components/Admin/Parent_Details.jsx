@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deletes, homeC } from "../../services/admin_services";
-import Admin_Sidebar from "./Admin_Sidebar";
+import AdminSidebar from "./AdminSidebar";
 import "../Admin/Admin_Slider.css";
 // import AdminNavbar from "./adminNavbar";
 // import './card.css'; // Optional: For styling
@@ -11,7 +11,7 @@ const AdminParent = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-2 ">
-          <Admin_Sidebar />
+          <AdminSidebar />
         </div>
 
         <div className="col-10 ms-auto p-4">

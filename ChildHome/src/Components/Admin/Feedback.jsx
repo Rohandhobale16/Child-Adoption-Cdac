@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { feedback } from "../../services/admin_services";
 import "../Admin/Admin_Slider.css";
-import Admin_Sidebar from "./Admin_Sidebar";
+import AdminSidebar from "./AdminSidebar";
 
 // import './card.css'; // Optional: For styling
 
@@ -12,7 +12,7 @@ const Feedback = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-2">
-          <Admin_Sidebar />
+          <AdminSidebar />
         </div>
         <div className="col-10 ms-auto p-4">
           <Content />
