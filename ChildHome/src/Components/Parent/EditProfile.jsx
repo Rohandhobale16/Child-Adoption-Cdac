@@ -213,7 +213,7 @@ const EditProfile = () => {
         <div className="col-10 ms-auto p-4">
           <div className="container_background">
             <div className="registration-container">
-              <h1 className="form-title text-primary">Parent Registration</h1>
+              <h1 className="form-title text-primary">Edit Profile</h1>
 
               <form>
                 <h3>Marital Detail </h3>
