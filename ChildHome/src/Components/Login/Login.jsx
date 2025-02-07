@@ -53,7 +53,7 @@ const Login = () => {
     <div className="login-container">
       <div className="login-card">
         <form onSubmit={handleLogin}>
-          <h2 className="login-title">Sign In</h2>
+          <h1 class="form-title text-primary">Sign In</h1>
           <div className="input-group">
             <FaUser className="icon" />
             <input
@@ -73,10 +73,14 @@ const Login = () => {
             />
           </div>
           <div className="login-options">
-            <a href="/">Forgot Password?</a>
-            <a href="/">Register</a>
+            <a hidden href="/">
+              Forgot Password?
+            </a>
+            <a hidden href="/">
+              Register
+            </a>
           </div>
-          <button className="login-btn" type="submit">
+          <button className="btn btn-primary" id="login-btn" type="submit">
             Login
           </button>
         </form>
