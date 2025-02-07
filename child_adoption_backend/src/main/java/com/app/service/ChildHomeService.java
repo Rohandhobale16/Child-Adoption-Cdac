@@ -61,7 +61,7 @@ public class ChildHomeService {
         obj.setStatus(true);
         childDao.save(obj);
 
-        return new ApiResponse("added child with ID " + obj.getId());
+        return new ApiResponse("success");
     }
 
 	public ApiResponse addEvent(AddEventsDto dto) {
@@ -76,7 +76,7 @@ public class ChildHomeService {
         obj.setStatus(true);
         eventsDao.save(obj);
 
-        return new ApiResponse("added event with ID " + obj.getId()); 
+        return new ApiResponse("success"); 
 	}
 
 	public ApiResponse addSocialWorker(AddEmployeeRequestDto dto) {
@@ -108,7 +108,7 @@ public class ChildHomeService {
 
         employeeDao.save(obj);
 
-        return new ApiResponse("added social worker with ID " + obj.getId());
+        return new ApiResponse("success");
 	}
 
 }

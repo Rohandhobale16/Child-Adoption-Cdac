@@ -35,13 +35,13 @@ public class AdminService {
 	public  ApiResponse deleteChildHome(Long id) {
 		ChildHome ch=childHomeDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID!!!"));
 		ch.setStatus(false);
-		return new ApiResponse("deleted childHome with ID " + ch.getId());
+		return new ApiResponse("success");
 	}
 
 	public ApiResponse deleteParent(Long id) {
 		Parent p=parentDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID!!!!"));
 		p.setStatus(false);
-		return new ApiResponse("deleted parent with ID " + p.getId());
+		return new ApiResponse("success");
 	}
 
 	public List<RequestDto> getRequestData() {
@@ -55,6 +55,7 @@ public class AdminService {
 	public RequestDto getFeedback(Long id) {
 		Request r=requestDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID!!!!"));
 		RequestDto obj1= modelMapper.map(r, RequestDto.class);
+		obj1.setMessage("success");
 		return obj1;
 	}
 	

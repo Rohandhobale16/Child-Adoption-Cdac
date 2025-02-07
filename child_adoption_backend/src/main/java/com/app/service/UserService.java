@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.AddressDao;
@@ -12,7 +13,6 @@ import com.app.dao.EmployeeDao;
 import com.app.dao.ParentCoupleDao;
 import com.app.dao.ParentDao;
 import com.app.dao.UserDao;
-import com.app.mapper.UserMapper;
 import com.app.dto.*;
 import com.app.pojos.*;
 import jakarta.transaction.Transactional;
@@ -34,6 +34,8 @@ public class UserService {
 	private ModelMapper mapper;
 	@Autowired
 	private ParentCoupleDao parentCoupleDao;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	public Object  findByEmailandPassword(LoginRequestDto loginDto) {
 		User user=userDao.findByEmailAndPassword(loginDto.getEmail(),loginDto.getPassword());
 		if(user.getRole().name().equals(UserRole.ROLE_ADMIN.name())) {
@@ -61,6 +63,13 @@ public class UserService {
 		
 		
 	}
+	public LoginResponseDto findByEmailandPassword1(LoginRequestDto loginDto) {
+		User user=userDao.findByEmail(loginDto.getEmail()).orElseThrow();
+		LoginResponseDto l=new LoginResponseDto();
+		l.setId(user.getId());
+		l.setRole(user.getRole().name());
+		return l;
+	}
 	public ApiResponse addChildHome(AddChildHomeRequestDto dto) {
 		Address a=new Address();
 		a.setCity(dto.getCity());
@@ -77,7 +86,7 @@ public class UserService {
 		user.setFname(dto.getFname());
 		user.setLname(dto.getLname());
 		user.setMobile(dto.getMobile());
-		user.setPassword(dto.getPassword());
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRole(dto.getRole());
 		user.setStatus(true);
 		userDao.save(user);
@@ -86,7 +95,7 @@ public class UserService {
 		 obj.setU(user);
 		 System.out.println(obj);
 		 childHomeDao.save(obj);
-		 return new ApiResponse("added order with ID " + obj.getId());
+		 return new ApiResponse("success");
 	}
 	public ApiResponse addParentDto(AddParentRequestDto dto) {
 		//email validation need to be checked same email exists or not
@@ -106,7 +115,7 @@ public class UserService {
 		user.setFname(dto.getFname());
 		user.setLname(dto.getLname());
 		user.setMobile(dto.getMobile());
-		user.setPassword(dto.getPassword());
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRole(UserRole.ROLE_PARENT);
 		user.setStatus(true);
 		userDao.save(user);
@@ -130,7 +139,7 @@ public class UserService {
 		 obj.setPc(ps);
 		 System.out.println(obj);
 		 parentDao.save(obj);
-		 return new ApiResponse("added order with ID " + obj.getId());
+		 return new ApiResponse("success");
 		}
 		Parent obj= mapper.map(dto,Parent.class);
 		 obj.setStatus(true);
@@ -138,6 +147,6 @@ public class UserService {
 		 obj.setPc(null);
 		 System.out.println(obj);
 		 parentDao.save(obj);
-		 return new ApiResponse("added order with ID " + obj.getId());
+		 return new ApiResponse("success");
 	}
 }

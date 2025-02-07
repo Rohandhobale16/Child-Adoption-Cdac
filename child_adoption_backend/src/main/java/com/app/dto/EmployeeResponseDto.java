@@ -12,4 +12,5 @@ import lombok.Setter;
 public class EmployeeResponseDto extends BaseEntityDto{
 private User u;
 private ChildHome c;
+private String message;
 }

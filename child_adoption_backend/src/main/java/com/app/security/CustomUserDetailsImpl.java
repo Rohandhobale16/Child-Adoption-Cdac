@@ -1,5 +1,4 @@
 package com.app.security;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -10,18 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.app.pojos.User;
 public class CustomUserDetailsImpl implements UserDetails {
 	private User userEntity;
-	
-
 	public CustomUserDetailsImpl(User userEntity) {
 		super();
 		this.userEntity = userEntity;
 	}
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return List.of
-				(new SimpleGrantedAuthority(userEntity.getRole().name()));
+		return List.of(new SimpleGrantedAuthority(userEntity.getRole().name()));
 	}
 
 	@Override

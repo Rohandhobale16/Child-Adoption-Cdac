@@ -18,4 +18,5 @@ public class RequestDto extends BaseEntityDto{
 	private ChildResponseDto c;
 	private String status;
 	private String feedBack;
+	private String message;
 }

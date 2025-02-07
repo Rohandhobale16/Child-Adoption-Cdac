@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.dao.AddressDao;
 import com.app.dao.EmployeeDao;
 import com.app.dao.RequestDao;
 import com.app.dto.AddEmployeeRequestDto;
@@ -27,6 +28,8 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeDao employeeDao;
 	@Autowired
+	private AddressDao addressDao;
+	@Autowired
 	private RequestDao requestDao;
 	@Autowired
 	private ModelMapper mapper;
@@ -38,32 +41,32 @@ public class EmployeeService {
 		 e.u.setLname(dto.getLname());
 		 e.u.setMobile(dto.getMobile());
 		 e.u.setPassword(dto.getPassword());
-		 Address a=new Address();
-		 a.setCity(dto.getCity());
-		 a.setDistrict(dto.getDistrict());
-		 a.setHouseNo(dto.getHouseNo());
-		 a.setPincode(dto.getPincode());
-		 a.setState(dto.getState());
-		 a.setStreet(dto.getStreet());
-		 a.setStatus(true);
-		 e.u.setAddress(a);
-		return new ApiResponse("updated sucessfully" + e.getId());
+		 
+		 e.u.address.setCity(dto.getCity());
+		 e.u.address.setDistrict(dto.getDistrict());
+		 e.u.address.setHouseNo(dto.getHouseNo());
+		 e.u.address.setPincode(dto.getPincode());
+		 e.u.address.setState(dto.getState());
+		 e.u.address.setStreet(dto.getStreet());
+		 e.u.address.setStatus(true);
+		return new ApiResponse("success");
 	}
 	public EmployeeResponseDto getSocialWorkerDetails(Long id) {
-		Employee e = employeeDao.findById(id).orElseThrow(() -> new RuntimeException("ChildHome not found"));
+		Employee e = employeeDao.findById(id).orElseThrow(() -> new RuntimeException("employee not found"));
 		EmployeeResponseDto er=mapper.map(e,EmployeeResponseDto.class);
+		er.setMessage("success");
 		return er;
 		//add message to show success
 	}
 	public List<RequestDto> getRequestDetails() {
-		List<Request> l=requestDao.findAll();
+		List<Request> l=requestDao.findByStatus("applied");
 		List<RequestDto> li=l.stream().map(r->mapper.map(r,RequestDto.class)).collect(Collectors.toList());
 		return li;
 	}
 	public ApiResponse updateRequestStatus(Long id, String status) {
-		Request r=requestDao.findById(id) .orElseThrow(() -> new RuntimeException("ChildHome not found"));
-		r.setStatus(status);
-		return new ApiResponse("updated sucessfully" + r.getId());
+		Request r=requestDao.findById(id) .orElseThrow(() -> new RuntimeException("request not found"));
+		r.setStatus("verified");
+		return new ApiResponse("success");
 	}
 
 }

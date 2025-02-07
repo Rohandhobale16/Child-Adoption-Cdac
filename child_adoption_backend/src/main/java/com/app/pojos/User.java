@@ -27,6 +27,6 @@ private String password;
 private UserRole role;
 @ManyToOne
 @JoinColumn(name="address",nullable=false)
-private Address address;
+public Address address;
 private boolean status;
 }
