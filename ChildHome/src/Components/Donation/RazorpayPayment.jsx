@@ -4,32 +4,39 @@ import "./RazorpayPayment.css"; // Custom CSS for additional styling
 
 const RazorpayPayment = () => {
   const [amount, setAmount] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const payNow = async () => {
+    if (!amount || amount <= 0) {
+      alert("Please enter a valid amount");
+      return;
+    }
+
     try {
-      const response = await fetch("http://localhost:5000/create-order", {
+      setLoading(true);
+      // Create an order on the backend
+      const response = await fetch("http://localhost:8080/api/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount,
+          amount: amount,
           currency: "INR",
           receipt: "receipt#1",
-          notes: {},
         }),
       });
 
       const order = await response.json();
 
       const options = {
-        key: "rzp_test_wBrQr87m3vtD3z",
+        key: "rzp_test_wBrQr87m3vtD3z", // Replace with your Razorpay Key ID
         amount: order.amount,
         currency: order.currency,
         name: "Child Home Adoption",
         description: "Donation for Child Home Adoption",
         order_id: order.id,
-        callback_url: "http://localhost:5000/payment-success",
+        callback_url: "http://localhost:8080/api/payment-success",
         prefill: {
           name: "Your Name",
           email: "your.email@example.com",
@@ -38,30 +45,33 @@ const RazorpayPayment = () => {
         theme: {
           color: "#F37254",
         },
-        handler: function (response) {
-          fetch("http://localhost:5000/verify-payment", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.status === "ok") {
-                window.location.href = "/payment-success";
-              } else {
-                alert("Payment verification failed");
+        handler: async function (response) {
+          try {
+            const verificationResponse = await fetch(
+              "http://localhost:8080/api/verify-payment",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                }),
               }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Error verifying payment");
-            });
+            );
+            const verificationResult = await verificationResponse.json();
+
+            if (verificationResult.status === "ok") {
+              window.location.href = "/payment-success";
+            } else {
+              alert("Payment verification failed");
+            }
+          } catch (error) {
+            console.error("Error verifying payment:", error);
+            alert("Error verifying payment");
+          }
         },
       };
 
@@ -69,6 +79,9 @@ const RazorpayPayment = () => {
       rzp.open();
     } catch (error) {
       console.error("Error during payment:", error);
+      alert("Error initiating payment");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,8 +116,9 @@ const RazorpayPayment = () => {
                 type="button"
                 onClick={payNow}
                 className="btn btn-primary btn-lg w-100 pay-button"
+                disabled={loading}
               >
-                Donate Now
+                {loading ? "Processing..." : "Donate Now"}
               </button>
             </div>
           </form>
