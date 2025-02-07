@@ -130,7 +130,7 @@ const ParentRegistration = () => {
           partnernationality,
           password
         );
-        if (result.message="success") {
+        if ((result.message = "success")) {
           toast.success("Registration Successfull");
           navigate("/");
         } else {
@@ -191,9 +191,9 @@ const ParentRegistration = () => {
           city,
           state,
           pincode,
-          password,
+          password
         );
-        if (result.message="success") {
+        if ((result.message = "success")) {
           toast.success("Registration Successfull");
           navigate("/");
         } else {
@@ -697,7 +697,7 @@ const ParentRegistration = () => {
                   className="form-control"
                   onChange={(e) => {
                     setPartnerfname(e.target.value);
-                    setPartnergender(gender === "Male" ? "Female" : "Male")
+                    setPartnergender(gender === "Male" ? "Female" : "Male");
                   }}
                   type="text"
                   name="first_name"
@@ -1019,9 +1019,7 @@ const ParentRegistration = () => {
           <center>
             <button
               onClick={onRegister}
-
-              type="button
-              "
+              type="button"
               className="btn  btn-primary"
             >
               Submit

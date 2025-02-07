@@ -1,157 +1,278 @@
 import React, { useState } from "react";
 import "../Registration/Registration.css";
 import SocialworkerSlider from "./Socialworker_Slider";
+import { registerSocialworker } from "../../services/registration";
+import { toast } from "react-toastify";
+import ChildhomeSlider from "../ChildHome/Childhome_Slider";
 
 const SocialWorkerRegistration = () => {
+  const [fname, setfname] = useState("");
+  const [lname, setlname] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
+  const [houseNo, setHouse] = useState("");
+  const [street, setStreet] = useState("");
+  const [district, setDistrict] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onRegister = async () => {
+    if (fname.length === 0) {
+      toast.warning("Please enter First Name");
+    } else if (lname.length === 0) {
+      toast.warning("Please enter Last Name");
+    } else if (email.length === 0) {
+      toast.warning("Please enter Email");
+    } else if (houseNo.length === 0) {
+      toast.warning("Please enter Houseno");
+    } else if (street.length === 0) {
+      toast.warning("Please enter Street");
+    } else if (district.length === 0) {
+      toast.warning("Please enter District");
+    } else if (city.length === 0) {
+      toast.warning("Please enter City");
+    } else if (state.length === 0) {
+      toast.warning("Please enter State");
+    } else if (pincode.length === 0) {
+      toast.warning("Please enter pincode");
+    } else if (mobile.length === 0) {
+      toast.warning("Please enter Mobile No");
+    } else if (password.length === 0) {
+      toast.warning("Please enter Password");
+    } else {
+      const result = await registerSocialworker(
+        fname,
+        lname,
+        mobile,
+        email,
+        houseNo,
+        street,
+        district,
+        city,
+        state,
+        pincode
+      );
+      if ((result.message = "success")) {
+        toast.success("Registration Successfull");
+      } else {
+        toast.error("Registration Failed");
+      }
+    }
+  };
+
+  console.log(
+    fname,
+    lname,
+    mobile,
+    email,
+    houseNo,
+    street,
+    district,
+    city,
+    state,
+    pincode
+  );
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-2">
-          <SocialworkerSlider />
+          <ChildhomeSlider />
         </div>
         <div className="col-10 ms-auto p-4">
-          <Content />
+          <div>
+            <h2 className="text-center text-primary mb-4">
+              Social Worker Registration
+            </h2>
+            <form className="shadow-lg p-4 rounded-lg bg-light">
+              <div className="form-group">
+                <label htmlFor="first_name" className="form-label">
+                  First Name:
+                </label>
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  onChange={(e) => {
+                    setfname(e.target.value);
+                  }}
+                  className="form-control"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="last_name" className="form-label">
+                  Last Name:
+                </label>
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  onChange={(e) => {
+                    setlname(e.target.value);
+                  }}
+                  className="form-control"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email" className="form-label">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Password:</label>
+              </div>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="phone" className="form-label">
+                  Mobile No:
+                </label>
+                <input
+                  type="tel"
+                  id="mobile"
+                  name="mobile"
+                  onChange={(e) => {
+                    setMobile(e.target.value);
+                  }}
+                  className="form-control"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Addresse</label>
+                <br />
+                <label>House No:</label>
+              </div>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setHouse(e.target.value);
+                  }}
+                  type="text"
+                  name="houseno"
+                  id="houseno"
+                  placeholder="House Number"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Street :</label>
+              </div>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setStreet(e.target.value);
+                  }}
+                  type="text"
+                  name="street"
+                  id="street"
+                  placeholder="Street "
+                />
+              </div>
+
+              <div className="form-group">
+                <label>District :</label>
+              </div>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setDistrict(e.target.value);
+                  }}
+                  type="text"
+                  name="district"
+                  id="district"
+                  placeholder="District "
+                />
+              </div>
+
+              <div className="form-group">
+                <label>City :</label>
+              </div>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                  }}
+                  type="text"
+                  name="city"
+                  id="city"
+                  placeholder="City "
+                />
+              </div>
+              <div className="form-group">
+                <label>State :</label>
+              </div>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setState(e.target.value);
+                  }}
+                  type="text"
+                  name="state"
+                  id="state"
+                  placeholder="State "
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Pincode :</label>
+              </div>
+              <div className="input-group">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setPincode(e.target.value);
+                  }}
+                  type="number"
+                  name="pincode"
+                  id="pincode"
+                  placeholder="Pincode "
+                />
+              </div>
+
+              <button
+                type="button"
+                className="btn btn-primary btn-block w-100 mt-3"
+                onClick={onRegister}
+              >
+                Register
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const Content = () => {
-  const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    address: "",
-    childhomeid: "", // Added childhomeid instead of qualifications, experience, organization
-    social_worker_id: "", // ID to be generated or provided after registration
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Submit the form data (e.g., API call)
-    console.log("Registration Data", formData);
-  };
-
-  return (
-    <div>
-      <h2 className="text-center text-primary mb-4">
-        Social Worker Registration
-      </h2>
-      <form
-        onSubmit={handleSubmit}
-        className="shadow-lg p-4 rounded-lg bg-light"
-      >
-        <div className="mb-3">
-          <label htmlFor="first_name" className="form-label">
-            First Name:
-          </label>
-          <input
-            type="text"
-            id="first_name"
-            name="first_name"
-            value={formData.first_name}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="last_name" className="form-label">
-            Last Name:
-          </label>
-          <input
-            type="text"
-            id="last_name"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="phone" className="form-label">
-            Phone:
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="address" className="form-label">
-            Address:
-          </label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="childhomeid" className="form-label">
-            Child Home ID:
-          </label>
-          <input
-            type="text"
-            id="childhomeid"
-            name="childhomeid"
-            value={formData.childhomeid}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-        {/* Optional: Hidden field for social_worker_id, which can be generated after registration */}
-        <input
-          type="hidden"
-          name="social_worker_id"
-          value={formData.social_worker_id}
-        />
-
-        <button type="submit" className="btn btn-primary btn-block w-100 mt-3">
-          Register
-        </button>
-      </form>
     </div>
   );
 };

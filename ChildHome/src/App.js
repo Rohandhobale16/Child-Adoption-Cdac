@@ -1,8 +1,7 @@
-import { Route, Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
 import Login from "./Components/Login/Login";
-// import Applicantreg from './Components/Registration/Applicantreg'
 import AdminHome from "./Components/Admin/admin_home";
 import AdminChild from "./Components/Admin/ChildHome_Details.jsx";
 import Feedback from "./Components/Admin/Feedback.jsx";
@@ -19,7 +18,6 @@ import ContactUs from "./Components/ContactUs/ContactUs";
 import RazorpayPayment from "./Components/Donation/RazorpayPayment";
 import Events from "./Components/Event/Events.jsx";
 import Home from "./Components/Home/Home";
-import Layout from "./Components/Navbar/Layout";
 import BookingStatus from "./Components/Parent/BookingStatus";
 import EditProfile from "./Components/Parent/EditProfile";
 import ParentFeedback from "./Components/Parent/ParentFeedback.jsx";
@@ -32,64 +30,170 @@ import EditRequestStatus from "./Components/Socialworker/EditRequestStatus.jsx";
 import SocialWorkerEdit from "./Components/Socialworker/SocialWorkerEdit";
 import SocialWorkerProfile from "./Components/Socialworker/SocialWorkerProfile";
 import SocialWorkerRegistration from "./Components/Socialworker/SocialWorkerRegistration";
+import { AuthProvider } from "./Components/Authenticate/AuthContext.jsx";
+import ProtectedRoute from "./Components/Authenticate/ProtectedRoute.jsx";
+import Navbar from "./Components/Navbar/Navbar.jsx";
+import Footer from "./Components/Footer/Footer.jsx";
 
 function App() {
   return (
-    <>
-      <Layout>
-
+    <AuthProvider>
+      <Navbar />
+      <main>
         <Routes>
+
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
+          <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/donate" element={<RazorpayPayment />} />
           <Route path="/Applicantreg" element={<ParentRegistration />} />
           <Route path="/Childhomereg" element={<Childhhomereg />} />
-          <Route path="/donate" element={<RazorpayPayment />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/childhome/addchild" element={<AddChildForm />} />
-          <Route path="/displayhomes" element={<ChildHomeTable />} />
+          <Route
+            path="/displayhomes" element={<ChildHomeTable />} />
           <Route path="/events" element={<Events />} />
-          <Route
-            path="/schemesAndGuidelinesPage"
-            element={<SchemesAndGuidelinesPage />}
-          />
-          <Route
-            path="/importantCourtOrdersPage"
-            element={<ImportantCourtOrdersPage />}
-          />
+          <Route path="/schemesAndGuidelinesPage" element={<SchemesAndGuidelinesPage />} />
+          <Route path="/importantCourtOrdersPage" element={<ImportantCourtOrdersPage />} />
           <Route path="/annualReportPage" element={<AnnualReportPage />} />
-          <Route path="/parent" element={<ParentProfile />} />
-          <Route path="/parent/feedback" element={<ParentFeedback />} />
-          <Route path="/parent/status" element={<BookingStatus />} />
-          <Route path="/parent/edit" element={<EditProfile />} />
-
-          <Route path="/admin" element={<AdminHome />} />
-          <Route path="/admin/parentdetails" element={<AdminParent />} />
-          <Route path="/admin/childhomedetails" element={<AdminChild />} />
-          <Route path="/admin/feedback/:id" element={<Feedback />} />
-
-          <Route path="/childhome" element={<InitiateAdoptionRequest />} />
+          <Route
+            path="/parent"
+            element={
+              <ProtectedRoute>
+                <ParentProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/parent/feedback"
+            element={
+              <ProtectedRoute>
+                <ParentFeedback />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/parent/status"
+            element={
+              <ProtectedRoute>
+                <BookingStatus />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/parent/edit"
+            element={
+              <ProtectedRoute>
+                <EditProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminHome />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/parentdetails"
+            element={
+              <ProtectedRoute>
+                <AdminParent />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/childhomedetails"
+            element={
+              <ProtectedRoute>
+                <AdminChild />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/feedback/:id"
+            element={
+              <ProtectedRoute>
+                <Feedback />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/childhome"
+            element={
+              <ProtectedRoute>
+                <InitiateAdoptionRequest />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/childhome/registerSocialWorker"
-            element={<SocialWorkerRegistration />}
+            element={
+              <ProtectedRoute>
+                <SocialWorkerRegistration />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/childhome/uploadcertifiacte"
-            element={<UploadCertificate />}
+            element={
+              <ProtectedRoute>
+                <UploadCertificate />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/childhome/addevent" element={<ChildHomeEvents />} />
-          <Route path="/childhome/edit" element={<EditHomeProfile />} />
-
-          <Route path="/childHomeProfile" element={<ChildHomeProfile />} />
-
-          <Route path="/social/edit" element={<SocialWorkerEdit />} />
-          <Route path="/social" element={<EditRequestStatus />} />
+          <Route
+            path="/childhome/addevent"
+            element={
+              <ProtectedRoute>
+                <ChildHomeEvents />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/childhome/edit"
+            element={
+              <ProtectedRoute>
+                <EditHomeProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/childHomeProfile"
+            element={
+              <ProtectedRoute>
+                <ChildHomeProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/social/edit"
+            element={
+              <ProtectedRoute>
+                <SocialWorkerEdit />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/social"
+            element={
+              <ProtectedRoute>
+                <EditRequestStatus />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/socialWorkerProfile"
-            element={<SocialWorkerProfile />}
+            element={
+              <ProtectedRoute>
+                <SocialWorkerProfile />
+              </ProtectedRoute>
+            }
           />
         </Routes>
-      </Layout>
-    </>
+      </main>
+      <Footer />
+    </AuthProvider>
   );
 }
 

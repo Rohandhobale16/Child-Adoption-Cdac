@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Footer from "../Footer/Footer";
 import ImageSlideshow from "../ImageSlideshow/ImageSlideshow";
 
 const Home = () => {
@@ -8,7 +7,6 @@ const Home = () => {
     <div>
       <ImageSlideshow />
       <div className="container my-1" style={{ paddingTop: "20px" }}>
-        {/* Hero Section */}
         <div className="row align-items-center mb-5">
           <div className="col-lg-6 col-12 text-center text-lg-start">
             <h1 className="display-4 fw-bold">
@@ -42,11 +40,10 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Features Section */}
         <div className="row text-center mb-5">
           <div className="col-md-4">
             <img
-              src="Logo/care.jpeg" /* Replace with your icon */
+              src="Logo/care.jpeg"
               alt="Care"
               className="mb-3"
               style={{ height: "60px" }}
@@ -58,7 +55,7 @@ const Home = () => {
           </div>
           <div className="col-md-4">
             <img
-              src="Logo/guidance.jpeg" /* Replace with your icon */
+              src="Logo/guidance.jpeg"
               alt="Guidance"
               className="mb-3"
               style={{ height: "60px" }}
@@ -70,7 +67,7 @@ const Home = () => {
           </div>
           <div className="col-md-4">
             <img
-              src="Logo/community.png" /* Replace with your icon */
+              src="Logo/community.png"
               alt="Community"
               className="mb-3"
               style={{ height: "60px" }}
@@ -82,7 +79,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Stats Section */}
         <div className="bg-light py-5 rounded text-center">
           <div className="row">
             <div className="col-md-3">
@@ -104,7 +100,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Call to Action Section */}
         <div className="text-center mt-5">
           <h3 className="fw-bold">Ready to Make a Difference?</h3>
           <p className="text-muted">
