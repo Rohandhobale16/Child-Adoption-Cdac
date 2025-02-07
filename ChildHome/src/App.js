@@ -21,7 +21,7 @@ import Home from "./Components/Home/Home";
 import BookingStatus from "./Components/Parent/BookingStatus";
 import EditProfile from "./Components/Parent/EditProfile";
 import ParentFeedback from "./Components/Parent/ParentFeedback.jsx";
-import ParentProfile from "./Components/Parent/Parentprofile";
+import Parentprofile from "./Components/Parent/Parentprofile";
 import ParentRegistration from "./Components/Registration/ParentRegistration";
 import AnnualReportPage from "./Components/Resources/AnnualReportPage";
 import ImportantCourtOrdersPage from "./Components/Resources/ImportantCourtOrdersPage";
@@ -34,6 +34,7 @@ import { AuthProvider } from "./Components/Authenticate/AuthContext.jsx";
 import ProtectedRoute from "./Components/Authenticate/ProtectedRoute.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import Footer from "./Components/Footer/Footer.jsx";
+import BookingSlot from "./Components/Parent/BookingSlot.jsx";
 
 function App() {
   return (
@@ -58,9 +59,13 @@ function App() {
             path="/parent"
             element={
               <ProtectedRoute>
-                <ParentProfile />
+                <Parentprofile />
               </ProtectedRoute>
             }
+          />
+          <Route
+            path="/parent/bookingslot"
+            element={<ProtectedRoute><BookingSlot /></ProtectedRoute>}
           />
           <Route
             path="/parent/feedback"

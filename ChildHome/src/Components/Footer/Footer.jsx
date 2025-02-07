@@ -8,12 +8,11 @@ const Footer = () => {
       <div className="footer-image"></div>
 
       <footer
-        className="text-black my-3 px-4 py-4" // Added padding for spacing
-        style={{ backgroundColor: "rgb(255 227 227)" }}
+        className="text-black mt-3 px-4 py-4"
+        style={{ backgroundColor: "white" }}
       >
         <div>
           <div className="row">
-            {/* About Us Section */}
             <div className="col-md-4">
               <h5>About Us</h5>
               <p>
@@ -24,7 +23,6 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Quick Links Section */}
             <div className="col-md-4">
               <h5>Quick Links</h5>
               <ul className="list-unstyled">
@@ -54,7 +52,6 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Contact Information Section */}
             <div className="col-md-4">
               <h5>Contact Information</h5>
               <p>
@@ -73,7 +70,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Social Media Links */}
           <div className="row mt-4">
             <div className="col text-center">
               <a
@@ -94,7 +90,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Copyright Section */}
           <div className="row mt-3">
             <div className="col text-center">
               <p className="small m-0">

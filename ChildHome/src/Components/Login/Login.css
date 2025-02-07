@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #ffffff, #ff6a88, #ff99ac);
+    /* background: linear-gradient(135deg, #ffffff, #ff6a88, #ff99ac); */
   }
   
   /* Login card styles */
@@ -34,8 +34,8 @@
   }
   
   .input-group .icon {
-    color: #ff6a88;
-    margin-right: 10px;
+    color: #6998fc;
+    /* margin-right: 10px; */
   }
   
   .input-group input {
@@ -46,21 +46,10 @@
     font-size: 16px;
   }
   
-  /* Login button */
-  .login-btn {
-    background: #ff6a88;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .login-btn:hover {
+
+  #login-btn:hover {
     background: #ff4d6d;
+    border: #ff4d6d;
   }
   
   /* Forgot password & Register links */

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import "./Slideshow.css"; // Make sure to create this CSS file
+import "./Slideshow.css";
 
 const ImageSlideshow = () => {
   const images = [
     "/images/slider1.jpg",
     "/images/slider2.png",
     "/images/slider3.png",
-  ]; // Replace with your actual image paths
+  ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [currentIndex]);
