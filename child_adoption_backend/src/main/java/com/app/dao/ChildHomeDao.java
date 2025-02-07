@@ -11,4 +11,6 @@ import java.util.List;
 
 public interface ChildHomeDao extends JpaRepository<ChildHome, Long> {
 	ChildHome findByU(User u);
+
+	List<ChildHome> findByStatus(boolean status);
 }

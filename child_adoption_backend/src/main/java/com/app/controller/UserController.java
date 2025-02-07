@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,6 +85,10 @@ public class UserController {
 	@PostMapping("/addparent")
 	public ResponseEntity<?> addParent( @RequestBody AddParentRequestDto dto ){
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.addParentDto(dto));
+	}
+	@GetMapping("/getchildhomedetails")
+	public ResponseEntity<?> getChildHomeDetails( ){
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.getChildHomeDetails());
 	}
 }
 /*

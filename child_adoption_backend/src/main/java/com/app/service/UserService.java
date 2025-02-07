@@ -1,6 +1,7 @@
 package com.app.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,5 +149,10 @@ public class UserService {
 		 System.out.println(obj);
 		 parentDao.save(obj);
 		 return new ApiResponse("success");
+	}
+	public List<ChildHomeResponseDto> getChildHomeDetails() {
+		List<ChildHome> l=childHomeDao.findByStatus(true);
+		List<ChildHomeResponseDto> li=l.stream().map(r->mapper.map(r,ChildHomeResponseDto.class)).collect(Collectors.toList());
+		return li;
 	}
 }
