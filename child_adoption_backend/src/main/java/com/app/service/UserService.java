@@ -88,7 +88,7 @@ public class UserService {
 		user.setLname(dto.getLname());
 		user.setMobile(dto.getMobile());
 		user.setPassword(passwordEncoder.encode(dto.getPassword()));
-		user.setRole(dto.getRole());
+		user.setRole(UserRole.ROLE_CHILDHOME);
 		user.setStatus(true);
 		userDao.save(user);
 		ChildHome obj= mapper.map(dto,ChildHome.class);
