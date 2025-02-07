@@ -3,79 +3,85 @@ import "../Registration/Registration.css";
 import { FaPhoneAlt, FaEnvelope, FaLock, FaUserAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { registerChildhome } from "../../services/registration";
+import { useNavigate } from "react-router-dom";
 
 const ChildHomeReg = () => {
-  const [chilhomeName, setChilhomeName] = useState("");
-  const [Houseno, setHouse] = useState("");
-  const [Street, setStreet] = useState("");
-  const [District, setDistrict] = useState("");
-  const [City, setCity] = useState("");
-  const [State, setState] = useState("");
-  const [Pincode, setPincode] = useState("");
-  const [Mobile, setMobile] = useState("");
-  const [Managerfname, setManagerfname] = useState("");
-  const [Managerlname, setManagerlname] = useState("");
-  const [Bankaccountno, setBankaccountno] = useState("");
-  const [Ifscno, setIfscno] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-  const [InHome, setInHome] = useState("");
-  const [Adaptable, setAdaptable] = useState("");
+  const nevigate = useNavigate();
+  const [houseName, setChilhomeName] = useState("");
+  const [houseNo, setHouse] = useState("");
+  const [street, setStreet] = useState("");
+  const [district, setDistrict] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [fname, setManagerfname] = useState("");
+  const [lname, setManagerlname] = useState("");
+  const [bankAccount, setBankaccountno] = useState("");
+  const [ifscCode, setIfscno] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [inHome, setInHome] = useState("");
+  const [adoptable, setAdaptable] = useState("");
 
   const onRegister = async () => {
-    if (chilhomeName.length === 0) {
+    // const role = 0;
+    if (houseName.length === 0) {
       toast.warning("Please enter Child Home Name");
-    } else if (Mobile.length === 0) {
+    } else if (mobile.length === 0) {
       toast.warning("Please enter Mobile NO");
-    } else if (Email.length === 0) {
+    } else if (email.length === 0) {
       toast.warning("Please enter Email");
-    } else if (Houseno.length === 0) {
+    } else if (houseNo.length === 0) {
       toast.warning("Please enter Houseno");
-    } else if (Street.length === 0) {
+    } else if (street.length === 0) {
       toast.warning("Please enter Street");
-    } else if (District.length === 0) {
+    } else if (district.length === 0) {
       toast.warning("Please enter District");
-    } else if (City.length === 0) {
+    } else if (city.length === 0) {
       toast.warning("Please enter City");
-    } else if (State.length === 0) {
+    } else if (state.length === 0) {
       toast.warning("Please enter State");
-    } else if (Pincode.length === 0) {
+    } else if (pincode.length === 0) {
       toast.warning("Please enter pincode");
-    } else if (Managerfname.length === 0) {
+    } else if (fname.length === 0) {
       toast.warning("Please enter Manager First first name");
-    } else if (Managerlname.length === 0) {
+    } else if (lname.length === 0) {
       toast.warning("Please enter Manager First last name");
-    } else if (Bankaccountno.length === 0) {
+    } else if (bankAccount.length === 0) {
       toast.warning("Please enter Bank Account No");
-    } else if (Ifscno.length === 0) {
+    } else if (ifscCode.length === 0) {
       toast.warning("Please enter IFSC code");
-    } else if (Password.length === 0) {
+    } else if (password.length === 0) {
       toast.warning("Please enter Bank Account No");
-    } else if (InHome.length === 0) {
+    } else if (inHome.length === 0) {
       toast.warning("Please enter Total Child Count");
-    } else if (Adaptable.length === 0) {
+    } else if (adoptable.length === 0) {
       toast.warning("Please enter Adoptable child count");
     } else {
       const result = await registerChildhome(
-        Houseno,
-        Street,
-        District,
-        State,
-        Pincode,
-        City,
-        chilhomeName,
-        InHome,
-        Adaptable,
-        Managerfname,
-        Managerlname,
-        Mobile,
-        Email,
-        Password,
-        Bankaccountno,
-        Ifscno
+        houseNo,
+        street,
+        district,
+        state,
+        pincode,
+        city,
+        houseName,
+        inHome,
+        adoptable,
+        fname,
+        lname,
+        mobile,
+        email,
+        password,
+
+        bankAccount,
+        ifscCode
       );
-      if ((result.message = "success")) {
+      // console.log(result.message);
+      if (result && result.message === "success") {
         toast.success("Registration Successfull");
+        nevigate("/");
       } else {
         toast.error("Registration Failed");
       }
@@ -83,22 +89,22 @@ const ChildHomeReg = () => {
   };
 
   console.log(
-    chilhomeName,
-    Houseno,
-    Street,
-    District,
-    City,
-    State,
-    Pincode,
-    Mobile,
-    Managerfname,
-    Managerlname,
-    Bankaccountno,
-    Ifscno,
-    Email,
-    Password,
-    InHome,
-    Adaptable
+    houseNo,
+    street,
+    district,
+    state,
+    pincode,
+    city,
+    houseName,
+    inHome,
+    adoptable,
+    fname,
+    lname,
+    mobile,
+    email,
+    password,
+    bankAccount,
+    ifscCode
   );
 
   return (
