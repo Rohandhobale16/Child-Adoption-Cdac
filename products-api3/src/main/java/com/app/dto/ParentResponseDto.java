@@ -20,5 +20,4 @@ private String dob;
 private String occupation;
 private Long annualIncome;
 private UserResponseDto u;
-private ParentCoupleResponseDto pc;
 }

@@ -22,6 +22,5 @@ public class Child extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name="ch")
 	private ChildHome ch;
-	private boolean status;
 	
 }

@@ -1,0 +1,57 @@
+package com.app.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.dto.AddChildHomeRequestDto;
+import com.app.dto.AddChildRequestDto;
+import com.app.dto.AddEmployeeRequestDto;
+import com.app.dto.ApiResponse;
+import com.app.dto.AddEventsDto;
+import com.app.service.ChildHomeService;
+@RestController
+public class ChildHomeController {
+	@Autowired
+    private ChildHomeService childHomeService;
+
+    @PostMapping("/childhome/addchild")
+    public ResponseEntity<?> addChild(@RequestBody AddChildRequestDto childDto) {
+        try {
+            ApiResponse response = childHomeService.addChild(childDto);
+            return new ResponseEntity<>(response, HttpStatus.OK); // 200 OK
+        } catch (Exception e) {
+            // Important: Log the exception for debugging
+            e.printStackTrace(); // Or use a proper logging framework (e.g., SLF4j)
+
+            // Return a more informative error response
+            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
+            //Or
+            // return new ResponseEntity<>(new ApiResponse("Failed to add child: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/childhome/addevents")
+    public ResponseEntity<?> addEvent(@RequestBody AddEventsDto dto) {
+        try {
+            ApiResponse response = childHomeService.addEvent(dto);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to add event: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/childhome/addemployee")
+    public ResponseEntity<?> addSocialWorker(@RequestBody AddEmployeeRequestDto dto) {
+        try {
+            ApiResponse response = childHomeService.addSocialWorker(dto);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to add social worker: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+}

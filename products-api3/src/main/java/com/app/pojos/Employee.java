@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Employee extends BaseEntity{
 	@OneToOne
 	@JoinColumn(name="u",nullable=false)
-	public User u;
+private User u;
 	@OneToOne
 	@JoinColumn(name="c",nullable=false)
 private ChildHome c;
