@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { createUrl } from '../util'
+
+
 export async function register2(material,
     fname,
     lname,
@@ -19,7 +21,8 @@ export async function register2(material,
     pincode,
     password) {
     try {
-        // const url = createUrl('/admin')
+
+        const url = createUrl('addparent')
         const body = {
             material,
             fname,
@@ -40,7 +43,7 @@ export async function register2(material,
             pincode,
             password
         }
-        const response = await axios.post("http://localhost:8080/addparent", body)
+        const response = await axios.post(url, body)
         return response.data
     }
     catch (r) {
@@ -77,7 +80,7 @@ export async function register1(
     partnernationality,
     password) {
     try {
-        // const url = createUrl('/admin')
+        const url = createUrl('addparent')
         const body = {
             material,
             fname,
@@ -108,7 +111,7 @@ export async function register1(
             partnernationality,
             password
         }
-        const response = await axios.post("http://localhost:8080/addparent", body)
+        const response = await axios.post(url, body)
         return response.data
     }
     catch (r) {
@@ -131,13 +134,13 @@ export async function registerChildhome(
     mobile,
     email,
     password,
-    role,
+
     bankAccount,
-    ifscCode,
+    ifscCode
 ) {
     try {
 
-
+        const url = createUrl("addchildhome")
         const body = {
             houseNo,
             street,
@@ -153,11 +156,13 @@ export async function registerChildhome(
             mobile,
             email,
             password,
+
             bankAccount,
-            ifscCode,
+            ifscCode
         }
 
-        const response = axios.post("http://localhost:8080/addchildhome", body);
+        const response = await axios.post(url, body);
+        console.log(response.data)
         return response.data;
     } catch {
         return { status: "error", error: "Error in registerChildhome" }

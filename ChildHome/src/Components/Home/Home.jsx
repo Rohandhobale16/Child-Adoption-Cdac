@@ -109,7 +109,7 @@ const Home = () => {
           <Link to="/donate" className="btn btn-primary btn-lg me-3">
             Donate Now
           </Link>
-          <Link to="/contact" className="btn btn-outline-primary btn-lg">
+          <Link to="/contactus" className="btn btn-outline-primary btn-lg">
             Contact Us
           </Link>
         </div>

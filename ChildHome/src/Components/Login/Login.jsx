@@ -4,6 +4,7 @@ import "./Login.css";
 import { useAuth } from "../Authenticate/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { loginservice } from "../../services/Loginservice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,40 +14,42 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      //Testing data
-      const data = {
-        email: "om@gmail.com",
-        password: "1234",
-        userRole: "ROLE_PARENT",
-        id: "1",
-      };
 
-      // const response = await axios.post("/api/login", { email, password });
-      // const userData = response.data;
+    if (email.length === 0) {
+      toast.warning("Please enter Email Id");
+    } else if (password.length === 0) {
+      toast.warning("Please enter Password");
+    } else
+      try {
+        //Testing data
+        // const data = {
+        //   email: "om@gmail.com",
+        //   password: "1234",
+        //   userRole: "ROLE_PARENT",
+        //   id: "1",
+        // };
 
-      const userData = data; //  demo purposes
+        const response = await loginservice(email, password);
 
-      if (userData) {
-        setUser(userData);
+        if (response) {
+          // Check if response is NOT null (success)
+          const userData = response;
+          setUser(userData);
 
-        if (userData.userRole === "ROLE_CHILDHOME") {
-          navigate("/childHomeProfile");
-        } else if (userData.userRole === "ROLE_ADMIN") {
-          navigate("/admin");
-        } else if (userData.userRole === "ROLE_PARENT") {
-          navigate("/parent");
-        } else if (userData.userRole === "ROLE_EMPLOYEE") {
-          navigate("/socialWorkerProfile");
-        } else {
-          toast.warning("Invalid credentials or user role.");
-          navigate("/login");
+          if (userData.userRole === "ROLE_CHILDHOME") {
+            navigate("/childHomeProfile");
+          } else if (userData.userRole === "ROLE_ADMIN") {
+            navigate("/admin");
+          } else if (userData.userRole === "ROLE_PARENT") {
+            navigate("/parent");
+          } else if (userData.userRole === "ROLE_EMPLOYEE") {
+            navigate("/socialWorkerProfile");
+          }
         }
+      } catch (error) {
+        console.log("Login error:", error);
+        toast.error("An error occurred during login.");
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An error occurred during login.");
-    }
   };
 
   return (
