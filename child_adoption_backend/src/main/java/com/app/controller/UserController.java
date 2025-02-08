@@ -90,6 +90,10 @@ public class UserController {
 	public ResponseEntity<?> getChildHomeDetails( ){
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.getChildHomeDetails());
 	}
+	@GetMapping("/geteventdetails")
+	public ResponseEntity<?> getEventDetails( ){
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.getChildHomeDetails());
+	}
 }
 /*
 @RestController

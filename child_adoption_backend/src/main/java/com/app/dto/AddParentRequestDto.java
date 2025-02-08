@@ -27,7 +27,7 @@ public class AddParentRequestDto {
 	private String state;
 	private String pincode;
 	private String city;
-	private boolean marrigeStatus;
+	private String marrigeStatus;
 	private Gender gender;
 	private String nationality;
 	private String dob;
