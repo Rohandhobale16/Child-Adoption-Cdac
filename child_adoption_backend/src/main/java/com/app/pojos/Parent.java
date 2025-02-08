@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 public class Parent extends BaseEntity {
-	private boolean marrigeStatus;
+	private String marrigeStatus;
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	private String nationality;

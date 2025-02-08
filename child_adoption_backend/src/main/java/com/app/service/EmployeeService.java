@@ -40,8 +40,7 @@ public class EmployeeService {
 		 e.u.setFname(dto.getFname());
 		 e.u.setLname(dto.getLname());
 		 e.u.setMobile(dto.getMobile());
-		 e.u.setPassword(dto.getPassword());
-		 
+		 e.u.setPassword(dto.getPassword()); 
 		 e.u.address.setCity(dto.getCity());
 		 e.u.address.setDistrict(dto.getDistrict());
 		 e.u.address.setHouseNo(dto.getHouseNo());
@@ -65,7 +64,7 @@ public class EmployeeService {
 	}
 	public ApiResponse updateRequestStatus(Long id, String status) {
 		Request r=requestDao.findById(id) .orElseThrow(() -> new RuntimeException("request not found"));
-		r.setStatus("verified");
+		r.setStatus(status);
 		return new ApiResponse("success");
 	}
 

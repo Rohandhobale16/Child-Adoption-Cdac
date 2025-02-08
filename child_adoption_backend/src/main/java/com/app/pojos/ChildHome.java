@@ -21,5 +21,5 @@ public class ChildHome extends BaseEntity{
 	private String ifscCode;
 	@OneToOne
 	@JoinColumn(name="u",nullable=false)
-	private User u;
+	public User u;
 }

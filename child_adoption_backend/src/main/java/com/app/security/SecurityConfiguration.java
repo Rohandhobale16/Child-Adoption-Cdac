@@ -33,12 +33,16 @@ public class SecurityConfiguration {
 	        .authorizeHttpRequests
 	        (request -> 
 	        request.requestMatchers("/Login",
-	        		"/addchildhome","/addparent").permitAll() 
+	        		"/addchildhome","/addparent","/geteventdetails","/getchildhomedetails").permitAll() 
 	        //required explicitly for JS clients (eg React app - to permit pre flight requests)
 	        .requestMatchers(HttpMethod.OPTIONS).permitAll()
 	        	
 	       .requestMatchers("/admin","/admin/{id}","/admin/deletechildhome/{id}","/admin/deleteperent/{id}")
 	       .hasRole("ADMIN")
+	       .requestMatchers("/employee/getrequestdetails","/employee/updaterequest/{id}","/employee/getemployeedetails/{id}","/employee/updateemployee")
+	       .hasRole("EMPLOYEE")
+	       .requestMatchers("/childhome/addchild","/childhome/addevents","/childhome/addemployee","/childhome/addrequest","/childhome/getchildhomedetails/{id}","/childhome/updatechildhome","/childhome/updaterequest/{id}")
+	       .hasRole("CHILDHOME")
 	       .requestMatchers("/parent")  
 	       .hasRole("PARENT")
 	       .anyRequest().authenticated())

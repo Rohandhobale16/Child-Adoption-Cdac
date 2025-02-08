@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.app.dao.AddressDao;
 import com.app.dao.ChildHomeDao;
 import com.app.dao.EmployeeDao;
+import com.app.dao.EventsDao;
 import com.app.dao.ParentCoupleDao;
 import com.app.dao.ParentDao;
 import com.app.dao.UserDao;
@@ -31,6 +32,8 @@ public class UserService {
 	private EmployeeDao employeeDao;
 	@Autowired
 	private AddressDao addressDao;
+	@Autowired
+	private EventsDao eventDao;
 	@Autowired
 	private ModelMapper mapper;
 	@Autowired
@@ -153,6 +156,11 @@ public class UserService {
 	public List<ChildHomeResponseDto> getChildHomeDetails() {
 		List<ChildHome> l=childHomeDao.findByStatus(true);
 		List<ChildHomeResponseDto> li=l.stream().map(r->mapper.map(r,ChildHomeResponseDto.class)).collect(Collectors.toList());
+		return li;
+	}
+	public List<EventResponseDto> getEventDetails() {
+		List<Events> l=eventDao.findByStatus(true);
+		List<EventResponseDto> li=l.stream().map(r->mapper.map(r,EventResponseDto.class)).collect(Collectors.toList());
 		return li;
 	}
 }
