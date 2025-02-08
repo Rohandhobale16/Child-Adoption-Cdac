@@ -35,9 +35,10 @@ const ImageSlideshow = () => {
       </button>
 
       <img
+        className="img-fluid"
         src={images[currentIndex]}
         alt="Slideshow"
-        className="slideshow-image"
+        // className="slideshow-image"
       />
 
       <button className="nav-button right" onClick={nextSlide}>
