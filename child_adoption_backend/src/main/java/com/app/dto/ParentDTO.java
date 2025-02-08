@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ParentDTO {
     private Long id;
-    private boolean marriageStatus;
+    private String marriageStatus;
 
     // Parent Details
     private String fname;

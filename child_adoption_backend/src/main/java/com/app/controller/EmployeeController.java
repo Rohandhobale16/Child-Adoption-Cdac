@@ -50,7 +50,7 @@ public class EmployeeController {
             return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-	@PostMapping("/employee/updateemployee/{id}")
+	@PostMapping("/employee/updaterequest/{id}")
     public ResponseEntity<?> updateRequestStatus(@PathVariable Long id,@RequestBody String status) {
         try {
             ApiResponse response = employeeService.updateRequestStatus(id,status);

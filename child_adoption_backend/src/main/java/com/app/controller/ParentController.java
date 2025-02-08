@@ -23,11 +23,11 @@ public class ParentController {
 	@Autowired
 	private ParentService parentService;
 	
-	@PostMapping("/parent/bookSlot")
-		public ResponseEntity<?> bookSlot(@RequestBody SlotBookingDto slotBookingDto){
-			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(parentService.bookSlot(slotBookingDto));
-	    }
+//	@PostMapping("/parent/bookSlot")
+//		public ResponseEntity<?> bookSlot(@RequestBody SlotBookingDto slotBookingDto){
+//			return ResponseEntity.status(HttpStatus.CREATED)
+//					.body(parentService.bookSlot(slotBookingDto));
+//	    }
     @GetMapping("/childhomes")
 	   public ResponseEntity<List<ChildHomeDTO>> getAllChildHomes() {
 	    List<ChildHomeDTO> childHomes = parentService.getAllChildHomes();
@@ -43,11 +43,11 @@ public class ParentController {
     }
     
     
-    @PutMapping("/{id}")
-    public ResponseEntity<ParentDTO> updateParent(@PathVariable Long id, @RequestBody ParentDTO parentDTO) {
-        ParentDTO updatedParent = parentService.updateParentDetails(id, parentDTO);
-        return ResponseEntity.ok(updatedParent);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<ParentDTO> updateParent(@PathVariable Long id, @RequestBody ParentDTO parentDTO) {
+//        ParentDTO updatedParent = parentService.updateParentDetails(id, parentDTO);
+//        return ResponseEntity.ok(updatedParent);
+//    }
 }
 	
 	
