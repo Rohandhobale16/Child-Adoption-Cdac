@@ -103,28 +103,28 @@ const Navbar = () => {
                 </a>
               </li>
 
-              {user && user.userRole === "ROLE_CHILDHOME" && (
+              {user && user.role === "ROLE_CHILDHOME" && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/childHome">
                     ChildHome Dashboard
                   </Link>
                 </li>
               )}
-              {user && user.userRole === "ROLE_ADMIN" && (
+              {user && user.role === "ROLE_ADMIN" && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/admin">
                     Admin Dashboard
                   </Link>
                 </li>
               )}
-              {user && user.userRole === "ROLE_PARENT" && (
+              {user && user.role === "ROLE_PARENT" && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/parent">
                     Parent Dashboard
                   </Link>
                 </li>
               )}
-              {user && user.userRole === "ROLE_EMPLOYEE" && (
+              {user && user.role === "ROLE_EMPLOYEE" && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/employee">
                     SocialWorker Dashboard

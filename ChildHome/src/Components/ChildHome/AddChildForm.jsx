@@ -1,148 +1,152 @@
 import React, { useState } from "react";
 import ChildhomeSlider from "./Childhome_Slider";
+import { addChild } from "../../services/Childhomeservice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Authenticate/AuthContext";
 
 const AddChildForm = () => {
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-2">
-          <ChildhomeSlider />
-        </div>
-        <div className="col-10 ms-auto p-4">
-          <section>
-            <Content />
-          </section>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// AddChildForm Component
-const Content = () => {
+  const { user } = useAuth();
+  const navigator = useNavigate();
   const [childData, setChildData] = useState({
     name: "",
     gender: "",
     age: "",
     photo: null,
   });
-  const [message, setMessage] = useState("");
 
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setChildData({ ...childData, [name]: value });
   };
 
-  // Handle file input (for photo)
   const handleFileChange = (e) => {
     setChildData({ ...childData, photo: e.target.files[0] });
   };
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("name", childData.name);
-    formData.append("gender", childData.gender);
-    formData.append("age", childData.age);
-    formData.append("photo", childData.photo);
+    const data = {
+      name: childData.name,
+      gender: childData.gender,
+      // age: parseInt(childData.age),
+      age: childData.age,
+      ch: user.id,
+    };
 
-    // Send data to the server using fetch
-    fetch("http://localhost:5000/api/children", {
-      method: "POST",
-      body: formData, // Use FormData to handle file uploads
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setMessage("Child details added successfully!");
-        setChildData({ name: "", gender: "", age: "", photo: null }); // Reset form
-      })
-      .catch((error) => {
-        console.error("Error adding child details:", error);
-        setMessage("Error adding child details.");
-      });
+    try {
+      const result = await addChild(data); // Send the data object
+      if (result && result.status === 200) {
+        toast.success("Child Added Successfully");
+        navigator("/childHome");
+      } else if (
+        result &&
+        result.response &&
+        result.response.data &&
+        result.response.data.message
+      ) {
+        toast.error(result.response.data.message);
+      } else {
+        toast.error("Failed to add child.");
+        console.error("Add child failed:", result);
+      }
+    } catch (error) {
+      toast.error("An error occurred during child addition.");
+      console.error("Add child error:", error);
+    }
   };
-
   return (
-    <div>
-      <h2 className="text-center mb-4">Add New Child</h2>
-
-      {message && (
-        <div className="alert alert-info text-center" role="alert">
-          {message}
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-2">
+          <ChildhomeSlider />
         </div>
-      )}
+        <div className="col-10">
+          <div className="container_background">
+            <div className="registration-container">
+              <h1 className="form-title text-primary">Add Child </h1>
 
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name:
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            value={childData.name}
-            onChange={handleChange}
-            required
-          />
+              <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <div className="form-group">
+                  <label htmlFor="name" className="form-label">
+                    Name:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    name="name"
+                    value={childData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="gender" className="form-label">
+                    Gender:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <select
+                    className="form-select"
+                    id="gender"
+                    name="gender"
+                    value={childData.gender}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="age" className="form-label">
+                    Age:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="age"
+                    name="age"
+                    value={childData.age}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div hidden className="form-group">
+                  <label htmlFor="photo" className="form-label">
+                    Photo:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <input
+                    hidden
+                    type="file"
+                    className="form-control"
+                    id="photo"
+                    name="photo"
+                    onChange={handleFileChange}
+                  />
+                </div>
+
+                <button type="submit" className="btn btn-primary">
+                  Add Child
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-
-        <div className="mb-3">
-          <label htmlFor="gender" className="form-label">
-            Gender:
-          </label>
-          <select
-            className="form-select"
-            id="gender"
-            name="gender"
-            value={childData.gender}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="age" className="form-label">
-            Age:
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            id="age"
-            name="age"
-            value={childData.age}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="photo" className="form-label">
-            Photo:
-          </label>
-          <input
-            type="file"
-            className="form-control"
-            id="photo"
-            name="photo"
-            onChange={handleFileChange}
-            required
-          />
-        </div>
-
-        <button type="submit" className="btn btn-primary w-100">
-          Add Child
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

@@ -25,24 +25,24 @@ const Login = () => {
         // const data = {
         //   email: "om@gmail.com",
         //   password: "1234",
-        //   userRole: "ROLE_PARENT",
+        //   userRole: "ROLE_CHILDHOME",
         //   id: "1",
         // };
 
         const response = await loginservice(email, password);
-
+        // const response = data;
+        console.log(response);
         if (response) {
-          // Check if response is NOT null (success)
           const userData = response;
           setUser(userData);
 
-          if (userData.userRole === "ROLE_CHILDHOME") {
+          if (userData.role === "ROLE_CHILDHOME") {
             navigate("/childHomeProfile");
-          } else if (userData.userRole === "ROLE_ADMIN") {
+          } else if (userData.role === "ROLE_ADMIN") {
             navigate("/admin");
-          } else if (userData.userRole === "ROLE_PARENT") {
+          } else if (userData.role === "ROLE_PARENT") {
             navigate("/parent");
-          } else if (userData.userRole === "ROLE_EMPLOYEE") {
+          } else if (userData.role === "ROLE_EMPLOYEE") {
             navigate("/socialWorkerProfile");
           }
         }

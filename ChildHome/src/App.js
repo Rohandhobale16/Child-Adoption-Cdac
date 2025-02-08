@@ -6,7 +6,7 @@ import AdminHome from "./Components/Admin/admin_home";
 import AdminChild from "./Components/Admin/ChildHome_Details.jsx";
 import Feedback from "./Components/Admin/Feedback.jsx";
 import AdminParent from "./Components/Admin/Parent_Details";
-import AddChildForm from "./Components/ChildHome/AddChildForm";
+
 import ChildHomeEvents from "./Components/ChildHome/ChildHomeEvents";
 import ChildHomeProfile from "./Components/ChildHome/ChildHomeProfile";
 import Childhhomereg from "./Components/ChildHome/ChildHomereg";
@@ -35,6 +35,7 @@ import ProtectedRoute from "./Components/Authenticate/ProtectedRoute.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import Footer from "./Components/Footer/Footer.jsx";
 import BookingSlot from "./Components/Parent/BookingSlot.jsx";
+import AddChildForm from "./Components/ChildHome/AddChildForm.jsx";
 
 function App() {
   return (
@@ -128,6 +129,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <InitiateAdoptionRequest />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/childhome/addchild"
+            element={
+              <ProtectedRoute>
+                <AddChildForm />
               </ProtectedRoute>
             }
           />

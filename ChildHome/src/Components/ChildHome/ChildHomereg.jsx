@@ -25,7 +25,7 @@ const ChildHomeReg = () => {
   const [adoptable, setAdaptable] = useState("");
 
   const onRegister = async () => {
-    // const role = 0;
+    const role = "ROLE_CHILDHOME";
     if (houseName.length === 0) {
       toast.warning("Please enter Child Home Name");
     } else if (mobile.length === 0) {
@@ -74,7 +74,7 @@ const ChildHomeReg = () => {
         mobile,
         email,
         password,
-
+        role,
         bankAccount,
         ifscCode
       );

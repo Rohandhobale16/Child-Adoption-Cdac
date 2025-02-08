@@ -2,7 +2,8 @@ import axios from 'axios'
 import { createUrl } from '../util'
 
 
-export async function register2(material,
+export async function register2(
+    marrigeStatus,
     fname,
     lname,
     gender,
@@ -24,7 +25,7 @@ export async function register2(material,
 
         const url = createUrl('addparent')
         const body = {
-            material,
+            marrigeStatus,
             fname,
             lname,
             gender,
@@ -51,7 +52,7 @@ export async function register2(material,
     }
 }
 export async function register1(
-    material,
+    marrigeStatus,
     fname,
     lname,
     gender,
@@ -82,7 +83,7 @@ export async function register1(
     try {
         const url = createUrl('addparent')
         const body = {
-            material,
+            marrigeStatus,
             fname,
             lname,
             gender,

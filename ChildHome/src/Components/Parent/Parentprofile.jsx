@@ -4,7 +4,7 @@ import "../Parent/Parent_Slider.css";
 import { useAuth } from "../Authenticate/AuthContext";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { fetchParent } from "../../services/Parentservice";
 
 const Parentprofile = () => {
   return (
@@ -41,26 +41,29 @@ const Profile = () => {
   const [profile, setProfile] = useState({
     name: "",
     email: "",
-    phone: "",
+    mobile: "",
   });
 
   useEffect(() => {
     const response = async () => {
       if (user) {
         try {
-          // const response = axios.get(
-          //   `http://localhost:8080/api/parent/profile/${user.id}`
-          // );
-          // const data = response.data;
-          // setProfile(data);
+          const response = await fetchParent(user);
 
-          //Testing data
-          const dummyData = {
-            name: "omkar",
-            email: "om@gmail.com",
-            phone: "2345678",
+          const data = {
+            name: response.name,
+            email: response.email,
+            phone: response.mobile,
           };
-          setProfile(dummyData);
+          setProfile(data);
+
+          // //Testing data
+          // const dummyData = {
+          //   name: "omkar",
+          //   email: "om@gmail.com",
+          //   phone: "2345678",
+          // };
+          // setProfile(dummyData);
         } catch (error) {
           console.error("Error fetching data:", error);
           toast.error("Failed to fetch data");
@@ -75,7 +78,7 @@ const Profile = () => {
       <p class="">
         Email: {profile.email}
         <br />
-        Mobile No: {profile.phone}
+        Mobile No: {profile.mobile}
       </p>
       <button onClick={logout} class="btn btn-danger">
         Logout

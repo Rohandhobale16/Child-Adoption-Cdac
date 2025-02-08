@@ -80,196 +80,206 @@ const SocialWorkerRegistration = () => {
         <div className="col-2">
           <ChildhomeSlider />
         </div>
-        <div className="col-10 ms-auto p-4">
-          <div>
-            <h2 className="text-center text-primary mb-4">
-              Social Worker Registration
-            </h2>
-            <form className="shadow-lg p-4 rounded-lg bg-light">
-              <div className="form-group">
-                <label htmlFor="first_name" className="form-label">
-                  First Name:
-                </label>
-                <input
-                  type="text"
-                  id="first_name"
-                  name="first_name"
-                  onChange={(e) => {
-                    setfname(e.target.value);
-                  }}
-                  className="form-control"
-                  required
-                />
-              </div>
+        <div className="col-10">
+          <div className="container_background">
+            <div className="registration-container">
+              <h1 className="form-title text-primary">
+                Social Worker Registration
+              </h1>
+              <form onSubmit={onRegister}>
+                <div className="form-group">
+                  <label htmlFor="first_name" className="form-label">
+                    First Name:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <input
+                    placeholder="First Name"
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    onChange={(e) => {
+                      setfname(e.target.value);
+                    }}
+                    className="form-control"
+                    required
+                  />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="last_name" className="form-label">
-                  Last Name:
-                </label>
-                <input
-                  type="text"
-                  id="last_name"
-                  name="last_name"
-                  onChange={(e) => {
-                    setlname(e.target.value);
-                  }}
-                  className="form-control"
-                  required
-                />
-              </div>
+                <div className="form-group">
+                  <label htmlFor="last_name" className="form-label">
+                    Last Name:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <input
+                    placeholder="Last Name"
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    onChange={(e) => {
+                      setlname(e.target.value);
+                    }}
+                    className="form-control"
+                    required
+                  />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="email" className="form-label">
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  className="form-control"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Password:</label>
-              </div>
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Password"
-                />
-              </div>
+                <div className="form-group">
+                  <label htmlFor="email" className="form-label">
+                    Email:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <input
+                    placeholder="Email Id"
+                    type="email"
+                    id="email"
+                    name="email"
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    className="form-control"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Password:</label>
+                </div>
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                  />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="phone" className="form-label">
-                  Mobile No:
-                </label>
-                <input
-                  type="tel"
-                  id="mobile"
-                  name="mobile"
-                  onChange={(e) => {
-                    setMobile(e.target.value);
-                  }}
-                  className="form-control"
-                  required
-                />
-              </div>
+                <div className="form-group">
+                  <label htmlFor="phone" className="form-label">
+                    Mobile No:
+                  </label>
+                </div>
+                <div className="input-group">
+                  <input
+                    placeholder="Mobile No."
+                    type="tel"
+                    id="mobile"
+                    name="mobile"
+                    onChange={(e) => {
+                      setMobile(e.target.value);
+                    }}
+                    className="form-control"
+                    required
+                  />
+                </div>
 
-              <div className="form-group">
-                <label>Addresse</label>
-                <br />
-                <label>House No:</label>
-              </div>
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  onChange={(e) => {
-                    setHouse(e.target.value);
-                  }}
-                  type="text"
-                  name="houseno"
-                  id="houseno"
-                  placeholder="House Number"
-                />
-              </div>
+                <div className="form-group">
+                  <label>Addresse</label>
+                  <br />
+                  <label>House No:</label>
+                </div>
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    onChange={(e) => {
+                      setHouse(e.target.value);
+                    }}
+                    type="text"
+                    name="houseno"
+                    id="houseno"
+                    placeholder="House Number"
+                  />
+                </div>
 
-              <div className="form-group">
-                <label>Street :</label>
-              </div>
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  onChange={(e) => {
-                    setStreet(e.target.value);
-                  }}
-                  type="text"
-                  name="street"
-                  id="street"
-                  placeholder="Street "
-                />
-              </div>
+                <div className="form-group">
+                  <label>Street :</label>
+                </div>
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    onChange={(e) => {
+                      setStreet(e.target.value);
+                    }}
+                    type="text"
+                    name="street"
+                    id="street"
+                    placeholder="Street "
+                  />
+                </div>
 
-              <div className="form-group">
-                <label>District :</label>
-              </div>
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  onChange={(e) => {
-                    setDistrict(e.target.value);
-                  }}
-                  type="text"
-                  name="district"
-                  id="district"
-                  placeholder="District "
-                />
-              </div>
+                <div className="form-group">
+                  <label>District :</label>
+                </div>
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    onChange={(e) => {
+                      setDistrict(e.target.value);
+                    }}
+                    type="text"
+                    name="district"
+                    id="district"
+                    placeholder="District "
+                  />
+                </div>
 
-              <div className="form-group">
-                <label>City :</label>
-              </div>
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  onChange={(e) => {
-                    setCity(e.target.value);
-                  }}
-                  type="text"
-                  name="city"
-                  id="city"
-                  placeholder="City "
-                />
-              </div>
-              <div className="form-group">
-                <label>State :</label>
-              </div>
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  onChange={(e) => {
-                    setState(e.target.value);
-                  }}
-                  type="text"
-                  name="state"
-                  id="state"
-                  placeholder="State "
-                />
-              </div>
+                <div className="form-group">
+                  <label>City :</label>
+                </div>
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    onChange={(e) => {
+                      setCity(e.target.value);
+                    }}
+                    type="text"
+                    name="city"
+                    id="city"
+                    placeholder="City "
+                  />
+                </div>
+                <div className="form-group">
+                  <label>State :</label>
+                </div>
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    onChange={(e) => {
+                      setState(e.target.value);
+                    }}
+                    type="text"
+                    name="state"
+                    id="state"
+                    placeholder="State "
+                  />
+                </div>
 
-              <div className="form-group">
-                <label>Pincode :</label>
-              </div>
-              <div className="input-group">
-                <input
-                  className="form-control"
-                  onChange={(e) => {
-                    setPincode(e.target.value);
-                  }}
-                  type="number"
-                  name="pincode"
-                  id="pincode"
-                  placeholder="Pincode "
-                />
-              </div>
+                <div className="form-group">
+                  <label>Pincode :</label>
+                </div>
+                <div className="input-group">
+                  <input
+                    className="form-control"
+                    onChange={(e) => {
+                      setPincode(e.target.value);
+                    }}
+                    type="number"
+                    name="pincode"
+                    id="pincode"
+                    placeholder="Pincode "
+                  />
+                </div>
 
-              <button
-                type="button"
-                className="btn btn-primary btn-block w-100 mt-3"
-                onClick={onRegister}
-              >
-                Register
-              </button>
-            </form>
+                <button type="submit" className="btn btn-primary ">
+                  Register
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

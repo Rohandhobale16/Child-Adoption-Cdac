@@ -8,10 +8,12 @@ export async function loginservice(email, password) {
   const body = { email, password };
   try {
     const response = await axios.post(url, body);
+    //console.log(response);
     const data = response.data;
-    console.log(data); // Keep this for debugging
+    //console.log(data.message);
+    console.log(data);
 
-    if (response.status === 200) {
+    if (data.message === "success") {
       // Check response.status, not data.status
       return data;
     } else {
