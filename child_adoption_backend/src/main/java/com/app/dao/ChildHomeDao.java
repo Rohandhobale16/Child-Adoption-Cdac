@@ -7,10 +7,12 @@ import com.app.pojos.Parent;
 import com.app.pojos.User;
 
 import java.util.List;
-
+import java.util.Optional;
 
 public interface ChildHomeDao extends JpaRepository<ChildHome, Long> {
 	ChildHome findByU(User u);
 
 	List<ChildHome> findByStatus(boolean status);
+
+	Optional<ChildHome> findByHouseName(String houseName);
 }
