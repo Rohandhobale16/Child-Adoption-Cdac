@@ -44,36 +44,54 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	public Object findByEmailandPassword(LoginRequestDto loginDto) {
-		User user = userDao.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
-		if (user.getRole().name().equals(UserRole.ROLE_ADMIN.name())) {
-			UserResponseDto obj1 = mapper.map(user, UserResponseDto.class);
-			return obj1;
-		} else if (user.getRole().name().equals(UserRole.ROLE_PARENT.name())) {
-			List<Parent> obj = parentDao.findByU(user);
-			Parent a = obj.get(0);
-			ParentResponseDto obj1 = mapper.map(a, ParentResponseDto.class);
-			// ParentResponseDto obj1= UserMapper.INSTANCE.aToParentResponseDto(a);
-			System.out.print(a.getU());
-			return obj1;
-		} else if (user.getRole().name().equals(UserRole.ROLE_CHILDHOME.name())) {
-			ChildHome obj = childHomeDao.findByU(user);
-			ChildHomeResponseDto obj1 = mapper.map(obj, ChildHomeResponseDto.class);
-			return obj1;
-		} else {
-			Employee obj = employeeDao.findByU(user);
-			EmployeeResponseDto obj1 = mapper.map(obj, EmployeeResponseDto.class);
-			return obj1;
-		}
-
-	}
+//	public Object findByEmailandPassword(LoginRequestDto loginDto) {
+//		User user = userDao.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
+//		if (user.getRole().name().equals(UserRole.ROLE_ADMIN.name())) {
+//			UserResponseDto obj1 = mapper.map(user, UserResponseDto.class);
+//			return obj1;
+//		} else if (user.getRole().name().equals(UserRole.ROLE_PARENT.name())) {
+//			List<Parent> obj = parentDao.findByU(user);
+//			Parent a = obj.get(0);
+//			ParentResponseDto obj1 = mapper.map(a, ParentResponseDto.class);
+//			// ParentResponseDto obj1= UserMapper.INSTANCE.aToParentResponseDto(a);
+//			System.out.print(a.getU());
+//			return obj1;
+//		} else if (user.getRole().name().equals(UserRole.ROLE_CHILDHOME.name())) {
+//			ChildHome obj = childHomeDao.findByU(user);
+//			ChildHomeResponseDto obj1 = mapper.map(obj, ChildHomeResponseDto.class);
+//			return obj1;
+//		} else {
+//			Employee obj = employeeDao.findByU(user);
+//			EmployeeResponseDto obj1 = mapper.map(obj, EmployeeResponseDto.class);
+//			return obj1;
+//		}
+//
+//	}
 
 	public LoginResponseDto findByEmailandPassword1(LoginRequestDto loginDto) {
 		User user = userDao.findByEmail(loginDto.getEmail()).orElseThrow();
+		System.out.println(user);
 		LoginResponseDto l = new LoginResponseDto();
-		l.setId(user.getId());
-		l.setRole(user.getRole().name());
-		return l;
+		if (user.getRole().name().equals(UserRole.ROLE_ADMIN.name())) {
+			l.setId(user.getId());
+			l.setRole(user.getRole().name());
+			return l;
+		} else if (user.getRole().name().equals(UserRole.ROLE_PARENT.name())) {
+			//Parent obj = parentDao.findByU(user);
+			l.setId(user.getId());
+			l.setRole(user.getRole().name());
+			return l;
+		} else if (user.getRole().name().equals(UserRole.ROLE_CHILDHOME.name())) {
+			ChildHome obj = childHomeDao.findByU(user);
+			l.setId(obj.getId());
+			l.setRole(user.getRole().name());
+			return l;
+		} else {
+			Employee obj = employeeDao.findByU(user);
+			l.setId(obj.getId());
+			l.setRole(user.getRole().name());
+			return l;
+		}
 	}
 
 	public ApiResponse addChildHome(AddChildHomeRequestDto dto) {

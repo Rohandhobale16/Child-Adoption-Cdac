@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ParentDao extends JpaRepository<Parent, Long> {
-	List<Parent> findByU(User u);
+	Parent findByU(User u);
 
 	@Query("SELECT p FROM Parent p WHERE p.u.id = :userId")
 	Optional<Parent> findByUserId(@Param("userId") Long userId);

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.AddressDao;
@@ -59,6 +60,8 @@ public class ChildHomeService {
 	private AddressDao addressDao;
 	@Autowired
 	private ModelMapper mapper;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public ApiResponse addChild(AddChildRequestDto dto) {
 
@@ -112,7 +115,7 @@ public class ChildHomeService {
 		user.setFname(dto.getFname());
 		user.setLname(dto.getLname());
 		user.setMobile(dto.getMobile());
-		user.setPassword(dto.getPassword());
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		user.setRole(UserRole.ROLE_EMPLOYEE);
 		user.setStatus(true);
 		userDao.save(user);
@@ -144,17 +147,20 @@ public class ChildHomeService {
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		ChildHome l = childHomeDao.findByU(user);
+
+	public ChildHomeResponseDto getChildHomeDetails(Long id) {
+		ChildHome l = childHomeDao.findById(id).orElseThrow();
 		ChildHomeResponseDto li = mapper.map(l, ChildHomeResponseDto.class);
 		return li;
 	}
 
-	public ApiResponse updateChildHome(UpdateChildHomeRequestDto dto) {
-		ChildHome e = childHomeDao.findById(dto.getId()).orElseThrow(() -> new RuntimeException("ChildHome not found"));
+	public ApiResponse updateChildHome(Long id, UpdateChildHomeRequestDto dto) {
+		ChildHome e = childHomeDao.findById(id).orElseThrow(() -> new RuntimeException("ChildHome not found"));
 		e.u.setEmail(dto.getEmail());
 		e.u.setFname(dto.getFname());
 		e.u.setLname(dto.getLname());
 		e.u.setMobile(dto.getMobile());
-		e.u.setPassword(dto.getPassword());
+		e.u.setPassword(passwordEncoder.encode(dto.getPassword()));
 		e.u.address.setCity(dto.getCity());
 		e.u.address.setDistrict(dto.getDistrict());
 		e.u.address.setHouseNo(dto.getHouseNo());
@@ -181,5 +187,15 @@ public class ChildHomeService {
 				.collect(Collectors.toList());
 
 		return li;
+	}
+
+	public Long countChildHomeDetails() {
+		Long s = childDao.count();
+		return s;
+	}
+
+	public Long countEmployee() {
+		Long s = employeeDao.count();
+		return s;
 	}
 }

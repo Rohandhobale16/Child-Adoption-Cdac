@@ -84,10 +84,11 @@ public class ChildHomeController {
             return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping("/childhome/updatechildhome")
-    public ResponseEntity<?> updateSocialWorker(@RequestBody UpdateChildHomeRequestDto dto) {
+    @PostMapping("/childhome/updatechildhome/{id}")
+    public ResponseEntity<?> updateSocialWorker(@PathVariable Long id,@RequestBody UpdateChildHomeRequestDto dto) {
+    	System.out.println("updatechildhome request");
         try {
-            ApiResponse response = childHomeService.updateChildHome(dto);
+            ApiResponse response = childHomeService.updateChildHome(id,dto);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production
@@ -110,6 +111,28 @@ public class ChildHomeController {
 		try {
 
 			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getAllChildHomeDetails());
+		} catch (Exception e) {
+			e.printStackTrace(); // Use proper logging in production
+			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+    @GetMapping("/childhome/childhomecount")
+	public ResponseEntity<?> countChildHomeDetails() {
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.countChildHomeDetails());
+		} catch (Exception e) {
+			e.printStackTrace(); // Use proper logging in production
+			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+    @GetMapping("/childhome/employeecount")
+	public ResponseEntity<?> countEmployee() {
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.countEmployee());
 		} catch (Exception e) {
 			e.printStackTrace(); // Use proper logging in production
 			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
