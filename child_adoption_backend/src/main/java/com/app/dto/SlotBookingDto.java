@@ -8,8 +8,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class SlotBookingDto {
-	private Long parentId;
+    private Long parentId;
     private String childHomeName;
-    private LocalDate date;    
-    private Slot slot;        
+    private String date;
+    private Slot slot;
 }

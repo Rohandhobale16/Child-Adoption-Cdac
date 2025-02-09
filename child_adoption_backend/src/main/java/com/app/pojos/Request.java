@@ -1,6 +1,8 @@
 package com.app.pojos;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
@@ -12,17 +14,23 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Request extends BaseEntity{
+public class Request extends BaseEntity {
 
 	@OneToOne
-	@JoinColumn(name="p",nullable=true)
+	@JoinColumn(name = "p", nullable = true, unique = false)
 	private Parent p;
 	@OneToOne
-	@JoinColumn(name="c",nullable=true)
+	@JoinColumn(name = "c", nullable = true, unique = false)
 	private Child c;
+	@OneToOne
+	@JoinColumn(name = "ch", nullable = true, unique = false)
+	private ChildHome ch;
 	private String status;
 	private String feedBack;
-	//need to create document 
-//	@Lob
-//    private byte[] data;
+	private String date;
+	@Enumerated(EnumType.STRING)
+	private Slot slot;
+	// need to create document
+	// @Lob
+	// private byte[] data;
 }

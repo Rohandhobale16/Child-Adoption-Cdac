@@ -1,4 +1,6 @@
 package com.app.pojos;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -11,8 +13,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name="ChildHome")
-public class ChildHome extends BaseEntity{
+@Table(name = "ChildHome")
+public class ChildHome extends BaseEntity {
+	@Column(unique = true)
 	private String houseName;
 	private int inHome;
 	private int adoptable;
@@ -20,6 +23,6 @@ public class ChildHome extends BaseEntity{
 	private String bankAccount;
 	private String ifscCode;
 	@OneToOne
-	@JoinColumn(name="u",nullable=false)
+	@JoinColumn(name = "u", nullable = false)
 	public User u;
 }
