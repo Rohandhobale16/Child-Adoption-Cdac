@@ -9,7 +9,9 @@ export async function AddChild(data, user) {
     const response = await axios.post(url, data, {
       headers: { Authorization: `Bearer ${user.jwt} }` },
     });
-    return response;
+    if (response.status === 200) {
+      return response;
+    }
   } catch (error) {
     console.error("Error adding child:", error);
     return error.response; // Return the error response for better error handling
@@ -42,6 +44,25 @@ export async function getChildHomes(user) {
     const data = response.data;
     // console.log(response);
     // console.log(data);
+    if (response.status === 200) {
+      return data;
+    }
+  } catch (error) {
+    console.error("Error adding child:", error);
+    return error.response; // Return the error response for better error handling
+  }
+}
+
+export async function updateChildHome(data, user, id) {
+  console.log(id);
+  const url = createUrl(`childhome/updatechildhome/${id}`);
+  try {
+    const response = await axios.post(url, data, {
+      headers: { Authorization: `Bearer ${user.jwt} }` },
+    });
+
+    console.log(response);
+    console.log(data);
     if (response.status === 200) {
       return data;
     }

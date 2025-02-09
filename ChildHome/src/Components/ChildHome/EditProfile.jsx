@@ -3,9 +3,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import ChildhomeSlider from "./Childhome_Slider";
 import { useAuth } from "../Authenticate/AuthContext";
-import { getChildHomes } from "../../services/Childhomeservice";
+import {
+  getChildHomes,
+  updateChildHome,
+} from "../../services/Childhomeservice";
 
 const EditHomeProfile = () => {
+  const [id, setId] = useState();
   const [chilhomeName, setChilhomeName] = useState("");
   const [Houseno, setHouse] = useState("");
   const [Street, setStreet] = useState("");
@@ -23,7 +27,26 @@ const EditHomeProfile = () => {
   const [InHome, setInHome] = useState("");
   const [Adaptable, setAdaptable] = useState("");
   const { user } = useAuth();
-
+  console.log(
+    id,
+    chilhomeName,
+    Houseno,
+    Street,
+    District,
+    City,
+    State,
+    Pincode,
+    Mobile,
+    Managerfname,
+    Managerlname,
+    Bankaccountno,
+    Ifscno,
+    Email,
+    Password,
+    InHome,
+    Adaptable,
+    user
+  );
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -31,6 +54,7 @@ const EditHomeProfile = () => {
           const response = await getChildHomes(user);
           const data = response;
           // console.log(data);
+          setId(data.id);
           setChilhomeName(data.houseName);
           setHouse(data.u.address.houseNo);
           setStreet(data.u.address.street);
@@ -59,32 +83,31 @@ const EditHomeProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(id);
     const updatedData = {
-      chilhomeName,
-      Houseno,
-      Street,
-      District,
-      City,
-      State,
-      Pincode,
-      Mobile,
-      Managerfname,
-      Managerlname,
-      Bankaccountno,
-      Ifscno,
-      Email,
-      Password,
-      InHome,
-      Adaptable,
+      houseName: chilhomeName,
+      houseNo: Houseno,
+      street: Street,
+      district: District,
+      city: City,
+      state: State,
+      pincode: Pincode,
+      mobile: Mobile,
+      fname: Managerfname,
+      lname: Managerlname,
+      bankAccount: Bankaccountno,
+      ifscCode: Ifscno,
+      email: Email,
+      password: Password,
+      inHome: InHome,
+      adoptable: Adaptable,
     };
 
     try {
-      const response = await axios.put(
-        "http://localhost:8080/api/childhome/profile",
-        updatedData
-      );
-      toast.success("Profile updated successfully");
+      const response = await updateChildHome(updatedData, user, id);
+      if (response) {
+        toast.success("Profile updated successfully");
+      }
     } catch (error) {
       console.error("Error updating profile:", error);
       toast.error("Failed to update profile");
