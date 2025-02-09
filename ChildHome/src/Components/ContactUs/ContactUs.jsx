@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import "../Registration/Registration.css";
+import { addContactUsdata } from "../../services/ContactService";
+import { useNavigate } from "react-router-dom";
 
 const ContactUs = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({ name, email, message });
+    const data = {
+      name,
+      email,
+      message,
+    };
+
+    const response = await addContactUsdata(data);
+
+    navigate("/");
   };
 
   return (
