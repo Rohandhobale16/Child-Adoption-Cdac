@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../Registration/Registration.css";
-import { FaPhoneAlt, FaEnvelope, FaLock, FaUserAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { registerChildhome } from "../../services/registration";
 import { useNavigate } from "react-router-dom";

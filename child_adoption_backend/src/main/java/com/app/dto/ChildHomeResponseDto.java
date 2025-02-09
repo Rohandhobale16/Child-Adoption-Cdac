@@ -15,5 +15,7 @@ private String houseName;
 private int inHome;
 private int adoptable;
 private boolean status;
+private String bankAccount;
+private String ifscCode;
 private User u;
 }

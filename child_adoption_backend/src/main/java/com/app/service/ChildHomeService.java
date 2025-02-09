@@ -41,11 +41,11 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class ChildHomeService {
 	@Autowired
-    private ChildDao childDao;
+	private ChildDao childDao;
 	@Autowired
-    private EventsDao eventsDao; 
-    // Inject ChildHomeDao
-    @Autowired
+	private EventsDao eventsDao;
+	// Inject ChildHomeDao
+	@Autowired
 	private UserDao userDao;
 	@Autowired
 	private ParentDao parentDao;
@@ -59,40 +59,45 @@ public class ChildHomeService {
 	private AddressDao addressDao;
 	@Autowired
 	private ModelMapper mapper;
-    public ApiResponse addChild(AddChildRequestDto dto) {
-        Child obj = new Child();
-        obj.setName(dto.getName());
-        obj.setAge(dto.getAge());
-        obj.setGender(dto.getGender());
 
-        // *** KEY CHANGE: Fetch ChildHome entity by ID ***
-        ChildHome childHome = childHomeDao.findById(dto.getCh()) // Use getChId()
-                .orElseThrow(() -> new RuntimeException("ChildHome not found")); // Handle not found
+	public ApiResponse addChild(AddChildRequestDto dto) {
+		// Fetch the User by ID
+		User user = userDao.findById(dto.getCh())
+				.orElseThrow(() -> new RuntimeException("User not found"));
 
-        obj.setCh(childHome); // Set the ChildHome entity
-        obj.setStatus(true);
-        childDao.save(obj);
+		// Fetch ChildHome associated with the User
+		ChildHome childHome = childHomeDao.findByU(user);
 
-        return new ApiResponse("success");
-    }
+		// Create a new Child entity
+		Child obj = new Child();
+		obj.setName(dto.getName());
+		obj.setAge(dto.getAge());
+		obj.setGender(dto.getGender());
+		obj.setCh(childHome); // Assign the found ChildHome
+		obj.setStatus(true);
+
+		childDao.save(obj);
+
+		return new ApiResponse("success");
+	}
 
 	public ApiResponse addEvent(AddEventsDto dto) {
 		Events obj = new Events();
-        obj.setEventName(dto.getEventName());
-        obj.setEventDate(dto.getEventDate());
-        obj.setEventDescription(dto.getEventDescription());
+		obj.setEventName(dto.getEventName());
+		obj.setEventDate(dto.getEventDate());
+		obj.setEventDescription(dto.getEventDescription());
 
-        ChildHome childHome = childHomeDao.findById(dto.getChId())
-                .orElseThrow(() -> new RuntimeException("ChildHome not found"));
-        obj.setCh(childHome);
-        obj.setStatus(true);
-        eventsDao.save(obj);
+		ChildHome childHome = childHomeDao.findById(dto.getChId())
+				.orElseThrow(() -> new RuntimeException("ChildHome not found"));
+		obj.setCh(childHome);
+		obj.setStatus(true);
+		eventsDao.save(obj);
 
-        return new ApiResponse("success"); 
+		return new ApiResponse("success");
 	}
 
 	public ApiResponse addSocialWorker(AddEmployeeRequestDto dto) {
-		Address a=new Address();
+		Address a = new Address();
 		a.setCity(dto.getCity());
 		a.setDistrict(dto.getDistrict());
 		a.setHouseNo(dto.getHouseNo());
@@ -101,7 +106,7 @@ public class ChildHomeService {
 		a.setStreet(dto.getStreet());
 		a.setStatus(true);
 		addressDao.save(a);
-		User user=new User();
+		User user = new User();
 		user.setAddress(a);
 		user.setEmail(dto.getEmail());
 		user.setFname(dto.getFname());
@@ -112,66 +117,70 @@ public class ChildHomeService {
 		user.setStatus(true);
 		userDao.save(user);
 
-        ChildHome childHome = childHomeDao.findById(dto.getChId())
-                .orElseThrow(() -> new RuntimeException("ChildHome not found"));
-        Employee obj= new Employee();
-        obj.setC(childHome);
-        obj.setU(user);
+		ChildHome childHome = childHomeDao.findById(dto.getChId())
+				.orElseThrow(() -> new RuntimeException("ChildHome not found"));
+		Employee obj = new Employee();
+		obj.setC(childHome);
+		obj.setU(user);
 
-        employeeDao.save(obj);
+		employeeDao.save(obj);
 
-        return new ApiResponse("success");
-	}
-
-	public ApiResponse addRequest(AddRequestDto dto) {
-		 Child child = childDao.findById(dto.getCid()) .orElseThrow(() -> new RuntimeException("Child not found"));
-		 Parent parent = parentDao.findById(dto.getPid()) .orElseThrow(() -> new RuntimeException("parent not found"));
-		 Request r=new Request();
-		 r.setP(parent);
-		 r.setC(child);
-		 r.setStatus("initiated");
-		 requestDao.save(r);
 		return new ApiResponse("success");
 	}
 
-	public ChildHomeResponseDto  getChildHomeDetails(Long id) {
-		 ChildHome l = childHomeDao.findById(id).orElseThrow(() -> new RuntimeException("ChildHome not found"));
-			ChildHomeResponseDto li=mapper.map(l,ChildHomeResponseDto.class);
+	public ApiResponse addRequest(AddRequestDto dto) {
+		Child child = childDao.findById(dto.getCid()).orElseThrow(() -> new RuntimeException("Child not found"));
+		Parent parent = parentDao.findById(dto.getPid()).orElseThrow(() -> new RuntimeException("parent not found"));
+		Request r = new Request();
+		r.setP(parent);
+		r.setC(child);
+		r.setStatus("initiated");
+		requestDao.save(r);
+		return new ApiResponse("success");
+	}
+
+	public ChildHomeResponseDto getChildHomeDetails(Long id) {
+		User user = userDao.findById(id)
+				.orElseThrow(() -> new RuntimeException("User not found"));
+
+		
+		ChildHome l = childHomeDao.findByU(user);
+		ChildHomeResponseDto li = mapper.map(l, ChildHomeResponseDto.class);
 		return li;
 	}
 
 	public ApiResponse updateChildHome(UpdateChildHomeRequestDto dto) {
 		ChildHome e = childHomeDao.findById(dto.getId()).orElseThrow(() -> new RuntimeException("ChildHome not found"));
-	 e.u.setEmail(dto.getEmail());
-	 e.u.setFname(dto.getFname());
-	 e.u.setLname(dto.getLname());
-	 e.u.setMobile(dto.getMobile());
-	 e.u.setPassword(dto.getPassword()); 
-	 e.u.address.setCity(dto.getCity());
-	 e.u.address.setDistrict(dto.getDistrict());
-	 e.u.address.setHouseNo(dto.getHouseNo());
-	 e.u.address.setPincode(dto.getPincode());
-	 e.u.address.setState(dto.getState());
-	 e.u.address.setStreet(dto.getStreet());
-	 e.u.address.setStatus(true);
-	 e.setAdoptable(dto.getAdoptable());
-	 e.setBankAccount(dto.getBankAccount());
-	 e.setIfscCode(dto.getIfscCode());
-	 e.setInHome(dto.getInHome());
-	return new ApiResponse("success");
+		e.u.setEmail(dto.getEmail());
+		e.u.setFname(dto.getFname());
+		e.u.setLname(dto.getLname());
+		e.u.setMobile(dto.getMobile());
+		e.u.setPassword(dto.getPassword());
+		e.u.address.setCity(dto.getCity());
+		e.u.address.setDistrict(dto.getDistrict());
+		e.u.address.setHouseNo(dto.getHouseNo());
+		e.u.address.setPincode(dto.getPincode());
+		e.u.address.setState(dto.getState());
+		e.u.address.setStreet(dto.getStreet());
+		e.u.address.setStatus(true);
+		e.setAdoptable(dto.getAdoptable());
+		e.setBankAccount(dto.getBankAccount());
+		e.setIfscCode(dto.getIfscCode());
+		e.setInHome(dto.getInHome());
+		return new ApiResponse("success");
 	}
+
 	public ApiResponse updateRequestStatus(Long id, String status) {
-		Request r=requestDao.findById(id) .orElseThrow(() -> new RuntimeException("request not found"));
+		Request r = requestDao.findById(id).orElseThrow(() -> new RuntimeException("request not found"));
 		r.setStatus(status);
 		return new ApiResponse("success");
 	}
 
 	public List<ChildHomeResponseDto> getAllChildHomeDetails() {
-        List<ChildHome> l = childHomeDao.findAll();
-        List<ChildHomeResponseDto> li=l.stream().map(e->mapper.map(e,ChildHomeResponseDto.class)).collect(Collectors.toList());
-        
-        
-        return li;
-    }
-	}
+		List<ChildHome> l = childHomeDao.findAll();
+		List<ChildHomeResponseDto> li = l.stream().map(e -> mapper.map(e, ChildHomeResponseDto.class))
+				.collect(Collectors.toList());
 
+		return li;
+	}
+}

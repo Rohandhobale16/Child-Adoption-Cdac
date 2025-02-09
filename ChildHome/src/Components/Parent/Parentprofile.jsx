@@ -24,7 +24,7 @@ const Parentprofile = () => {
           <img
             src="/images/ParentProfileBackground.avif"
             class="img-fluid"
-            alt="Parent Dashborad image"
+            alt="Parent Dashborad "
           />
         </div>
         <div className="col-2 " style={{ float: `right` }}>
