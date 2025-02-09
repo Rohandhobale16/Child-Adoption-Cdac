@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import ChildhomeSlider from "./Childhome_Slider";
-import axios from "axios";
+import { useAuth } from "../Authenticate/AuthContext";
+import { AddEvents } from "../../services/Childhomeservice";
+import { useNavigate } from "react-router-dom";
 
 const ChildHomeEvents = () => {
+  const { user } = useAuth();
+  const navigator = useNavigate();
+
   const [eventData, setEventData] = useState({
     eventName: "",
     eventDate: "",
     eventDescription: "",
-    photo: null,
   });
 
   const handleChange = (e) => {
@@ -16,8 +20,28 @@ const ChildHomeEvents = () => {
     setEventData({ ...eventData, [name]: value });
   };
 
-  const handleFileChange = (e) => {};
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    //console.log();
+    const data = {
+      eventName: eventData.eventName,
+      eventDate: eventData.eventDate,
+      eventDescription: eventData.eventDescription,
+      chId: user.id,
+    };
+
+    try {
+      const result = await AddEvents(data, user);
+      if (result && result.status === 200) {
+        toast.success("Event Added Successfully");
+        navigator("/childHome");
+      }
+    } catch (error) {
+      toast.error("An error occurred while adding the event.");
+      console.log("Event addition error:", error);
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -27,20 +51,20 @@ const ChildHomeEvents = () => {
         <div className="col-10">
           <div className="container_background">
             <div className="registration-container">
-              <h1 className="form-title text-primary">Add Event </h1>
+              <h1 className="form-title text-primary">Add Event</h1>
 
-              <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="name" className="form-label">
-                    Event Name :
+                  <label htmlFor="eventName" className="form-label">
+                    Event Name:
                   </label>
                 </div>
                 <div className="input-group">
                   <input
                     type="text"
                     className="form-control"
-                    id="eventname"
-                    name="eventname"
+                    id="eventName"
+                    name="eventName"
                     value={eventData.eventName}
                     onChange={handleChange}
                     required
@@ -48,16 +72,16 @@ const ChildHomeEvents = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="gender" className="form-label">
-                    Event Date :
+                  <label htmlFor="eventDate" className="form-label">
+                    Event Date:
                   </label>
                 </div>
                 <div className="input-group">
                   <input
                     type="date"
                     className="form-control"
-                    id="eventdate"
-                    name="eventdate"
+                    id="eventDate"
+                    name="eventDate"
                     value={eventData.eventDate}
                     onChange={handleChange}
                     required
@@ -65,34 +89,18 @@ const ChildHomeEvents = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="age" className="form-label">
-                    Event Description :
+                  <label htmlFor="eventDescription" className="form-label">
+                    Event Description:
                   </label>
                 </div>
                 <div className="input-group">
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
-                    id="eventdescription"
-                    name="eventdescription"
+                    id="eventDescription"
+                    name="eventDescription"
                     value={eventData.eventDescription}
                     onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div hidden className="form-group">
-                  <label hidden htmlFor="photo" className="form-label">
-                    Photo:
-                  </label>
-                </div>
-                <div hidden className="input-group">
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="photo"
-                    name="photo"
-                    onChange={handleFileChange}
                     required
                   />
                 </div>

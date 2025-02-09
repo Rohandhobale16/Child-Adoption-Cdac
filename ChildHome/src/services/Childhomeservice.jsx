@@ -14,8 +14,7 @@ export async function AddChild(data, user) {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; // Return the error response for better error handling
-  }
+    return error.response; 
 }
 
 export async function getChildList() {
@@ -31,7 +30,7 @@ export async function getChildList() {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; // Return the error response for better error handling
+    return error.response; 
   }
 }
 
@@ -49,7 +48,7 @@ export async function getChildHomes(user) {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; // Return the error response for better error handling
+    return error.response; 
   }
 }
 
@@ -68,6 +67,22 @@ export async function updateChildHome(data, user, id) {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; // Return the error response for better error handling
+    return error.response; 
   }
+}
+
+export async function AddEvents(data, user) {
+  const url = createUrl("childhome/addevents");
+  //console.log(user);
+  //console.log(data);
+  try {
+    const response = await axios.post(url, data, {
+      headers: { Authorization: `Bearer ${user.jwt} }` },
+    });
+    if (response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Error adding child:", error);
+    return error.response; 
 }

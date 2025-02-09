@@ -61,19 +61,17 @@ public class ChildHomeService {
 	private ModelMapper mapper;
 
 	public ApiResponse addChild(AddChildRequestDto dto) {
-		// Fetch the User by ID
+
 		User user = userDao.findById(dto.getCh())
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
-		// Fetch ChildHome associated with the User
 		ChildHome childHome = childHomeDao.findByU(user);
 
-		// Create a new Child entity
 		Child obj = new Child();
 		obj.setName(dto.getName());
 		obj.setAge(dto.getAge());
 		obj.setGender(dto.getGender());
-		obj.setCh(childHome); // Assign the found ChildHome
+		obj.setCh(childHome);
 		obj.setStatus(true);
 
 		childDao.save(obj);
@@ -87,8 +85,10 @@ public class ChildHomeService {
 		obj.setEventDate(dto.getEventDate());
 		obj.setEventDescription(dto.getEventDescription());
 
-		ChildHome childHome = childHomeDao.findById(dto.getChId())
-				.orElseThrow(() -> new RuntimeException("ChildHome not found"));
+		User user = userDao.findById(dto.getChId())
+				.orElseThrow(() -> new RuntimeException("User not found"));
+
+		ChildHome childHome = childHomeDao.findByU(user);
 		obj.setCh(childHome);
 		obj.setStatus(true);
 		eventsDao.save(obj);
@@ -143,7 +143,6 @@ public class ChildHomeService {
 		User user = userDao.findById(id)
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
-		
 		ChildHome l = childHomeDao.findByU(user);
 		ChildHomeResponseDto li = mapper.map(l, ChildHomeResponseDto.class);
 		return li;
