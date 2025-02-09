@@ -38,6 +38,7 @@ const ChildhomeSlider = () => {
           Register Social Worker
         </Link>
         <Link
+          hidden
           id="admin_slider_link"
           className="nav-link"
           to="/childhome/uploadcertifiacte"

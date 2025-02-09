@@ -81,12 +81,12 @@ const ChildHomeEvents = () => {
                   />
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="photo" className="form-label">
+                <div hidden className="form-group">
+                  <label hidden htmlFor="photo" className="form-label">
                     Photo:
                   </label>
                 </div>
-                <div className="input-group">
+                <div hidden className="input-group">
                   <input
                     type="file"
                     className="form-control"
