@@ -6,7 +6,7 @@ export async function fetchParent(user) {
   const url = createUrl(`parent/${user.id}`);
   const response = await axios.get(url);
   const data = response.data;
-  if (data.message == "success") {
+  if (data.message === "success") {
     return data;
   } else {
     if (response.status === 400 || response.status === 401) {

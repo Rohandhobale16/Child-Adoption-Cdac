@@ -1,14 +1,13 @@
 import axios from "axios";
 import { createUrl } from "../util";
 
-export async function addChild(data) {
+export async function AddChild(data, user) {
   const url = createUrl("childhome/addchild");
+  console.log(user);
+  console.log(data);
   try {
     const response = await axios.post(url, data, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${user.jwt} }` },
     });
     return response;
   } catch (error) {
@@ -25,7 +24,25 @@ export async function getChildList() {
     console.log(response);
     console.log(response.status);
     console.log(data);
-    if (response.status == 200) {
+    if (response.status === 200) {
+      return data;
+    }
+  } catch (error) {
+    console.error("Error adding child:", error);
+    return error.response; // Return the error response for better error handling
+  }
+}
+
+export async function getChildHomes(user) {
+  const url = createUrl(`childhome/getchildhomedetails/${user.id}`);
+  try {
+    const response = await axios.get(url, {
+      headers: { Authorization: `Bearer ${user.jwt} }` },
+    });
+    const data = response.data;
+    // console.log(response);
+    // console.log(data);
+    if (response.status === 200) {
       return data;
     }
   } catch (error) {

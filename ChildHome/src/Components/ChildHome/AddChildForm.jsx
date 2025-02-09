@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChildhomeSlider from "./Childhome_Slider";
-import { addChild } from "../../services/Childhomeservice";
+import { AddChild } from "../../services/Childhomeservice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Authenticate/AuthContext";
@@ -12,7 +12,6 @@ const AddChildForm = () => {
     name: "",
     gender: "",
     age: "",
-    photo: null,
   });
 
   const handleChange = (e) => {
@@ -20,9 +19,9 @@ const AddChildForm = () => {
     setChildData({ ...childData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    setChildData({ ...childData, photo: e.target.files[0] });
-  };
+  // const handleFileChange = (e) => {
+  //   setChildData({ ...childData, photo: e.target.files[0] });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,24 +35,14 @@ const AddChildForm = () => {
     };
 
     try {
-      const result = await addChild(data); // Send the data object
+      const result = await AddChild(data, user); // Send the data object
       if (result && result.status === 200) {
         toast.success("Child Added Successfully");
         navigator("/childHome");
-      } else if (
-        result &&
-        result.response &&
-        result.response.data &&
-        result.response.data.message
-      ) {
-        toast.error(result.response.data.message);
-      } else {
-        toast.error("Failed to add child.");
-        console.error("Add child failed:", result);
       }
     } catch (error) {
       toast.error("An error occurred during child addition.");
-      console.error("Add child error:", error);
+      console.log("Add child error:", error);
     }
   };
   return (
@@ -67,7 +56,7 @@ const AddChildForm = () => {
             <div className="registration-container">
               <h1 className="form-title text-primary">Add Child </h1>
 
-              <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="name" className="form-label">
                     Name:
@@ -123,7 +112,7 @@ const AddChildForm = () => {
                   />
                 </div>
 
-                <div hidden className="form-group">
+                {/* <div hidden className="form-group">
                   <label htmlFor="photo" className="form-label">
                     Photo:
                   </label>
@@ -137,7 +126,7 @@ const AddChildForm = () => {
                     name="photo"
                     onChange={handleFileChange}
                   />
-                </div>
+                </div> */}
 
                 <button type="submit" className="btn btn-primary">
                   Add Child

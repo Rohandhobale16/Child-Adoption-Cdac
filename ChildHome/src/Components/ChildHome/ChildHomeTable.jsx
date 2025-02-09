@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getChildList } from "../../services/Childhomeservice";
 
 const ChildHomeTable = () => {
-  const [count, setCount] = useState();
   const [childHomes, setChildHomes] = useState([]);
 
   useEffect(() => {

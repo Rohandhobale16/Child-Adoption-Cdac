@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../Registration/Registration.css";
-import SocialworkerSlider from "./Socialworker_Slider";
 import { registerSocialworker } from "../../services/registration";
 import { toast } from "react-toastify";
 import ChildhomeSlider from "../ChildHome/Childhome_Slider";

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import ChildhomeSlider from "./Childhome_Slider";
 import { useAuth } from "../Authenticate/AuthContext";
+import { getChildHomes } from "../../services/Childhomeservice";
 
 const EditHomeProfile = () => {
   const [chilhomeName, setChilhomeName] = useState("");
@@ -27,29 +28,25 @@ const EditHomeProfile = () => {
     const fetchData = async () => {
       if (user) {
         try {
-          //toast.warning(user.id);
-          const response = await axios.get(
-            `http://localhost:8080/api/childhome/profile/${user.id}`
-          );
-          const data = response.data;
-
-          //toast.warning(data);
-          setChilhomeName(data.chilhomeName);
-          setHouse(data.Houseno);
-          setStreet(data.Street);
-          setDistrict(data.District);
-          setCity(data.City);
-          setState(data.State);
-          setPincode(data.Pincode);
-          setMobile(data.Mobile);
-          setManagerfname(data.Managerfname);
-          setManagerlname(data.Managerlname);
-          setBankaccountno(data.Bankaccountno);
-          setIfscno(data.Ifscno);
-          setEmail(data.Email);
-          setPassword(data.Password);
-          setInHome(data.InHome);
-          setAdaptable(data.Adaptable);
+          const response = await getChildHomes(user);
+          const data = response;
+          // console.log(data);
+          setChilhomeName(data.houseName);
+          setHouse(data.u.address.houseNo);
+          setStreet(data.u.address.street);
+          setDistrict(data.u.address.district);
+          setCity(data.u.address.city);
+          setState(data.u.address.state);
+          setPincode(data.u.address.pincode);
+          setMobile(data.u.mobile);
+          setManagerfname(data.u.fname);
+          setManagerlname(data.u.lname);
+          setBankaccountno(data.bankAccount);
+          setIfscno(data.ifscCode);
+          setEmail(data.u.email);
+          setPassword(data.u.password);
+          setInHome(data.inHome);
+          setAdaptable(data.adoptable);
         } catch (error) {
           console.error("Error fetching data:", error);
           toast.error("Failed to fetch data");

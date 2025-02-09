@@ -129,7 +129,7 @@ const ParentRegistration = () => {
           partnernationality,
           password
         );
-        if (result.message == "success") {
+        if (result.message === "success") {
           toast.success("Registration Successfull");
           navigate("/");
         } else {

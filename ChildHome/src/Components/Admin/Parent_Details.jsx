@@ -21,12 +21,12 @@ const AdminParent = () => {
   );
 };
 function ParentDetails() {
-  console.log("parent details calling")
+  console.log("parent details calling");
   const [items, setItems] = useState([]);
   const onLoadItems = async () => {
-    console.log("parent details calling")
+    console.log("parent details calling");
     const result = await homeC();
-    if (result["status"] == "success") {
+    if (result["status"] === "success") {
       setItems(result["users"]);
     } else {
       toast.error(result["error"]);
@@ -37,7 +37,7 @@ function ParentDetails() {
   }, []);
   const del = async (id) => {
     const result = await deletes(id);
-    if (result["status"] == "success") {
+    if (result["status"] === "success") {
       toast.success("deleted");
       onLoadItems();
     } else {

@@ -8,7 +8,7 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here (like sending the data to an API)
+
     console.log({ name, email, message });
   };
 
