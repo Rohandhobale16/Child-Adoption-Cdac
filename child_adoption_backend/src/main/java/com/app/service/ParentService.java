@@ -1,26 +1,13 @@
 package com.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.app.dao.AddressDao;
-import com.app.dao.ChildHomeDao;
-import com.app.dao.ParentCoupleDao;
-import com.app.dao.ParentDao;
-import com.app.dao.RequestDao;
-import com.app.dao.UserDao;
+import com.app.dao.*;
 import com.app.dto.ChildHomeDTO;
 import com.app.dto.ParentDTO;
 import com.app.dto.SlotBookingDto;
-import com.app.pojos.Address;
-import com.app.pojos.ChildHome;
-import com.app.pojos.Gender;
-import com.app.pojos.Parent;
-import com.app.pojos.ParentCouple;
-import com.app.pojos.Request;
-import com.app.pojos.User;
+import com.app.pojos.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -71,21 +58,19 @@ public class ParentService {
         }).collect(Collectors.toList());
     }
 
-    public SlotBookingDto bookSlot(Long id,SlotBookingDto slotBookingDto) {
-
+    public SlotBookingDto bookSlot(Long userId, SlotBookingDto slotBookingDto) {
         ChildHome childHome = childHomeRepository.findByHouseName(slotBookingDto.getChildHomeName())
                 .orElseThrow(() -> new RuntimeException("Child home not found"));
 
         Long childHomeId = childHome.getId();
-        //Long id = slotBookingDto.getParentId();
-//        Parent parent=parentRepository.findByU(id).
-        
-        Parent parent = parentRepository.findById(id)
+
+        Parent parent = parentRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Parent not found"));
-        Long parentid = parent.getId();
+
+        Long parentId = parent.getId();
 
         // Check if the parent has already booked the same ChildHome on the same date
-        boolean alreadyBooked = requestRepository.existsByP_IdAndCh_IdAndDate(id, childHomeId,
+        boolean alreadyBooked = requestRepository.existsByP_IdAndCh_IdAndDate(parentId, childHomeId,
                 slotBookingDto.getDate());
         if (alreadyBooked) {
             throw new RuntimeException("You have already booked a slot for this child home on the selected date.");
@@ -107,8 +92,8 @@ public class ParentService {
         return slotBookingDto;
     }
 
-    public ParentDTO getParentProfile(Long id) {
-        Parent parent = parentRepository.findById(id)
+    public ParentDTO getParentProfile(Long userId) {
+        Parent parent = parentRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Parent not found"));
 
         ParentDTO dto = new ParentDTO();
@@ -144,52 +129,53 @@ public class ParentService {
         return dto;
     }
 
-     public ParentDTO updateParentDetails(Long id, ParentDTO parentDTO) {
-         Parent parent = parentRepository.findById(id)
-                 .orElseThrow(() -> new RuntimeException("Parent not found"));
+    public ParentDTO updateParentDetails(Long parentId, ParentDTO parentDTO) {
+        Parent parent = parentRepository.findById(parentId)
+                .orElseThrow(() -> new RuntimeException("Parent not found"));
 
-//          Update User Details
+        // Update User Details
         User user = parent.getU();
-         user.setFname(parentDTO.getFname());
-         user.setLname(parentDTO.getLname());
-         user.setEmail(parentDTO.getEmail());
-         userRepository.save(user);
+        user.setFname(parentDTO.getFname());
+        user.setLname(parentDTO.getLname());
+        user.setEmail(parentDTO.getEmail());
+        userRepository.save(user);
 
-//          Update Address Details
-         Address address = user.getAddress();
-         address.setHouseNo(parentDTO.getHouseNo());
-         address.setStreet(parentDTO.getStreet());
-         address.setCity(parentDTO.getCity());
-         address.setDistrict(parentDTO.getDistrict());
-         address.setState(parentDTO.getState());
-         address.setPincode(parentDTO.getPincode());
-         addressRepository.save(address);
+        // Update Address Details
+        Address address = user.getAddress();
+        address.setHouseNo(parentDTO.getHouseNo());
+        address.setStreet(parentDTO.getStreet());
+        address.setCity(parentDTO.getCity());
+        address.setDistrict(parentDTO.getDistrict());
+        address.setState(parentDTO.getState());
+        address.setPincode(parentDTO.getPincode());
+        addressRepository.save(address);
 
-//          Update Parent Details
-         parent.setIncome(parentDTO.getAnnualIncome());
-         parent.setOccupation(parentDTO.getOccupation());
-         parent.setMarrigeStatus(parentDTO.getMarriageStatus());
+        // Update Parent Details
+        parent.setIncome(parentDTO.getAnnualIncome());
+        parent.setOccupation(parentDTO.getOccupation());
+        parent.setMarrigeStatus(parentDTO.getMarriageStatus());
 
-//          If married, update partner details
-         if (parentDTO.getPartnerFname() != null) {
-             ParentCouple partner = parent.getPc();
-             if (partner == null) {
-                 partner = new ParentCouple();
-             }
-             partner.setPartnerfname(parentDTO.getPartnerFname());
-             partner.setPartnerlname(parentDTO.getPartnerLname());
-             partner.setPartneremail(parentDTO.getPartnerEmail());
-             partner.setPartnergender(Gender.valueOf(parentDTO.getPartnerGender()));
-             partner.setPartneroccupation(parentDTO.getPartnerOccupation());
-             partner.setPartnerincome(parentDTO.getPartnerIncome());
+        // If married, update partner details
+        if (parentDTO.getPartnerFname() != null) {
+            ParentCouple partner = parent.getPc();
+            if (partner == null) {
+                partner = new ParentCouple();
+            }
+            partner.setPartnerfname(parentDTO.getPartnerFname());
+            partner.setPartnerlname(parentDTO.getPartnerLname());
+            partner.setPartneremail(parentDTO.getPartnerEmail());
+            partner.setPartnergender(Gender.valueOf(parentDTO.getPartnerGender()));
+            partner.setPartneroccupation(parentDTO.getPartnerOccupation());
+            partner.setPartnerincome(parentDTO.getPartnerIncome());
             parentCoupleRepository.save(partner);
-             parent.setPc(partner);
-         } else {
-             parent.setPc(null); // Remove partner if not married
-         }
+            parent.setPc(partner);
+        } else {
+            parent.setPc(null); // Remove partner if not married
+        }
 
         parentRepository.save(parent);
 
+        // Return updated parent details
         ParentDTO updatedDTO = new ParentDTO();
         updatedDTO.setFname(user.getFname());
         updatedDTO.setLname(user.getLname());
@@ -209,5 +195,4 @@ public class ParentService {
 
         return updatedDTO;
     }
-
 }
