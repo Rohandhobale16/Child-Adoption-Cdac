@@ -62,19 +62,20 @@ public class ChildHomeService {
 	private ModelMapper mapper;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 	public ApiResponse addChild(AddChildRequestDto dto) {
-
+		// Fetch the User by ID
 		User user = userDao.findById(dto.getCh())
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
+		// Fetch ChildHome associated with the User
 		ChildHome childHome = childHomeDao.findByU(user);
 
+		// Create a new Child entity
 		Child obj = new Child();
 		obj.setName(dto.getName());
 		obj.setAge(dto.getAge());
 		obj.setGender(dto.getGender());
-		obj.setCh(childHome);
+		obj.setCh(childHome); // Assign the found ChildHome
 		obj.setStatus(true);
 
 		childDao.save(obj);
@@ -88,10 +89,8 @@ public class ChildHomeService {
 		obj.setEventDate(dto.getEventDate());
 		obj.setEventDescription(dto.getEventDescription());
 
-		User user = userDao.findById(dto.getChId())
-				.orElseThrow(() -> new RuntimeException("User not found"));
-
-		ChildHome childHome = childHomeDao.findByU(user);
+		ChildHome childHome = childHomeDao.findById(dto.getChId())
+				.orElseThrow(() -> new RuntimeException("ChildHome not found"));
 		obj.setCh(childHome);
 		obj.setStatus(true);
 		eventsDao.save(obj);
@@ -142,19 +141,13 @@ public class ChildHomeService {
 		return new ApiResponse("success");
 	}
 
-	public ChildHomeResponseDto getChildHomeDetails(Long id) {
-		User user = userDao.findById(id)
-				.orElseThrow(() -> new RuntimeException("User not found"));
-
-		ChildHome l = childHomeDao.findByU(user);
-
-	public ChildHomeResponseDto getChildHomeDetails(Long id) {
+	public ChildHomeResponseDto getChildHomeDetails(Long id) {	
 		ChildHome l = childHomeDao.findById(id).orElseThrow();
 		ChildHomeResponseDto li = mapper.map(l, ChildHomeResponseDto.class);
 		return li;
 	}
 
-	public ApiResponse updateChildHome(Long id, UpdateChildHomeRequestDto dto) {
+	public ApiResponse updateChildHome(Long id,UpdateChildHomeRequestDto dto) {
 		ChildHome e = childHomeDao.findById(id).orElseThrow(() -> new RuntimeException("ChildHome not found"));
 		e.u.setEmail(dto.getEmail());
 		e.u.setFname(dto.getFname());
@@ -189,13 +182,13 @@ public class ChildHomeService {
 		return li;
 	}
 
-	public Long countChildHomeDetails() {
-		Long s = childDao.count();
+	public  Long countChildHomeDetails() {
+		Long s=childDao.count();
 		return s;
 	}
 
 	public Long countEmployee() {
-		Long s = employeeDao.count();
+		Long s=employeeDao.count();
 		return s;
 	}
 }
