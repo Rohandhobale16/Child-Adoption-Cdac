@@ -165,4 +165,13 @@ public class ChildHomeService {
 		r.setStatus(status);
 		return new ApiResponse("success");
 	}
-}
+
+	public List<ChildHomeResponseDto> getAllChildHomeDetails() {
+        List<ChildHome> l = childHomeDao.findAll();
+        List<ChildHomeResponseDto> li=l.stream().map(e->mapper.map(e,ChildHomeResponseDto.class)).collect(Collectors.toList());
+        
+        
+        return li;
+    }
+	}
+

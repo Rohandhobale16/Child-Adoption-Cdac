@@ -1,27 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { getChildList } from "../../services/Childhomeservice";
 
-// ChildHomeTable Component
 const ChildHomeTable = () => {
+  const [count, setCount] = useState();
   const [childHomes, setChildHomes] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  // Fetch data from the backend
   useEffect(() => {
-    fetch('http://localhost:5000/api/childhomes')
-      .then((response) => response.json())
-      .then((data) => {
-        setChildHomes(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setLoading(false);
-      });
-  }, []);
+    async function fetchData() {
+      const fetchData = await getChildList();
+      setChildHomes(fetchData);
+    }
 
-  if (loading) {
-    return <div className="text-center my-5">Loading...</div>;
-  }
+    fetchData();
+  }, []);
 
   return (
     <div className="container my-5">
@@ -30,20 +21,28 @@ const ChildHomeTable = () => {
         <thead className="bg-primary text-white">
           <tr>
             <th>ID</th>
-            <th>Home Name</th>
+            <th>Child Home Name</th>
             <th>State</th>
             <th>Address</th>
             <th>Contact Details</th>
           </tr>
         </thead>
         <tbody>
-          {childHomes.map((home) => (
-            <tr key={home.id} className="text-dark">
-              <td>{home.id}</td>
-              <td>{home.name}</td>
-              <td>{home.state}</td>
-              <td>{home.address}</td>
-              <td>{home.contactDetails}</td>
+          {childHomes.map((home, index) => (
+            <tr key={home.id || index} className="text-dark">
+              <td>{index + 1}</td>
+              <td>{home.houseName}</td>
+              <td>{home.u.address.state}</td>
+              <td>
+                {home.u.address.state +
+                  " " +
+                  home.u.address.houseNo +
+                  " " +
+                  home.u.address.street +
+                  " " +
+                  home.u.address.city}
+              </td>
+              <td>{home.u.mobile}</td>
             </tr>
           ))}
         </tbody>
