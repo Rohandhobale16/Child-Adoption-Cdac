@@ -1,6 +1,7 @@
 package com.app.pojos;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,9 @@ import lombok.Setter;
 @Entity
 public class Employee extends BaseEntity{
 	@OneToOne
-	@JoinColumn(name="u",nullable=false)
+	@JoinColumn(name="user_id",nullable=false)
 	public User u;
-	@OneToOne
-	@JoinColumn(name="c",nullable=false)
+	@ManyToOne
+	@JoinColumn(name="child_home_id",nullable=false)
 private ChildHome c;
 }

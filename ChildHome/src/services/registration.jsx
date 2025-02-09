@@ -170,6 +170,3 @@ export async function registerChildhome(
     }
 }
 
-export async function registerSocialworker() {
-
-}

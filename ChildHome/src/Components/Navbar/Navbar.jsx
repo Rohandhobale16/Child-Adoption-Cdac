@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Navbar/Navbar.css";
 import { useAuth } from "../Authenticate/AuthContext";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  // console.log(user.email);
-  // console.log(user.password);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsNavbarOpen(!isNavbarOpen);
+  };
+
+  const closeNavbar = () => {
+    setIsNavbarOpen(false);
+  };
 
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
         <div className="container-fluid" id="navbarcontainerfluid">
-          <Link className="navbar-brand d-flex align-items-center me-4" to="/">
+          <Link
+            className="navbar-brand d-flex align-items-center me-4"
+            to="/"
+            onClick={closeNavbar}
+          >
             <img
               id="home_logo"
               src="/logo.jpg"
@@ -23,18 +35,22 @@ const Navbar = () => {
           </Link>
 
           <button
-            className="navbar-toggler"
+            className={`navbar-toggler ${isNavbarOpen ? "" : "collapsed"}`}
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
             aria-controls="navbarNav"
-            aria-expanded="false"
+            aria-expanded={isNavbarOpen}
             aria-label="Toggle navigation"
+            onClick={handleToggle}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div
+            className={`collapse navbar-collapse ${isNavbarOpen ? "show" : ""}`}
+            id="navbarNav"
+          >
             <ul className="navbar-nav ms-auto align-items-center">
               <li className="nav-item dropdown">
                 <button
@@ -53,6 +69,7 @@ const Navbar = () => {
                     <Link
                       className="dropdown-item"
                       to="/schemesAndGuidelinesPage"
+                      onClick={closeNavbar}
                     >
                       Schemes & Guidelines
                     </Link>
@@ -61,12 +78,17 @@ const Navbar = () => {
                     <Link
                       className="dropdown-item"
                       to="/importantCourtOrdersPage"
+                      onClick={closeNavbar}
                     >
                       Important Court Orders
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/annualReportPage">
+                    <Link
+                      className="dropdown-item"
+                      to="/annualReportPage"
+                      onClick={closeNavbar}
+                    >
                       Annual Reports
                     </Link>
                   </li>
@@ -74,22 +96,30 @@ const Navbar = () => {
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to="/contactus">
+                <Link
+                  className="nav-link"
+                  to="/contactus"
+                  onClick={closeNavbar}
+                >
                   Contact Us
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/displayhomes">
+                <Link
+                  className="nav-link"
+                  to="/displayhomes"
+                  onClick={closeNavbar}
+                >
                   Child Homes
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/events">
+                <Link className="nav-link" to="/events" onClick={closeNavbar}>
                   Events
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/donate">
+                <Link className="nav-link" to="/donate" onClick={closeNavbar}>
                   Donation
                 </Link>
               </li>
@@ -98,6 +128,7 @@ const Navbar = () => {
                   className="nav-link"
                   href="pdf_files/adoption_regulations.pdf"
                   target="_blank"
+                  onClick={closeNavbar}
                 >
                   Acts & Regulations
                 </a>
@@ -105,36 +136,42 @@ const Navbar = () => {
 
               {user && user.role === "ROLE_CHILDHOME" && (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/childHome">
+                  <Link
+                    className="nav-link"
+                    to="/childHome"
+                    onClick={closeNavbar}
+                  >
                     ChildHome Dashboard
                   </Link>
                 </li>
               )}
               {user && user.role === "ROLE_ADMIN" && (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/admin">
+                  <Link className="nav-link" to="/admin" onClick={closeNavbar}>
                     Admin Dashboard
                   </Link>
                 </li>
               )}
               {user && user.role === "ROLE_PARENT" && (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/parent">
+                  <Link className="nav-link" to="/parent" onClick={closeNavbar}>
                     Parent Dashboard
                   </Link>
                 </li>
               )}
               {user && user.role === "ROLE_EMPLOYEE" && (
                 <li className="nav-item">
-                  <Link className="nav-link" to="/employee">
+                  <Link
+                    className="nav-link"
+                    to="/employee"
+                    onClick={closeNavbar}
+                  >
                     SocialWorker Dashboard
                   </Link>
                 </li>
               )}
 
-              {user ? (
-                ""
-              ) : (
+              {!user && (
                 <li className="nav-item dropdown">
                   <button
                     className="btn nav-link dropdown-toggle"
@@ -149,12 +186,20 @@ const Navbar = () => {
                     aria-labelledby="registrationDropdown"
                   >
                     <li>
-                      <Link className="dropdown-item" to="/Applicantreg">
+                      <Link
+                        className="dropdown-item"
+                        to="/Applicantreg"
+                        onClick={closeNavbar}
+                      >
                         Resident Indian Parents
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item" to="/Childhomereg">
+                      <Link
+                        className="dropdown-item"
+                        to="/Childhomereg"
+                        onClick={closeNavbar}
+                      >
                         Register Child Home
                       </Link>
                     </li>
@@ -164,14 +209,23 @@ const Navbar = () => {
 
               {user ? (
                 <li className="nav-item">
-                  <button className="btn btn-danger ms-lg-3" onClick={logout}>
+                  <button
+                    className="btn btn-danger ms-lg-3"
+                    onClick={() => {
+                      logout();
+                      closeNavbar();
+                    }}
+                  >
                     Logout
                   </button>
                 </li>
               ) : (
                 <li className="nav-item">
                   <button
-                    onClick={() => navigate("/login")}
+                    onClick={() => {
+                      navigate("/login");
+                      closeNavbar();
+                    }}
                     className="btn btn-primary ms-lg-3"
                   >
                     Login

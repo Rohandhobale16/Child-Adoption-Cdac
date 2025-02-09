@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import "../Registration/Registration.css";
-import { registerSocialworker } from "../../services/registration";
 import { toast } from "react-toastify";
 import ChildhomeSlider from "../ChildHome/Childhome_Slider";
+import { useAuth } from "../Authenticate/AuthContext";
+import { registerSocialworker } from "../../services/SocialWorkerService";
+import { useNavigate } from "react-router-dom";
 
 const SocialWorkerRegistration = () => {
+  const navigator = useNavigate();
+  const { user } = useAuth();
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
   const [mobile, setMobile] = useState("");
@@ -17,62 +21,58 @@ const SocialWorkerRegistration = () => {
   const [pincode, setPincode] = useState("");
   const [password, setPassword] = useState("");
 
-  const onRegister = async () => {
-    if (fname.length === 0) {
-      toast.warning("Please enter First Name");
-    } else if (lname.length === 0) {
-      toast.warning("Please enter Last Name");
-    } else if (email.length === 0) {
-      toast.warning("Please enter Email");
-    } else if (houseNo.length === 0) {
-      toast.warning("Please enter Houseno");
-    } else if (street.length === 0) {
-      toast.warning("Please enter Street");
-    } else if (district.length === 0) {
-      toast.warning("Please enter District");
-    } else if (city.length === 0) {
-      toast.warning("Please enter City");
-    } else if (state.length === 0) {
-      toast.warning("Please enter State");
-    } else if (pincode.length === 0) {
-      toast.warning("Please enter pincode");
-    } else if (mobile.length === 0) {
-      toast.warning("Please enter Mobile No");
-    } else if (password.length === 0) {
-      toast.warning("Please enter Password");
-    } else {
-      const result = await registerSocialworker(
-        fname,
-        lname,
-        mobile,
-        email,
-        houseNo,
-        street,
-        district,
-        city,
-        state,
-        pincode
-      );
-      if ((result.message = "success")) {
-        toast.success("Registration Successfull");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (
+      !fname ||
+      !lname ||
+      !email ||
+      !mobile ||
+      !password ||
+      !houseNo ||
+      !street ||
+      !district ||
+      !city ||
+      !state ||
+      !pincode
+    ) {
+      toast.warning("All fields are required.");
+      return;
+    }
+    console.log(user.id);
+    const chId = user.id;
+    const employeeData = {
+      fname,
+      lname,
+      mobile,
+      email,
+      password,
+      houseNo,
+      street,
+      district,
+      state,
+      pincode,
+      city,
+      chId,
+    };
+    console.log(employeeData);
+    debugger;
+    try {
+      const result = await registerSocialworker(employeeData, user);
+      console.log(result);
+      if (result.message === "success") {
+        toast.success("Social Worker Registered Successfully");
+        navigator("/childHome");
       } else {
         toast.error("Registration Failed");
       }
+    } catch (error) {
+      toast.error("An error occurred during registration.");
+      console.error("Registration error:", error);
     }
   };
 
-  console.log(
-    fname,
-    lname,
-    mobile,
-    email,
-    houseNo,
-    street,
-    district,
-    city,
-    state,
-    pincode
-  );
   return (
     <div className="container-fluid">
       <div className="row">
@@ -85,7 +85,7 @@ const SocialWorkerRegistration = () => {
               <h1 className="form-title text-primary">
                 Social Worker Registration
               </h1>
-              <form onSubmit={onRegister}>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="first_name" className="form-label">
                     First Name:
