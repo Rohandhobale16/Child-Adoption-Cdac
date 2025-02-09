@@ -14,7 +14,8 @@ export async function AddChild(data, user) {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; 
+    return error.response;
+  }
 }
 
 export async function getChildList() {
@@ -30,7 +31,7 @@ export async function getChildList() {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; 
+    return error.response;
   }
 }
 
@@ -48,7 +49,7 @@ export async function getChildHomes(user) {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; 
+    return error.response;
   }
 }
 
@@ -67,7 +68,7 @@ export async function updateChildHome(data, user, id) {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; 
+    return error.response;
   }
 }
 
@@ -84,5 +85,6 @@ export async function AddEvents(data, user) {
     }
   } catch (error) {
     console.error("Error adding child:", error);
-    return error.response; 
+    return error.response;
+  }
 }
