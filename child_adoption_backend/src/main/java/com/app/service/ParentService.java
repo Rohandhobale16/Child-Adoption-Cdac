@@ -71,15 +71,18 @@ public class ParentService {
         }).collect(Collectors.toList());
     }
 
-    public SlotBookingDto bookSlot(SlotBookingDto slotBookingDto) {
+    public SlotBookingDto bookSlot(Long id,SlotBookingDto slotBookingDto) {
 
         ChildHome childHome = childHomeRepository.findByHouseName(slotBookingDto.getChildHomeName())
                 .orElseThrow(() -> new RuntimeException("Child home not found"));
 
         Long childHomeId = childHome.getId();
-        Long id = 2L;
+        //Long id = slotBookingDto.getParentId();
+//        Parent parent=parentRepository.findByU(id).
+        
         Parent parent = parentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Parent not found"));
+        Long parentid = parent.getId();
 
         // Check if the parent has already booked the same ChildHome on the same date
         boolean alreadyBooked = requestRepository.existsByP_IdAndCh_IdAndDate(id, childHomeId,
@@ -141,54 +144,70 @@ public class ParentService {
         return dto;
     }
 
-    // public ParentDTO updateParentDetails(Long id, ParentDTO parentDTO) {
-    // Parent parent = parentRepository.findById(id)
-    // .orElseThrow(() -> new RuntimeException("Parent not found"));
+     public ParentDTO updateParentDetails(Long id, ParentDTO parentDTO) {
+         Parent parent = parentRepository.findById(id)
+                 .orElseThrow(() -> new RuntimeException("Parent not found"));
 
-    // // Update User Details
-    // User user = parent.getU();
-    // user.setFname(parentDTO.getFname());
-    // user.setLname(parentDTO.getLname());
-    // user.setEmail(parentDTO.getEmail());
-    // userRepository.save(user);
+//          Update User Details
+        User user = parent.getU();
+         user.setFname(parentDTO.getFname());
+         user.setLname(parentDTO.getLname());
+         user.setEmail(parentDTO.getEmail());
+         userRepository.save(user);
 
-    // // Update Address Details
-    // Address address = user.getAddress();
-    // address.setHouseNo(parentDTO.getHouseNo());
-    // address.setStreet(parentDTO.getStreet());
-    // address.setCity(parentDTO.getCity());
-    // address.setDistrict(parentDTO.getDistrict());
-    // address.setState(parentDTO.getState());
-    // address.setPincode(parentDTO.getPincode());
-    // addressRepository.save(address);
+//          Update Address Details
+         Address address = user.getAddress();
+         address.setHouseNo(parentDTO.getHouseNo());
+         address.setStreet(parentDTO.getStreet());
+         address.setCity(parentDTO.getCity());
+         address.setDistrict(parentDTO.getDistrict());
+         address.setState(parentDTO.getState());
+         address.setPincode(parentDTO.getPincode());
+         addressRepository.save(address);
 
-    // // Update Parent Details
-    // parent.setIncome(parentDTO.getAnnualIncome());
-    // parent.setOccupation(parentDTO.getOccupation());
-    // parent.setMarrigeStatus(parentDTO.isMarriageStatus());
+//          Update Parent Details
+         parent.setIncome(parentDTO.getAnnualIncome());
+         parent.setOccupation(parentDTO.getOccupation());
+         parent.setMarrigeStatus(parentDTO.getMarriageStatus());
 
-    // // If married, update partner details
-    // if (parentDTO.isMarriageStatus() && parentDTO.getPartnerFname() != null) {
-    // ParentCouple partner = parent.getPc();
-    // if (partner == null) {
-    // partner = new ParentCouple();
-    // }
-    // partner.setPartnerfname(parentDTO.getPartnerFname());
-    // partner.setPartnerlname(parentDTO.getPartnerLname());
-    // partner.setPartneremail(parentDTO.getPartnerEmail());
-    // partner.setPartnergender(Gender.valueOf(parentDTO.getPartnerGender()));
-    // partner.setPartneroccupation(parentDTO.getPartnerOccupation());
-    // partner.setPartnerincome(parentDTO.getPartnerIncome());
+//          If married, update partner details
+         if (parentDTO.getPartnerFname() != null) {
+             ParentCouple partner = parent.getPc();
+             if (partner == null) {
+                 partner = new ParentCouple();
+             }
+             partner.setPartnerfname(parentDTO.getPartnerFname());
+             partner.setPartnerlname(parentDTO.getPartnerLname());
+             partner.setPartneremail(parentDTO.getPartnerEmail());
+             partner.setPartnergender(Gender.valueOf(parentDTO.getPartnerGender()));
+             partner.setPartneroccupation(parentDTO.getPartnerOccupation());
+             partner.setPartnerincome(parentDTO.getPartnerIncome());
+            parentCoupleRepository.save(partner);
+             parent.setPc(partner);
+         } else {
+             parent.setPc(null); // Remove partner if not married
+         }
 
-    // parentCoupleRepository.save(partner);
-    // parent.setPc(partner);
-    // } else {
-    // parent.setPc(null); // Remove partner if not married
-    // }
+        parentRepository.save(parent);
 
-    // parentRepository.save(parent);
+        ParentDTO updatedDTO = new ParentDTO();
+        updatedDTO.setFname(user.getFname());
+        updatedDTO.setLname(user.getLname());
+        updatedDTO.setEmail(user.getEmail());
+        updatedDTO.setMarriageStatus(parent.getMarrigeStatus());
+        updatedDTO.setOccupation(parent.getOccupation());
+        updatedDTO.setAnnualIncome(parent.getIncome());
 
-    // return parentDTO;
-    // }
+        if (parent.getPc() != null) {
+            updatedDTO.setPartnerFname(parent.getPc().getPartnerfname());
+            updatedDTO.setPartnerLname(parent.getPc().getPartnerlname());
+            updatedDTO.setPartnerEmail(parent.getPc().getPartneremail());
+            updatedDTO.setPartnerGender(parent.getPc().getPartnergender().toString());
+            updatedDTO.setPartnerOccupation(parent.getPc().getPartneroccupation());
+            updatedDTO.setPartnerIncome(parent.getPc().getPartnerincome());
+        }
+
+        return updatedDTO;
+    }
 
 }
