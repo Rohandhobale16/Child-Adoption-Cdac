@@ -33,7 +33,7 @@ public class SecurityConfiguration {
 	        .authorizeHttpRequests
 	        (request -> 
 	        request.requestMatchers("/Login",
-	        		"/addchildhome","/addparent","/geteventdetails","/getchildhomedetails").permitAll() 
+	        		"/addchildhome","/addparent","/geteventdetails","/getchildhomedetails","/childhome/allChildhomedetails").permitAll() 
 	        //required explicitly for JS clients (eg React app - to permit pre flight requests)
 	        .requestMatchers(HttpMethod.OPTIONS).permitAll()
 	        	

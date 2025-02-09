@@ -3,6 +3,7 @@ package com.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.app.dto.AddEventsDto;
 import com.app.dto.AddRequestDto;
 import com.app.service.ChildHomeService;
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class ChildHomeController {
 	@Autowired
     private ChildHomeService childHomeService;
@@ -102,4 +104,16 @@ public class ChildHomeController {
             return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/childhome/allChildhomedetails")
+	public ResponseEntity<?> getAllChildHomeDetails() {
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getAllChildHomeDetails());
+		} catch (Exception e) {
+			e.printStackTrace(); // Use proper logging in production
+			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }
