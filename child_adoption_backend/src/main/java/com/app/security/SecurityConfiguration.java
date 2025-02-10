@@ -30,7 +30,7 @@ public class SecurityConfiguration {
 				// 2. configure URL based access
 				.authorizeHttpRequests(request -> request.requestMatchers("/Login",
 						"/addchildhome", "/addparent", "/geteventdetails", "/getchildhomedetails",
-						"/childhome/allChildhomedetails", "contactus","/childhome/childhomecount","/childhome/employeecount").permitAll()
+						"/childhome/allChildhomedetails", "contactus","/childhome/childhomecount","/childhome/employeecount","/api/create-order","/api/verify-payment").permitAll()
 						// required explicitly for JS clients (eg React app - to permit pre flight
 						// requests)
 						.requestMatchers(HttpMethod.OPTIONS).permitAll()
