@@ -20,10 +20,11 @@ import com.app.dto.UpdateEmployeeRequestDto;
 import com.app.dto.AddEventsDto;
 import com.app.dto.AddRequestDto;
 import com.app.service.ChildHomeService;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class ChildHomeController {
-	@Autowired
+    @Autowired
     private ChildHomeService childHomeService;
 
     @PostMapping("/childhome/addchild")
@@ -36,24 +37,29 @@ public class ChildHomeController {
             e.printStackTrace(); // Or use a proper logging framework (e.g., SLF4j)
 
             // Return a more informative error response
-            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
-            //Or
-            // return new ResponseEntity<>(new ApiResponse("Failed to add child: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR); // 500
+                                                                                                            // Internal
+                                                                                                            // Server
+                                                                                                            // Error
+            // Or
+            // return new ResponseEntity<>(new ApiResponse("Failed to add child: " +
+            // e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/childhome/addevents")
     public ResponseEntity<?> addEvent(@RequestBody AddEventsDto dto) {
         try {
             ApiResponse response = childHomeService.addEvent(dto);
-            
-            
-            
+
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production
-            return new ResponseEntity<>(new ApiResponse("Failed to add event: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("Failed to add event: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/childhome/addemployee")
     public ResponseEntity<?> addSocialWorker(@RequestBody AddEmployeeRequestDto dto) {
         try {
@@ -61,9 +67,11 @@ public class ChildHomeController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production
-            return new ResponseEntity<>(new ApiResponse("Failed to add social worker: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("Failed to add social worker: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/childhome/addrequest")
     public ResponseEntity<?> addRequest(@RequestBody AddRequestDto dto) {
         try {
@@ -71,72 +79,93 @@ public class ChildHomeController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production
-            return new ResponseEntity<>(new ApiResponse("Failed to add social worker: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("Failed to add social worker: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/childhome/getchildhomedetails/{id}")
     public ResponseEntity<?> getChildHomeDetails(@PathVariable Long id) {
         try {
-             
-             return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getChildHomeDetails(id));
+
+            return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getChildHomeDetails(id));
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production
-            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/childhome/updatechildhome/{id}")
-    public ResponseEntity<?> updateSocialWorker(@PathVariable Long id,@RequestBody UpdateChildHomeRequestDto dto) {
-    	System.out.println("updatechildhome request");
+    public ResponseEntity<?> updateSocialWorker(@PathVariable Long id, @RequestBody UpdateChildHomeRequestDto dto) {
+        System.out.println("updatechildhome request");
         try {
-            ApiResponse response = childHomeService.updateChildHome(id,dto);
+            ApiResponse response = childHomeService.updateChildHome(id, dto);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production
-            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("/childhome/updaterequest/{id}")
-    public ResponseEntity<?> updateRequestStatus(@PathVariable Long id,@RequestBody String status) {
+    public ResponseEntity<?> updateRequestStatus(@PathVariable Long id, @RequestBody String status) {
         try {
-            ApiResponse response = childHomeService.updateRequestStatus(id,status);
+            ApiResponse response = childHomeService.updateRequestStatus(id, status);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production
-            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @GetMapping("/childhome/allChildhomedetails")
-	public ResponseEntity<?> getAllChildHomeDetails() {
-		try {
+    public ResponseEntity<?> getAllChildHomeDetails() {
+        try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getAllChildHomeDetails());
-		} catch (Exception e) {
-			e.printStackTrace(); // Use proper logging in production
-			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getAllChildHomeDetails());
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/childhome/childhomecount")
-	public ResponseEntity<?> countChildHomeDetails() {
-		try {
+    public ResponseEntity<?> countChildHomeDetails() {
+        try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.countChildHomeDetails());
-		} catch (Exception e) {
-			e.printStackTrace(); // Use proper logging in production
-			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            return ResponseEntity.status(HttpStatus.OK).body(childHomeService.countChildHomeDetails());
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/childhome/employeecount")
-	public ResponseEntity<?> countEmployee() {
-		try {
+    public ResponseEntity<?> countEmployee() {
+        try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.countEmployee());
-		} catch (Exception e) {
-			e.printStackTrace(); // Use proper logging in production
-			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+            return ResponseEntity.status(HttpStatus.OK).body(childHomeService.countEmployee());
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/childhome/getchilds/{id}")
+    public ResponseEntity<?> getAllChilds(@PathVariable Long id) {
+        try {
+            List<ChildDto> response = childHomeService.getAllChilds(id);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to get Childs: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

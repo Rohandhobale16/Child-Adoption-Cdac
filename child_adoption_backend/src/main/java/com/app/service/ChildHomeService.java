@@ -62,6 +62,7 @@ public class ChildHomeService {
 	private ModelMapper mapper;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
 	public ApiResponse addChild(AddChildRequestDto dto) {
 		// Fetch the User by ID
 		User user = userDao.findById(dto.getCh())
@@ -141,13 +142,13 @@ public class ChildHomeService {
 		return new ApiResponse("success");
 	}
 
-	public ChildHomeResponseDto getChildHomeDetails(Long id) {	
+	public ChildHomeResponseDto getChildHomeDetails(Long id) {
 		ChildHome l = childHomeDao.findById(id).orElseThrow();
 		ChildHomeResponseDto li = mapper.map(l, ChildHomeResponseDto.class);
 		return li;
 	}
 
-	public ApiResponse updateChildHome(Long id,UpdateChildHomeRequestDto dto) {
+	public ApiResponse updateChildHome(Long id, UpdateChildHomeRequestDto dto) {
 		ChildHome e = childHomeDao.findById(id).orElseThrow(() -> new RuntimeException("ChildHome not found"));
 		e.u.setEmail(dto.getEmail());
 		e.u.setFname(dto.getFname());
@@ -182,13 +183,18 @@ public class ChildHomeService {
 		return li;
 	}
 
-	public  Long countChildHomeDetails() {
-		Long s=childDao.count();
+	public Long countChildHomeDetails() {
+		Long s = childDao.count();
 		return s;
 	}
 
 	public Long countEmployee() {
-		Long s=employeeDao.count();
+		Long s = employeeDao.count();
 		return s;
+	}
+
+	public List<ChildDto> getAllChilds(Long childHomeId) {
+		// TODO Auto-generated method stub
+		return childDao.findChildrenByChildHomeId(childHomeId);
 	}
 }
