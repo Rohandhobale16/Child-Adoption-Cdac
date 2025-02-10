@@ -15,9 +15,6 @@ const Parent_Slider = () => {
       <Link id="admin_slider_link" className="nav-link" to="/parent/edit">
         Edit Profile
       </Link>
-      <Link id="admin_slider_link" className="nav-link" to="/parent/feedback">
-        Feedback
-      </Link>
       <Link id="admin_slider_link" className="nav-link" to="/parent/status">
         Booking Status
       </Link>

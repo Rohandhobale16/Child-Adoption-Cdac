@@ -17,6 +17,7 @@ const BookingSlot = () => {
 
   const fetchChildHomes = async () => {
     try {
+      
       if (!user.jwt) {
         console.error("No token found, please log in.");
         return;
@@ -26,15 +27,12 @@ const BookingSlot = () => {
         headers: {
           Authorization: `Bearer ${user.jwt}`,
         },
-        withCredentials: true,
+        withCredentials: true, 
       });
 
-      setChildHomes(response.data);
+      setChildHomes(response.data); 
     } catch (error) {
-      console.error(
-        "Error fetching child homes:",
-        error.response?.data || error.message
-      );
+      console.error("Error fetching child homes:", error.response?.data || error.message);
     }
   };
 
@@ -108,10 +106,12 @@ const BookSlotTable = ({ childHomes, onBookSlot }) => {
 };
 
 const BookSlotModal = ({ selectedChildHome }) => {
+ 
   const { user } = useAuth();
   const url = createUrl(`api/parent/parent/bookSlot/${user.id}`);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
+
 
   const getNextFourSundays = () => {
     let dates = [];
@@ -125,35 +125,33 @@ const BookSlotModal = ({ selectedChildHome }) => {
 
   const handleSubmit = async () => {
     try {
-      if (!user.jwt) {
-        console.error("No token found, please log in.");
-        return;
-      }
+        if (!user.jwt) {
+            console.error("No token found, please log in.");
+            return;
+        }
 
-      const bookingData = {
-        childHomeName: selectedChildHome,
-        date: selectedDate,
-        slot: selectedSlot.toUpperCase(),
-      };
+        const bookingData = {
+           
+            childHomeName: selectedChildHome,
+            date: selectedDate,
+            slot: selectedSlot.toUpperCase(), 
+        };
 
-      console.log("Booking Data:", bookingData);
-      console.log("JWT Token:", user.jwt);
+        console.log("Booking Data:", bookingData);
+        console.log("JWT Token:", user.jwt);
 
-      await axios.post(url, bookingData, {
-        headers: {
-          Authorization: `Bearer ${user.jwt}`,
-          "Content-Type": "application/json",
-        },
-      });
+        await axios.post(url, bookingData, {
+            headers: {
+                Authorization: `Bearer ${user.jwt}`,
+                "Content-Type": "application/json",
+            },
+        });
 
-      alert("Slot booked successfully!");
+        alert("Slot booked successfully!");
     } catch (error) {
-      console.error(
-        "Error booking slot:",
-        error.response?.data || error.message
-      );
+        console.error("Error booking slot:", error.response?.data || error.message);
     }
-  };
+};
 
   return (
     <div
@@ -214,11 +212,7 @@ const BookSlotModal = ({ selectedChildHome }) => {
             </div>
           </div>
           <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" >
               Close
             </button>
             <button

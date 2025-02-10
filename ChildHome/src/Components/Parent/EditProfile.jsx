@@ -4,11 +4,13 @@ import "../Parent/Parent_Slider.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Authenticate/AuthContext";
+import { createUrl } from "../../util";
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
+   const url = createUrl(`api/parent/profile/${user.id}`);
 
   const [formData, setFormData] = useState({
     material: "",
@@ -40,7 +42,7 @@ const EditProfile = () => {
   const fetchProfile = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/parent/profile/${user.id}`,
+        url,
         {
           method: "GET",
           headers: {
@@ -152,7 +154,7 @@ const EditProfile = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/parent/profile/${user.id}`,
+       url,
         {
           method: "PUT",
           headers: {
