@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import ChildhomeSlider from "./Childhome_Slider";
+import { useAuth } from "../Authenticate/AuthContext";
+import { getChildren } from "../../services/Childhomeservice";
 
 const InitiateAdoptionRequest = () => {
   return (
@@ -20,68 +23,59 @@ const InitiateAdoptionRequest = () => {
 };
 
 const Content = () => {
+  const { user } = useAuth();
   const [requests, setRequests] = useState([
     {
       id: 1,
       parentName: "John Doe",
       email: "john@example.com",
       phone: "123-456-7890",
-      childId: "C001",
-      status: true,
     },
     {
       id: 2,
       parentName: "Jane Smith",
       email: "jane@example.com",
       phone: "987-654-3210",
-      childId: "C002",
-      status: false,
     },
     {
       id: 3,
       parentName: "Michael Brown",
       email: "michael@example.com",
       phone: "456-789-0123",
-      childId: "C003",
-      status: true,
+    },
+    {
+      id: 4,
+      parentName: "Emily Davis",
+      email: "emily@example.com",
+      phone: "321-654-0987",
     },
   ]);
 
+  const [children, setChildren] = useState([]);
+
   useEffect(() => {
-    fetch("/api/adoption-requests")
-      .then((response) => response.json())
-      .then((data) => setRequests(data))
-      .catch((error) =>
-        console.error("Error fetching adoption requests:", error)
-      );
-  }, []);
+    if (user) {
+      // console.log("Fetching children for user ID:", user.id); // Debugging user ID
+      // axios
+      //   .get(`/childhome/getchilds/${user.id}`, {
+      //     headers: { Authorization: `Bearer ${user.jwt.trim()}` },
+      //   })
+      //   .then((response) => {
+      //     console.log("Fetched children:", response.data); // Debugging API response
+      //     setChildren(response.data);
+      //   })
+      //   .catch((error) => console.error("Error fetching children:", error));]
+      const response = async () => {
+        const data = await getChildren(user);
+        setChildren(data);
+      };
+      response();
+    }
+  }, [user]);
 
-  const handleStatusChange = (id, currentStatus) => {
-    setRequests((prevRequests) =>
-      prevRequests.map((request) =>
-        request.id === id ? { ...request, status: !currentStatus } : request
-      )
-    );
-
-    fetch(`/api/adoption-requests/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status: !currentStatus }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Status updated:", data);
-      })
-      .catch((error) => {
-        console.error("Error updating status:", error);
-        setRequests((prevRequests) =>
-          prevRequests.map((request) =>
-            request.id === id ? { ...request, status: currentStatus } : request
-          )
-        );
-      });
+  const handleSubmit = (id) => {
+    console.log("Submit clicked for ID:", id);
+    // Implement submit functionality here
   };
 
   return (
@@ -96,8 +90,8 @@ const Content = () => {
               <th>Parent Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Child ID</th>
-              <th>Status</th>
+              <th>Child</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -109,17 +103,30 @@ const Content = () => {
                 <td>{request.parentName}</td>
                 <td>{request.email}</td>
                 <td>{request.phone}</td>
-                <td>{request.childId}</td>
+                <td>
+                  <select
+                    className="form-select"
+                    style={{ width: "200px" }}
+                    key={children.length}
+                  >
+                    <option value="">Select a child</option>
+                    {children.length > 0 ? (
+                      children.map((child) => (
+                        <option key={child.id} value={child.id}>
+                          {child.id} - {child.name}
+                        </option>
+                      ))
+                    ) : (
+                      <option disabled>Loading...</option>
+                    )}
+                  </select>
+                </td>
                 <td className="text-center">
                   <button
-                    onClick={() =>
-                      handleStatusChange(request.id, request.status)
-                    }
-                    className={`btn ${
-                      request.status ? "btn-success" : "btn-warning"
-                    } btn-sm`}
+                    onClick={() => handleSubmit(request.id)}
+                    className="btn btn-primary btn-sm"
                   >
-                    {request.status ? "Accepted" : "Pending"}
+                    Submit
                   </button>
                 </td>
               </tr>
