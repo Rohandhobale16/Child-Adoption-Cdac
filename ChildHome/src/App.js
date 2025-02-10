@@ -189,7 +189,7 @@ function App() {
             }
           />
           <Route
-            path="/social"
+            path="/socialworkerChangeStatus"
             element={
               <ProtectedRoute>
                 <EditRequestStatus />
