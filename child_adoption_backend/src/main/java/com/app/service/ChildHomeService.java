@@ -24,6 +24,7 @@ import com.app.dto.AddRequestDto;
 import com.app.dto.ApiResponse;
 import com.app.dto.ChildHomeResponseDto;
 import com.app.dto.EmployeeResponseDto;
+import com.app.dto.EventResponseDto;
 import com.app.dto.RequestDto;
 import com.app.dto.UpdateChildHomeRequestDto;
 import com.app.pojos.Address;
@@ -97,6 +98,15 @@ public class ChildHomeService {
 
 		return new ApiResponse("success");
 	}
+	
+	public List<EventResponseDto> getAllEventDetails() {
+	    List<Events> l = eventsDao.findAll();
+		List<EventResponseDto> li = l.stream().map(e -> mapper.map(e, EventResponseDto.class))
+				.collect(Collectors.toList());
+		return li;
+	}
+	
+	
 
 	public ApiResponse addSocialWorker(AddEmployeeRequestDto dto) {
 		Address a = new Address();

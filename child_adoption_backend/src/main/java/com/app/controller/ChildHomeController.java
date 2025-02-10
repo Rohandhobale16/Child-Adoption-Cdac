@@ -41,6 +41,18 @@ public class ChildHomeController {
             // return new ResponseEntity<>(new ApiResponse("Failed to add child: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/childhome/allEventsDetails")
+   	public ResponseEntity<?> getAllEventsDetails() {
+   		try {
+
+   			return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getAllEventDetails());
+   		} catch (Exception e) {
+   			e.printStackTrace(); // Use proper logging in production
+   			return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+   					HttpStatus.INTERNAL_SERVER_ERROR);
+   		}
+   	}
     @PostMapping("/childhome/addevents")
     public ResponseEntity<?> addEvent(@RequestBody AddEventsDto dto) {
         try {
