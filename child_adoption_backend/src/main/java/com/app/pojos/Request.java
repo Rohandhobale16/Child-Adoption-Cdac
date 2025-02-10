@@ -1,10 +1,13 @@
 package com.app.pojos;
 
+import org.hibernate.annotations.ManyToAny;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +25,7 @@ public class Request extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "c", nullable = true, unique = false)
 	private Child c;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ch", nullable = true, unique = false)
 	private ChildHome ch;
 	private String status;

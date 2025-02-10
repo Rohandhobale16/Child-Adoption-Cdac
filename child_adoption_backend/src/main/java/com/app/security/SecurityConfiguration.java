@@ -45,7 +45,7 @@ public class SecurityConfiguration {
 						.hasRole("EMPLOYEE")
 						.requestMatchers("/childhome/addchild", "/childhome/addevents", "/childhome/addemployee",
 								"/childhome/addrequest", "/childhome/getchildhomedetails/{id}",
-								"/childhome/updatechildhome/{id}", "/childhome/updaterequest/{id}",
+								"/childhome/updatechildhome/{id}", "/employee/getrequest/{id}",
 								"/childhome/childhomecount", "/childhome/employeecount")
 						.hasRole("CHILDHOME")
 						.requestMatchers("/parent")

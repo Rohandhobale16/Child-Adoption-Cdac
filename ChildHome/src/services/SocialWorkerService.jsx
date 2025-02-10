@@ -84,9 +84,16 @@ export async function updateSocialworker(socialWorkeDdata, user) {
 }
 
 export async function getAllRequest(user) {
-  const url = createUrl("employee/getrequestdetails");
+  const url = createUrl(`employee/getrequestdetails`);
   const response = await axios.get(url, {
     headers: { Authorization: `Bearer ${user.jwt}` },
   });
   console.log(response);
+  console.log(response.data);
+  const resdata = response.data;
+  if (response.status === 200) {
+    return resdata;
+  } else {
+    return null;
+  }
 }

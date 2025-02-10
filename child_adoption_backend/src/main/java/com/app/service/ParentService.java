@@ -86,7 +86,7 @@ public class ParentService {
         request.setCh(childHome);
         request.setDate(slotBookingDto.getDate());
         request.setSlot(slotBookingDto.getSlot());
-
+        request.setStatus("booked");
         requestRepository.save(request);
 
         return slotBookingDto;

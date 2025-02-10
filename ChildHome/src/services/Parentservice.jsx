@@ -3,18 +3,22 @@ import { createUrl } from "../util";
 import { toast } from "react-toastify";
 
 export async function fetchParent(user) {
-  const url = createUrl(`parent/${user.id}`);
-  const response = await axios.get(url);
+  const url = createUrl(`api/parent/profile/${user.id}`);
+  const response = await axios.get(url, {
+    headers: { Authorization: `Bearer ${user.jwt}` },
+  });
   const data = response.data;
-  if (data.message === "success") {
+  // console.log(data);
+  if (response.status === 200) {
     return data;
   } else {
-    if (response.status === 400 || response.status === 401) {
-      toast.warning(data.message || "Invalid credentials. Please try again."); // Display message from server if available
+    if (response.status === 200 || response.status === 200) {
+      //  toast.warning(data.); // Display message from server if available
     } else if (response.status === 500) {
       toast.error("Internal Server Error. Please contact admin");
     } else {
-      toast.warning("Login failed. Please check your credentials."); // Generic message
+      console.log("");
+      // toast.warning("Login failed. Please check your credentials."); // Generic message
     }
     return null;
   }

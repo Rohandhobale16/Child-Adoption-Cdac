@@ -58,7 +58,7 @@ public class EmployeeService {
 		//add message to show success
 	}
 	public List<RequestDto> getRequestDetails() {
-		List<Request> l=requestDao.findByStatus("applied");
+		List<Request> l=requestDao.findByStatus("initiated");
 		List<RequestDto> li=l.stream().map(r->mapper.map(r,RequestDto.class)).collect(Collectors.toList());
 		return li;
 	}

@@ -41,7 +41,7 @@ const Profile = () => {
   const [profile, setProfile] = useState({
     name: "",
     email: "",
-    mobile: "",
+    gender: "",
   });
 
   useEffect(() => {
@@ -49,11 +49,11 @@ const Profile = () => {
       if (user) {
         try {
           const response = await fetchParent(user);
-
+          console.log(response);
           const data = {
-            name: response.name,
+            name: response.fname,
             email: response.email,
-            phone: response.mobile,
+            gender: response.gender,
           };
           setProfile(data);
 
@@ -78,7 +78,7 @@ const Profile = () => {
       <p class="">
         Email: {profile.email}
         <br />
-        Mobile No: {profile.mobile}
+        gender: {profile.gender}
       </p>
       <button onClick={logout} class="btn btn-danger">
         Logout

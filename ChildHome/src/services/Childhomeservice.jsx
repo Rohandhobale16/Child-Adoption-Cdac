@@ -90,16 +90,35 @@ export async function AddEvents(data, user) {
 }
 
 export async function getChildren(user, childHomeId) {
-  const url = createUrl("childhome/getchilds/1");
+  const url = createUrl(`childhome/getchilds/${user.id}`);
   try {
     const response = await axios.get(url, {
       headers: { Authorization: `Bearer ${user.jwt}` },
     });
+    console.log(response);
     if (response.status === 200) {
       return response.data;
     }
   } catch (error) {
     console.error("Error fetching children:", error);
+    return error.response;
+  }
+}
+
+export async function getParents(user) {
+  const url = createUrl(`childhome/getrequest/${user.id}`);
+  try {
+    const response = await axios.get(url, {
+      headers: { Authorization: `Bearer ${user.jwt}` },
+    });
+    console.log(response);
+    const data = response.data;
+    console.log(data);
+    if (response.status === 200) {
+      return data;
+    }
+  } catch (error) {
+    console.error("Error adding child:", error);
     return error.response;
   }
 }

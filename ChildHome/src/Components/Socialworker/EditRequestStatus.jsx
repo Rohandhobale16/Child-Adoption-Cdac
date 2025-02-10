@@ -24,10 +24,14 @@ const Content = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [status, setStatus] = useState("");
 
-  useEffect(async () => {
-    const response = await getAllRequest(user);
-    console.log(response);
-  }, [user]);
+  useEffect(() => {
+    debugger;
+    const fecthData = async () => {
+      const response = await getAllRequest(user);
+      console.log(response);
+    };
+    fecthData();
+  }, []);
 
   const handleChange = (e) => {
     setStatus(e.target.value);
@@ -41,23 +45,17 @@ const Content = () => {
       return;
     }
 
-    try {
-      const response = await fetch(`/api/requests/${selectedRequest.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
-      });
+    // try {
+    //   const response = await getAllRequest(user);
 
-      if (response.ok) {
-        toast.success("Request status updated successfully!");
-      } else {
-        toast.error("Failed to update request status");
-      }
-    } catch (error) {
-      toast.error("Error updating request status");
-    }
+    //   if (response.ok) {
+    //     toast.success("Request status updated successfully!");
+    //   } else {
+    //     toast.error("Failed to update request status");
+    //   }
+    // } catch (error) {
+    //   toast.error("Error updating request status");
+    // }
   };
 
   return (

@@ -12,4 +12,5 @@ public class SlotBookingDto {
     private String childHomeName;
     private String date;
     private Slot slot;
+    private String status;
 }

@@ -43,7 +43,7 @@ public class EmployeeController {
         }
     }
 	@GetMapping("/employee/getrequestdetails")
-    public ResponseEntity<?> getRequestDetails(@PathVariable Long id) {
+    public ResponseEntity<?> getRequestDetails() {
         try {
              
              return ResponseEntity.status(HttpStatus.OK).body(employeeService.getRequestDetails());

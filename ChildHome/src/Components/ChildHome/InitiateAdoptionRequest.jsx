@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import ChildhomeSlider from "./Childhome_Slider";
 import { useAuth } from "../Authenticate/AuthContext";
-import { getChildren } from "../../services/Childhomeservice";
+import { getChildren, getParents } from "../../services/Childhomeservice";
 
 const InitiateAdoptionRequest = () => {
   return (
@@ -11,7 +10,6 @@ const InitiateAdoptionRequest = () => {
         <div className="col-2">
           <ChildhomeSlider />
         </div>
-
         <main className="col-10 ms-auto p-4">
           <section>
             <Content />
@@ -50,32 +48,36 @@ const Content = () => {
       phone: "321-654-0987",
     },
   ]);
-
   const [children, setChildren] = useState([]);
 
   useEffect(() => {
     if (user) {
-      // console.log("Fetching children for user ID:", user.id); // Debugging user ID
-      // axios
-      //   .get(`/childhome/getchilds/${user.id}`, {
-      //     headers: { Authorization: `Bearer ${user.jwt.trim()}` },
-      //   })
-      //   .then((response) => {
-      //     console.log("Fetched children:", response.data); // Debugging API response
-      //     setChildren(response.data);
-      //   })
-      //   .catch((error) => console.error("Error fetching children:", error));]
-      const response = async () => {
-        const data = await getChildren(user);
-        setChildren(data);
+      const fetchChildren = async () => {
+        try {
+          const data = await getChildren(user);
+          const parentData = await getParents(user);
+          console.log(parentData);
+          //   console.log("Children Data :", data);
+          if (Array.isArray(data)) {
+            setChildren(data);
+          } else {
+            console.error("Unexpected response format:", data);
+          }
+        } catch (error) {
+          console.error("Error fetching children:", error);
+        }
       };
-      response();
+
+      fetchChildren();
     }
   }, [user]);
 
+  useEffect(() => {
+    //  console.log("Updated Children State:", children);
+  }, [children]);
+
   const handleSubmit = (id) => {
-    console.log("Submit clicked for ID:", id);
-    // Implement submit functionality here
+    console.log("Submit clicked for Request ID:", id);
   };
 
   return (
@@ -104,21 +106,13 @@ const Content = () => {
                 <td>{request.email}</td>
                 <td>{request.phone}</td>
                 <td>
-                  <select
-                    className="form-select"
-                    style={{ width: "200px" }}
-                    key={children.length}
-                  >
+                  <select className="form-select" style={{ width: "200px" }}>
                     <option value="">Select a child</option>
-                    {children.length > 0 ? (
-                      children.map((child) => (
-                        <option key={child.id} value={child.id}>
-                          {child.id} - {child.name}
-                        </option>
-                      ))
-                    ) : (
-                      <option disabled>Loading...</option>
-                    )}
+                    {children.map((child) => (
+                      <option key={child.id} value={child.id}>
+                        {child.id} - {child.name}
+                      </option>
+                    ))}
                   </select>
                 </td>
                 <td className="text-center">

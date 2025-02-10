@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ParentResponseDto extends BaseEntityDto{
-private boolean marrigeStatus;
+private String marrigeStatus;
 private Gender gender;
 private String nationality;
 private String dob;

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.app.pojos.Address;
+import com.app.pojos.ChildHome;
 import com.app.pojos.Request;
 
 public interface RequestDao extends JpaRepository<Request, Long> {
@@ -15,5 +16,7 @@ public interface RequestDao extends JpaRepository<Request, Long> {
 	boolean existsByP_IdAndCh_IdAndDate(Long id, Long childHomeId, String string);
 
 	int countByCh_IdAndDate(Long childHomeId, String string);
+
+	List<Request> findByStatusAndCh(String string, ChildHome a);
 
 }

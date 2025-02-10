@@ -182,4 +182,15 @@ public class ChildHomeController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/employee/getrequest/{id}")
+    public ResponseEntity<?> up(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getRequestDetails1(id));
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
