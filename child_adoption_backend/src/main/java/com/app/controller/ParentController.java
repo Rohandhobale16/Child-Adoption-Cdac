@@ -53,5 +53,17 @@ public class ParentController {
 
 	    return ResponseEntity.ok(response);
 	}
+	
+	 @GetMapping("/statusrequest/{parentId}")
+	    public ResponseEntity<?> getChildHomeAndStatus(@PathVariable Long parentId) {
+	         
+	         return ResponseEntity.status(HttpStatus.CREATED).body(parentService.getChildHomeAndStatusByParentId(parentId));
+	 }
+	 
+	 @PostMapping("/feedback/{id}")
+	    public ResponseEntity<String> setFeedback(@PathVariable Long id, @RequestBody FeedbackRequestDto feedbackRequest) {
+	        String response = parentService.setFeedback(id, feedbackRequest.getFeedback());
+	        return ResponseEntity.ok(response);
+	    }
 
 }

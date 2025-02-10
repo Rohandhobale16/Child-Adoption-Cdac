@@ -16,6 +16,7 @@ import lombok.Setter;
 public class RequestDto extends BaseEntityDto{
 	private ParentResponseDto p;
 	private ChildResponseDto c;
+	private ChildHomeResponseDto ch;
 	private String status;
 	private String feedBack;
 	private String message;
