@@ -25,6 +25,7 @@ import com.app.dto.ApiResponse;
 import com.app.dto.ChildHomeResponseDto;
 import com.app.dto.EmployeeResponseDto;
 import com.app.dto.EventResponseDto;
+import com.app.dto.ParentResponseDto;
 import com.app.dto.RequestDto;
 import com.app.dto.UpdateChildHomeRequestDto;
 import com.app.pojos.Address;
@@ -64,6 +65,12 @@ public class ChildHomeService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private AdminService adminservice;
+
 	public ApiResponse addChild(AddChildRequestDto dto) {
 		// Fetch the User by ID
 		User user = userDao.findById(dto.getCh())
@@ -96,6 +103,25 @@ public class ChildHomeService {
 		obj.setCh(childHome);
 		obj.setStatus(true);
 		eventsDao.save(obj);
+		
+		List<ParentResponseDto> Parents=adminservice.getParent();
+		List<String> parentEmails = Parents.stream()
+			    .map(parent -> parent.getU().getEmail()) 
+			    .collect(Collectors.toList());
+         
+		
+		for (String email : parentEmails) {
+		    String subject = "New Event Notification";
+		    String message = "Dear Parent,\n\n" +
+		                     "There is a new event at " + childHome.getHouseName() + ".\n\n" +
+		                     "Event Name: " + dto.getEventName() + ".\n\n" +
+		                     "Event Date: " + dto.getEventDate() + ".\n\n" +
+		                     "Event Description: " + dto.getEventDescription() + ".\n\n" +
+		                     "Regards,\nChild Adoption System Team";
+		    emailService.sendEmail(email, subject, message);
+		}
+		
+	
 
 		return new ApiResponse("success");
 	}
@@ -133,6 +159,13 @@ public class ChildHomeService {
 		Employee obj = new Employee();
 		obj.setC(childHome);
 		obj.setU(user);
+
+		String subject = "Child Home Registration Successful";
+		String message = "Dear " + dto.getFname() + ",\n\n" +
+				"Successfully registered as a Social Worker.\n\n" +
+				"Thank you for joining our platform.\n\n" +
+				"Regards,\nChild Adoption System Team";
+		emailService.sendEmail(dto.getEmail(), subject, message);
 
 		employeeDao.save(obj);
 
@@ -174,6 +207,13 @@ public class ChildHomeService {
 		e.setBankAccount(dto.getBankAccount());
 		e.setIfscCode(dto.getIfscCode());
 		e.setInHome(dto.getInHome());
+
+		String subject = "Child Home Registration Successful";
+		String message = "Dear " + dto.getFname() + ",\n\n" +
+				"Successfully Updated Your Data..\n\n" +
+				"Thank you for joining our platform.\n\n" +
+				"Regards,\nChild Adoption System Team";
+		emailService.sendEmail(dto.getEmail(), subject, message);
 		return new ApiResponse("success");
 	}
 
@@ -206,11 +246,13 @@ public class ChildHomeService {
 		// TODO Auto-generated method stub
 		return childDao.findChildrenByChildHomeId(childHomeId);
 	}
-	
+
 	public List<RequestDto> getRequestDetails1(Long id) {
-	    ChildHome a=childHomeDao.findById(id).orElseThrow();
-	    List<Request> l=requestDao.findByStatusAndCh("booked",a);
-	    List<RequestDto> li=l.stream().map(r->mapper.map(r,RequestDto.class)).collect(Collectors.toList());
-	    return li;
-	  }
+		ChildHome a = childHomeDao.findById(id).orElseThrow();
+		List<Request> l = requestDao.findByStatusAndCh("booked", a);
+		List<RequestDto> li = l.stream().map(r -> mapper.map(r, RequestDto.class)).collect(Collectors.toList());
+		return li;
+	}
 }
+
+

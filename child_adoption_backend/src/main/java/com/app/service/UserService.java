@@ -43,6 +43,9 @@ public class UserService {
 	private ParentCoupleDao parentCoupleDao;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private EmailService emailService;
 
 //	public Object findByEmailandPassword(LoginRequestDto loginDto) {
 //		User user = userDao.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
@@ -119,6 +122,15 @@ public class UserService {
 		obj.setU(user);
 		System.out.println(obj);
 		childHomeDao.save(obj);
+		
+		
+		String subject = "Child Home Registration Successful";
+	    String message = "Dear " + dto.getFname() + ",\n\n" +
+	                     "Your Child Home has been successfully registered.\n\n" +
+	                     "Thank you for joining our platform.\n\n" +
+	                     "Regards,\nChild Adoption System Team";
+	    emailService.sendEmail(dto.getEmail(), subject, message);
+		
 		return new ApiResponse("success");
 	}
 
@@ -164,6 +176,7 @@ public class UserService {
 			obj.setPc(ps);
 			System.out.println(obj);
 			parentDao.save(obj);
+		
 			return new ApiResponse("success");
 		}
 		Parent obj = mapper.map(dto, Parent.class);
@@ -172,6 +185,15 @@ public class UserService {
 		obj.setPc(null);
 		System.out.println(obj);
 		parentDao.save(obj);
+		
+		System.out.println(dto.getEmail());
+		String subject = "Parent Registration Successful";
+	    String message = "Dear " + dto.getFname() + ",\n\n" +
+	                     "Your have successfully registered.\n\n" +
+	                     "Thank you for joining our platform.\n\n" +
+	                     "Regards,\nChild Adoption System Team";
+	    emailService.sendEmail(dto.getEmail(), subject, message);
+	    
 		return new ApiResponse("success");
 	}
 
