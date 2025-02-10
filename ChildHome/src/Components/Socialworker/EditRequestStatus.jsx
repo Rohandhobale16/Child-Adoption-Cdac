@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import SocialworkerSlider from "./Socialworker_Slider";
-
+import { useAuth } from "../Authenticate/AuthContext";
+import { getAllRequest } from "../../services/SocialWorkerService";
 const EditRequestStatus = () => {
   return (
     <div className="container-fluid">
@@ -18,17 +19,15 @@ const EditRequestStatus = () => {
 };
 
 const Content = () => {
+  const { user } = useAuth();
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [status, setStatus] = useState("");
 
-  useEffect(() => {
-    // Fetch existing requests from API
-    fetch("/api/requests")
-      .then((response) => response.json())
-      .then((data) => setRequests(data))
-      .catch(() => toast.error("Failed to fetch requests"));
-  }, []);
+  useEffect(async () => {
+    const response = await getAllRequest(user);
+    console.log(response);
+  }, [user]);
 
   const handleChange = (e) => {
     setStatus(e.target.value);

@@ -82,3 +82,11 @@ export async function updateSocialworker(socialWorkeDdata, user) {
     return null;
   }
 }
+
+export async function getAllRequest(user) {
+  const url = createUrl("employee/getrequestdetails");
+  const response = await axios.get(url, {
+    headers: { Authorization: `Bearer ${user.jwt}` },
+  });
+  console.log(response);
+}
