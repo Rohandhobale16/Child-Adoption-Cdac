@@ -89,7 +89,7 @@ export async function AddEvents(data, user) {
   }
 }
 
-export async function getChildren(user, childHomeId) {
+export async function getChildren(user) {
   const url = createUrl(`childhome/getchilds/${user.id}`);
   try {
     const response = await axios.get(url, {
@@ -106,12 +106,12 @@ export async function getChildren(user, childHomeId) {
 }
 
 export async function getParents(user) {
-  const url = createUrl(`childhome/getrequest/${user.id}`);
+  const url = createUrl(`employee/getrequest/${user.id}`);
   try {
     const response = await axios.get(url, {
       headers: { Authorization: `Bearer ${user.jwt}` },
     });
-    console.log(response);
+    //console.log(response);
     const data = response.data;
     console.log(data);
     if (response.status === 200) {

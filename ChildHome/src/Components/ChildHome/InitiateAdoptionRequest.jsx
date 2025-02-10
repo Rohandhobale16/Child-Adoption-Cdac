@@ -49,15 +49,26 @@ const Content = () => {
     },
   ]);
   const [children, setChildren] = useState([]);
-
+  const [parents, setParents] = useState([]);
   useEffect(() => {
     if (user) {
+      const parentData = async () => {
+        try {
+          const parentData = await getParents(user);
+          console.log(parentData);
+          if (Array.isArray(parentData)) {
+            setParents(parentData);
+          } else {
+            console.error("Unexpected response format:", parentData);
+          }
+        } catch (error) {}
+      };
+
       const fetchChildren = async () => {
         try {
           const data = await getChildren(user);
-          const parentData = await getParents(user);
-          console.log(parentData);
-          //   console.log("Children Data :", data);
+
+          console.log("Children Data :", data);
           if (Array.isArray(data)) {
             setChildren(data);
           } else {
@@ -69,12 +80,13 @@ const Content = () => {
       };
 
       fetchChildren();
+      parentData();
     }
   }, [user]);
 
-  useEffect(() => {
-    //  console.log("Updated Children State:", children);
-  }, [children]);
+  // useEffect(() => {
+  //   //  console.log("Updated Children State:", children);
+  // }, [children]);
 
   const handleSubmit = (id) => {
     console.log("Submit clicked for Request ID:", id);
@@ -97,14 +109,14 @@ const Content = () => {
             </tr>
           </thead>
           <tbody>
-            {requests.map((request, index) => (
+            {parents.map((request, index) => (
               <tr
                 key={request.id}
                 className={index % 2 === 0 ? "table-light" : "table-secondary"}
               >
-                <td>{request.parentName}</td>
-                <td>{request.email}</td>
-                <td>{request.phone}</td>
+                <td>{request.p.u.fname}</td>
+                <td>{request.p.u.email}</td>
+                <td>{request.p.u.mobile}</td>
                 <td>
                   <select className="form-select" style={{ width: "200px" }}>
                     <option value="">Select a child</option>
