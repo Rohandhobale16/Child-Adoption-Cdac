@@ -4,9 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.app.pojos.Address;
 import com.app.pojos.ChildHome;
+import com.app.pojos.Parent;
 import com.app.pojos.Request;
 
 public interface RequestDao extends JpaRepository<Request, Long> {
@@ -17,6 +20,14 @@ public interface RequestDao extends JpaRepository<Request, Long> {
 
 	int countByCh_IdAndDate(Long childHomeId, String string);
 
+	@Query("SELECT r.ch.id, r.status FROM Request r WHERE r.p.id = :parentId")
+	List<Object[]> findChildHomeAndStatusByParentId(@Param("parentId") Long parentId);
+
+	List<Request> findByP(Parent p);
+
+
+
 	List<Request> findByStatusAndCh(String string, ChildHome a);
+
 
 }

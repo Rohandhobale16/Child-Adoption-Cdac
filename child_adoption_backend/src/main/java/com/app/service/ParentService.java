@@ -1,11 +1,14 @@
 package com.app.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.*;
 import com.app.dto.ChildHomeDTO;
 import com.app.dto.ParentDTO;
+import com.app.dto.RequestDto;
+import com.app.dto.RequestResponseDto;
 import com.app.dto.SlotBookingDto;
 import com.app.pojos.*;
 
@@ -35,6 +38,11 @@ public class ParentService {
 
     @Autowired
     private AddressDao addressRepository;
+    
+    @Autowired
+    private RequestDao requestDao;
+    @Autowired
+    private ModelMapper mapper;
 
     // Method to get all child homes
     public List<ChildHomeDTO> getAllChildHomes() {
@@ -195,6 +203,46 @@ public class ParentService {
 
         return updatedDTO;
     }
+    
+   
+
+//    public List<RequestDto> getChildHomeAndStatusByParentId(Long parentId) {
+//    	User u=userRepository.findById(parentId).orElseThrow();
+//    	Parent p=parentRepository.findByU(u);
+//        List<Request> l = requestDao.findByP(p);
+//        List<RequestDto> li=l.stream().map(r->mapper.map(r,RequestDto.class)).collect(Collectors.toList());
+//          return li;    }
+
+    public List<RequestDto> getChildHomeAndStatusByParentId(Long parentId) {
+        User u = userRepository.findById(parentId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + parentId));
+
+        Parent p = parentRepository.findByU(u);
+        if (p == null) {
+            throw new RuntimeException("Parent not found for user id: " + parentId);
+        }
+
+        List<Request> l = requestDao.findByP(p);
+        if (l == null) {
+            l = new ArrayList<>();
+        }
+
+        return l.stream()
+                .map(r -> mapper.map(r, RequestDto.class))
+                .collect(Collectors.toList());
+    }
+
+    public String setFeedback(Long id, String feedback) {
+        Request request = requestDao.findById(id)
+                .orElseThrow(() -> new RuntimeException("Request not found"));
+
+        request.setFeedBack(feedback);  // ✅ Stores only the feedback string
+        requestDao.save(request);  // ✅ Saves feedback to the database
+
+        return "Feedback submitted successfully!";
+    }
+
+    
 }
 
 
