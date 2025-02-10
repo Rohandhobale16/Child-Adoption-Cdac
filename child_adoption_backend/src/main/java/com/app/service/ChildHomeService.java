@@ -183,7 +183,7 @@ public class ChildHomeService {
 	}
 
 	public  Long countChildHomeDetails() {
-		Long s=childDao.count();
+		Long s=childHomeDao.count();
 		return s;
 	}
 
