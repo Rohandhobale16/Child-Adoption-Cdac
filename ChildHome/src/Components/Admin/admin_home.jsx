@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { viewSucess } from "../../services/admin_services";
+import { useAuth } from "../Authenticate/AuthContext";
 
 import "../Admin/Admin_Slider.css";
 import AdminSidebar from "./AdminSidebar";
@@ -27,17 +28,20 @@ const AdminHome = () => {
 // Separated Form Component
 function SucessTable() {
   const [items, setItems] = useState([]);
+    const { user } = useAuth();
+  
   const navigate = useNavigate();
   const onLoadItems = async () => {
-    const result = await viewSucess();
-    if (result["status"] === "success") {
-      setItems(result["users"]);
+    const result = await viewSucess(user);
+    if (result!=null) {
+      setItems(result);
+      console.log(result);
     } else {
       toast.error(result["error"]);
     }};
   
   const book = async (id) => {
-    navigate(`/feedback/${id}`);
+    navigate(`/admin/feedback/${id}`);
   };
   useEffect(() => {
      onLoadItems();
@@ -71,17 +75,18 @@ function SucessTable() {
               return (
                 //change the colomn name according to the data in the table
                 <tr key={index}>
-                  <td>{item["id"]}</td>
-                  <td>{item["name"]}</td>
-                  <td>{item["cname"]}</td>
-                  <td>{item["childhomename"]}</td>
-                  <td>{item["status"]}</td>
+                  <td>{item.id}</td>
+                  <td>{item.p.u.fname}</td>
+                  <td>{item.c.name}</td>
+                  <td>{item.c.ch.houseName}</td>
+                  <td>{item.status}</td>
+                  <td>
                   <button
                     onClick={() => book(item["id"])}
                     className="btn btn-sm ms-2"
                   >
-                    delete
-                  </button>
+                    Feedback
+                  </button></td>
                 </tr>
               );
             })}

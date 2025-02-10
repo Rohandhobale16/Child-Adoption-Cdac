@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { feedback } from "../../services/admin_services";
 import "../Admin/Admin_Slider.css";
+import { useAuth } from "../Authenticate/AuthContext";
 import AdminSidebar from "./AdminSidebar";
 
 // import './card.css'; // Optional: For styling
@@ -36,21 +37,24 @@ const Content = () => {
 const CardComponent = () => {
   const [items, setItems] = useState([]);
   const { id } = useParams();
+  const { user } = useAuth();
+
   const onLoadItems = async () => {
-    const result = await feedback(id);
-    if (result["status"] === "success") {
-      setItems(result["users"]);
+    const result = await feedback(id,user);
+    if (result.message === "success") {
+      setItems(result);
     } else {
       toast.error(result["error"]);
     }
   };
   useEffect(() => {
+    console.log(id);
     onLoadItems();
   }, []);
   return (
     <div className="card ">
-      <h2>Request ID: {items.fname}</h2>
-      <p>Description: {items.description}</p>
+      <h2>Request ID: {items.id}</h2>
+      <p>Description: {items.feedback}</p>
     </div>
   );
 };

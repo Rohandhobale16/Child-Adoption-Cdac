@@ -2,6 +2,7 @@
 // import { Link } from "react-router-dom";
 // import { toast } from "react-toastify";
 import { child, deleteChild } from "../../services/admin_services";
+import { useAuth } from "../Authenticate/AuthContext";
 
 // import AdminNavbar from "./adminNavbar";
 // // import './card.css'; // Optional: For styling
@@ -62,28 +63,24 @@ const AdminChild = () => {
 // Separated Form Component
 function ChildHomeDetails() {
   const [items, setItems] = useState([]);
-
+  const { user } = useAuth();
+  const onLoadItems = async () => {
+    const result = await child(user);
+    if (result!=null) {
+      setItems(result);
+    } else {
+      toast.error("error");
+    }
+  };
   useEffect(() => {
-    const onLoadItems = async () => {
-      const result = await child();
-      if (result["status"] === "success") {
-        setItems(result["users"]);
-      } else {
-        toast.error(result["error"]);
-      }
-    };
+    
     onLoadItems();
   }, []);
   const del = async (id) => {
-    const result = await deleteChild(id);
-    if (result["status"] === "success") {
+    const result = await deleteChild(id,user);
+    if (result.message === "success") {
       toast.success("deleted");
-      const result = await child();
-      if (result["status"] === "success") {
-        setItems(result["users"]);
-      } else {
-        toast.error(result["error"]);
-      }
+      onLoadItems();
     } else {
       toast.error(result["error"]);
     }
@@ -110,9 +107,10 @@ function ChildHomeDetails() {
               return (
                 <tr key={index}>
                   <td>{item["id"]}</td>
-                  <td>{item["name"]}</td>
-                  <td>{item["email"]}</td>
-                  <td>{item["mobile"]}</td>
+                  <td>{item["houseName"]}</td>
+                  <td>{item.u.fname}</td>
+                  <td>{item.u.email}</td>
+                  <td>{item.u.mobile}</td>
                   <td>
                     <button
                       onClick={() => del(item["id"])}

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { deletes, homeC } from "../../services/admin_services";
 import "../Admin/Admin_Slider.css";
+import { useAuth } from "../Authenticate/AuthContext";
 import AdminSidebar from "./AdminSidebar";
+
 // import AdminNavbar from "./adminNavbar";
 // import './card.css'; // Optional: For styling
 const AdminParent = () => {
@@ -23,25 +25,27 @@ const AdminParent = () => {
 function ParentDetails() {
   console.log("parent details calling");
   const [items, setItems] = useState([]);
+    const { user } = useAuth();
+  
   const onLoadItems = async () => {
     console.log("parent details calling");
-    const result = await homeC();
-    if (result["status"] === "success") {
-      setItems(result["users"]);
+    const result = await homeC(user);
+    if (result!=null) {
+      setItems(result);
     } else {
-      toast.error(result["error"]);
+      toast.error("error");
     }
   };
   useEffect(() => {
     onLoadItems();
   }, []);
   const del = async (id) => {
-    const result = await deletes(id);
-    if (result["status"] === "success") {
+    const result = await deletes(id,user);
+    if (result.message === "success") {
       toast.success("deleted");
       onLoadItems();
     } else {
-      toast.error(result["error"]);
+      toast.error("invalid id");
     }
   };
   return (
@@ -66,10 +70,10 @@ function ParentDetails() {
               return (
                 <tr key={index}>
                   <td>{item["id"]}</td>
-                  <td>{item["fname"]}</td>
-                  <td>{item["lname"]}</td>
-                  <td>{item["email"]}</td>
-                  <td>{item["mobile"]}</td>
+                  <td>{item.u.fname}</td>
+                  <td>{item.u.lname}</td>
+                  <td>{item.u.email}</td>
+                  <td>{item.u.mobile}</td>
                   <td>
                     <button
                       onClick={() => del(item["id"])}

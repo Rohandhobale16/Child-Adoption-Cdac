@@ -13,6 +13,7 @@ import com.app.dao.ChildHomeDao;
 import com.app.dao.ParentDao;
 import com.app.dao.RequestDao;
 import com.app.dto.ApiResponse;
+import com.app.dto.ChildHomeResponseDto;
 import com.app.dto.ParentResponseDto;
 import com.app.dto.RequestDto;
 import com.app.pojos.ChildHome;
@@ -33,6 +34,7 @@ public class AdminService {
 	@Autowired
 	private ModelMapper modelMapper;
 	public  ApiResponse deleteChildHome(Long id) {
+		System.out.println(id);
 		ChildHome ch=childHomeDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invalid ID!!!"));
 		ch.setStatus(false);
 		return new ApiResponse("success");
@@ -57,6 +59,23 @@ public class AdminService {
 		RequestDto obj1= modelMapper.map(r, RequestDto.class);
 		obj1.setMessage("success");
 		return obj1;
+	}
+
+	public List<ChildHomeResponseDto> getChildHome() {
+		List<ChildHome> l=childHomeDao.findByStatus(true);
+		List<ChildHomeResponseDto> li=l.stream()
+				.map(r->modelMapper.map(r,ChildHomeResponseDto.class))
+				.collect(Collectors.toList());
+		return li;
+	}
+
+	public List<ParentResponseDto> getParent() {
+		
+		List<Parent> l=parentDao.findByStatus(true);
+		List<ParentResponseDto> li=l.stream()
+				.map(r->modelMapper.map(r,ParentResponseDto.class))
+				.collect(Collectors.toList());
+		return li;
 	}
 	
 }
