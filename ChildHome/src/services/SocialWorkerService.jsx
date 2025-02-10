@@ -53,9 +53,9 @@ export async function getSocialworkerProfile(user) {
   }
 }
 
-export async function updateSocialworker(socialWorkeDdata, user) {
+export async function updateSocialworker(id, socialWorkeDdata, user) {
   try {
-    const url = createUrl(`employee/updateemployee/${user.id}`);
+    const url = createUrl(`employee/updateemployee/${id}`);
     const response = await axios.put(url, socialWorkeDdata, {
       headers: {
         Authorization: `Bearer ${user.jwt}`,
@@ -94,6 +94,38 @@ export async function getAllRequest(user) {
   if (response.status === 200) {
     return resdata;
   } else {
+    return null;
+  }
+}
+
+export async function changeStatus(id, status, user) {
+  try {
+    const url = createUrl(`employee/updaterequest/${id}`);
+    const response = await axios.put(url, status, {
+      headers: {
+        Authorization: `Bearer ${user.jwt}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log(response);
+    console.log(response.data);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Status Change service error:", error);
+    if (axios.isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred during Changing Status.";
+      toast.error(errorMessage);
+    } else {
+      toast.error("A network error occurred. Please try again later.");
+    }
     return null;
   }
 }

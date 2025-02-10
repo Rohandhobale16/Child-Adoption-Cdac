@@ -1,9 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import SocialworkerSlider from "./Socialworker_Slider";
 import { useAuth } from "../Authenticate/AuthContext";
-import { getAllRequest } from "../../services/SocialWorkerService";
+import {
+  getAllRequest,
+  changeStatus,
+} from "../../services/SocialWorkerService";
 const EditRequestStatus = () => {
+  const { user } = useAuth();
+  const [chStatus, setChStatus] = useState("");
+
+  const [allData, setAllData] = useState([]);
+  useEffect(() => {
+    if (user) {
+      const fecthData = async () => {
+        const response = await getAllRequest(user);
+        console.log(response);
+        setAllData(response);
+      };
+
+      fecthData();
+    }
+  }, [user]);
+
+  const changeStatu = async (id) => {
+    try {
+      console.log(id);
+      const response = await changeStatus(id, chStatus, user);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -11,102 +39,61 @@ const EditRequestStatus = () => {
           <SocialworkerSlider />
         </div>
         <div className="col-10 ms-auto p-4">
-          <Content />
+          <h2 className="text-center mb-4 text-primary">
+            Initiate Adoption Request
+          </h2>
+          <div className="table-responsive">
+            <table className="table table-bordered table-striped">
+              <thead className="thead-light">
+                <tr>
+                  <th>Parent Id</th>
+                  <th>Parent Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Addresse</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allData.map((request, index) => (
+                  <tr
+                    key={request.p.id}
+                    className={
+                      index % 2 === 0 ? "table-light" : "table-secondary"
+                    }
+                  >
+                    <td>{request.p.id}</td>
+                    <td>{request.p.u.fname}</td>
+                    <td>{request.p.u.email}</td>
+                    <td>{request.p.u.mobile}</td>
+                    <td>{request.p.u.address.houseNo}</td>
+                    <td className="text-center">
+                      <button
+                        onClick={() => {
+                          changeStatu(request.p.id);
+                          setChStatus("verified");
+                        }}
+                        className="btn btn-primary mx-2 p-2 btn-sm"
+                      >
+                        OK
+                      </button>
+                      <button
+                        onClick={() => {
+                          changeStatus(request.p.id);
+                          setChStatus("rejected");
+                        }}
+                        className="btn btn-danger mx-2 p-2 btn-sm"
+                      >
+                        Rejected
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const Content = () => {
-  const { user } = useAuth();
-  const [requests, setRequests] = useState([]);
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [status, setStatus] = useState("");
-
-  useEffect(() => {
-    debugger;
-    const fecthData = async () => {
-      const response = await getAllRequest(user);
-      console.log(response);
-    };
-    fecthData();
-  }, []);
-
-  const handleChange = (e) => {
-    setStatus(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!selectedRequest) {
-      toast.error("Please select a request to update.");
-      return;
-    }
-
-    // try {
-    //   const response = await getAllRequest(user);
-
-    //   if (response.ok) {
-    //     toast.success("Request status updated successfully!");
-    //   } else {
-    //     toast.error("Failed to update request status");
-    //   }
-    // } catch (error) {
-    //   toast.error("Error updating request status");
-    // }
-  };
-
-  return (
-    <div className="card shadow-lg p-4 rounded-lg">
-      <h2 className="text-center mb-4 text-primary">Edit Request Status</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="request" className="form-label">
-            Select Request:
-          </label>
-          <select
-            id="request"
-            className="form-select"
-            onChange={(e) =>
-              setSelectedRequest(
-                requests.find((req) => req.id === Number(e.target.value))
-              )
-            }
-          >
-            <option value="">-- Select a request --</option>
-            {requests.map((request) => (
-              <option key={request.id} value={request.id}>
-                {request.title} - {request.status}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {selectedRequest && (
-          <div className="mb-3">
-            <label htmlFor="status" className="form-label">
-              Update Status:
-            </label>
-            <select
-              id="status"
-              className="form-select"
-              value={status}
-              onChange={handleChange}
-            >
-              <option value="">-- Select new status --</option>
-              <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </div>
-        )}
-
-        <button type="submit" className="btn btn-primary w-100 mt-3">
-          Update Status
-        </button>
-      </form>
     </div>
   );
 };
