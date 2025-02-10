@@ -163,7 +163,7 @@ const Navbar = () => {
                 <li className="nav-item">
                   <Link
                     className="nav-link"
-                    to="/employee"
+                    to="/socialWorkerProfile"
                     onClick={closeNavbar}
                   >
                     SocialWorker Dashboard

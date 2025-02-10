@@ -20,6 +20,8 @@ import com.app.dto.UpdateEmployeeRequestDto;
 import com.app.dto.AddEventsDto;
 import com.app.dto.AddRequestDto;
 import com.app.service.ChildHomeService;
+import java.util.*;
+import com.app.dto.ChildDto;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -44,6 +46,18 @@ public class ChildHomeController {
             // Or
             // return new ResponseEntity<>(new ApiResponse("Failed to add child: " +
             // e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/childhome/allEventsDetails")
+    public ResponseEntity<?> getAllEventsDetails() {
+        try {
+
+            return ResponseEntity.status(HttpStatus.OK).body(childHomeService.getAllEventDetails());
+        } catch (Exception e) {
+            e.printStackTrace(); // Use proper logging in production
+            return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

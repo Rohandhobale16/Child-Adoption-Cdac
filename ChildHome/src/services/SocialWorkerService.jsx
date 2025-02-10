@@ -37,3 +37,56 @@ export async function registerSocialworker(socialWorkeDdata, user) {
     return null;
   }
 }
+
+export async function getSocialworkerProfile(user) {
+  const url = createUrl(`employee/getemployeedetails/${user.id}`);
+  const response = await axios.get(url, {
+    headers: { Authorization: `Bearer ${user.jwt} }` },
+  });
+  console.log(response);
+  console.log(response.data);
+  const resdata = response.data;
+  if (response.status === 200) {
+    return resdata;
+  } else {
+    return null;
+  }
+}
+
+export async function updateSocialworker(socialWorkeDdata, user) {
+  try {
+    const url = createUrl(`employee/updateemployee/${user.id}`);
+    const response = await axios.put(url, socialWorkeDdata, {
+      headers: {
+        Authorization: `Bearer ${user.jwt}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response);
+    console.log(response.data);
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Registration service error:", error);
+    if (axios.isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred during Registration.";
+      toast.error(errorMessage);
+    } else {
+      toast.error("A network error occurred. Please try again later.");
+    }
+    return null;
+  }
+}
+
+export async function getAllRequest(user) {
+  const url = createUrl("employee/getrequestdetails");
+  const response = await axios.get(url, {
+    headers: { Authorization: `Bearer ${user.jwt}` },
+  });
+  console.log(response);
+}

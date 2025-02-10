@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SocialworkerSlider from "./Socialworker_Slider";
+import { useAuth } from "../Authenticate/AuthContext";
+import { toast } from "react-toastify";
+import {
+  getSocialworkerProfile,
+  updateSocialworker,
+} from "../../services/SocialWorkerService";
 
 const SocialWorkerEdit = () => {
   return (
@@ -19,23 +25,55 @@ const SocialWorkerEdit = () => {
 };
 
 const Content = () => {
-  const { id } = useParams(); // Get social_worker_id from URL params
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
+    fname: "",
+    lname: "",
+    mobile: "",
     email: "",
-    phone: "",
-    address: "",
-    childhomeid: "",
+    password: "",
+    houseNo: "",
+    street: "",
+    district: "",
+    state: "",
+    pincode: "",
+    city: "",
+    chId: "",
   });
 
   useEffect(() => {
-    // Fetch existing data from API
-    fetch(`http://localhost:5000/socialworkers/${id}`)
-      .then((response) => response.json())
-      .then((data) => setFormData(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, [id]);
+    const fetchData = async () => {
+      debugger;
+      if (user) {
+        try {
+          const response = await getSocialworkerProfile(user);
+          const data = response;
+          console.log(data);
+
+          setFormData((prevData) => ({
+            ...prevData,
+            fname: data.u.fname,
+            lname: data.u.lname,
+            mobile: data.u.mobile,
+            email: data.u.email,
+            password: data.u.password,
+            houseNo: data.u.address.houseNo,
+            street: data.u.address.street,
+            district: data.u.address.district,
+            state: data.u.address.state,
+            pincode: data.u.address.pincode,
+            city: data.u.address.city,
+            chId: data.id,
+          }));
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          // toast.error("Failed to fetch data");
+        }
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,16 +83,15 @@ const Content = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch(`http://localhost:5000/socialworkers/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log("Updated successfully:", data))
-      .catch((error) => console.error("Error updating data:", error));
+    try {
+      const response = await updateSocialworker(formData, user);
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile");
+    }
   };
 
   return (
@@ -72,9 +109,9 @@ const Content = () => {
           </label>
           <input
             type="text"
-            id="first_name"
-            name="first_name"
-            value={formData.first_name}
+            id="fname"
+            name="fname"
+            value={formData.fname}
             onChange={handleChange}
             className="form-control"
             required
@@ -87,9 +124,9 @@ const Content = () => {
           </label>
           <input
             type="text"
-            id="last_name"
-            name="last_name"
-            value={formData.last_name}
+            id="lname"
+            name="lname"
+            value={formData.lname}
             onChange={handleChange}
             className="form-control"
             required
@@ -110,42 +147,133 @@ const Content = () => {
             required
           />
         </div>
+        <div className="form-group">
+          <label>Password:</label>
+        </div>
+        <div className="input-group">
+          <input
+            className="form-control"
+            onChange={handleChange}
+            value={formData.password}
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+          />
+        </div>
 
         <div className="mb-3">
           <label htmlFor="phone" className="form-label">
-            Phone:
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="address" className="form-label">
-            Address:
+            Mobile No:
           </label>
           <input
             type="text"
-            id="address"
-            name="address"
-            value={formData.address}
+            id="phone"
+            name="phone"
+            value={formData.mobile}
             onChange={handleChange}
             className="form-control"
             required
           />
         </div>
 
+        <div className="form-group">
+          <label>Addresse</label>
+          <br />
+          <label>House No:</label>
+        </div>
+        <div className="input-group">
+          <input
+            className="form-control"
+            value={formData.houseNo}
+            onChange={handleChange}
+            type="text"
+            name="houseno"
+            id="houseno"
+            placeholder="House Number"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Street :</label>
+        </div>
+        <div className="input-group">
+          <input
+            className="form-control"
+            value={formData.street}
+            onChange={handleChange}
+            type="text"
+            name="street"
+            id="street"
+            placeholder="Street "
+          />
+        </div>
+
+        <div className="form-group">
+          <label>District :</label>
+        </div>
+        <div className="input-group">
+          <input
+            value={formData.district}
+            className="form-control"
+            onChange={handleChange}
+            type="text"
+            name="district"
+            id="district"
+            placeholder="District "
+          />
+        </div>
+
+        <div className="form-group">
+          <label>City :</label>
+        </div>
+        <div className="input-group">
+          <input
+            className="form-control"
+            value={formData.city}
+            onChange={handleChange}
+            type="text"
+            name="city"
+            id="city"
+            placeholder="City "
+          />
+        </div>
+        <div className="form-group">
+          <label>State :</label>
+        </div>
+        <div className="input-group">
+          <input
+            className="form-control"
+            value={formData.state}
+            onChange={handleChange}
+            type="text"
+            name="state"
+            id="state"
+            placeholder="State "
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Pincode :</label>
+        </div>
+        <div className="input-group">
+          <input
+            className="form-control"
+            value={formData.pincode}
+            onChange={handleChange}
+            type="number"
+            name="pincode"
+            id="pincode"
+            placeholder="Pincode "
+          />
+        </div>
+        {/* 
         <div className="mb-3">
-          <label htmlFor="childhomeid" className="form-label">
+          <label hiddden htmlFor="childhomeid" className="form-label">
             Child Home ID:
           </label>
           <input
+            hiddden
             type="text"
             id="childhomeid"
             name="childhomeid"
@@ -154,9 +282,9 @@ const Content = () => {
             className="form-control"
             required
           />
-        </div>
+        </div> */}
 
-        <button type="submit" className="btn btn-success btn-block w-100 mt-3">
+        <button type="submit" className="btn btn-primary w-100 mt-3">
           Update
         </button>
       </form>

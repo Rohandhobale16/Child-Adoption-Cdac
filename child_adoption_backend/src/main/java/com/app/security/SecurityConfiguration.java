@@ -30,20 +30,23 @@ public class SecurityConfiguration {
 				// 2. configure URL based access
 				.authorizeHttpRequests(request -> request.requestMatchers("/Login",
 						"/addchildhome", "/addparent", "/geteventdetails", "/getchildhomedetails",
-						"/childhome/allChildhomedetails", "contactus").permitAll()
+						"/childhome/allChildhomedetails", "contactus", "/childhome/childhomecount",
+						"/childhome/employeecount", "/api/create-order", "/api/verify-payment",
+						"/childhome/allEventsDetails").permitAll()
 						// required explicitly for JS clients (eg React app - to permit pre flight
 						// requests)
 						.requestMatchers(HttpMethod.OPTIONS).permitAll()
 
-						.requestMatchers("/admin", "/admin/{id}", "/admin/deletechildhome/{id}",
-								"/admin/deleteperent/{id}")
+						.requestMatchers("/admin", "/admin/feedback/{id}", "/admin/deletechildhome/{id}",
+								"/admin/deleteperent/{id}", "/admin/child", "/admin/parent")
 						.hasRole("ADMIN")
 						.requestMatchers("/employee/getrequestdetails", "/employee/updaterequest/{id}",
 								"/employee/getemployeedetails/{id}", "/employee/updateemployee")
 						.hasRole("EMPLOYEE")
 						.requestMatchers("/childhome/addchild", "/childhome/addevents", "/childhome/addemployee",
 								"/childhome/addrequest", "/childhome/getchildhomedetails/{id}",
-								"/childhome/updatechildhome/{id}", "/childhome/updaterequest/{id}","/childhome/childhomecount","/childhome/employeecount")
+								"/childhome/updatechildhome/{id}", "/childhome/updaterequest/{id}",
+								"/childhome/childhomecount", "/childhome/employeecount")
 						.hasRole("CHILDHOME")
 						.requestMatchers("/parent")
 						.hasRole("PARENT")

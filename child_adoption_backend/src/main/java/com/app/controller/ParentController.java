@@ -43,10 +43,15 @@ public class ParentController {
 	public ResponseEntity<ParentDTO> getParentProfile(@PathVariable Long id) {
 		return ResponseEntity.ok(parentService.getParentProfile(id));
 	}
+	@PutMapping("/profile/{id}")
+	public ResponseEntity<Map<String, Object>> updateParent(@PathVariable Long id, @RequestBody ParentDTO parentDTO) {
+	    ParentDTO updatedParent = parentService.updateParentDetails(id, parentDTO);
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ParentDTO> updateParent(@PathVariable Long id, @RequestBody ParentDTO parentDTO) {
-		ParentDTO updatedParent = parentService.updateParentDetails(id, parentDTO);
-		return ResponseEntity.ok(updatedParent);
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("message", "success");
+	    response.put("data", updatedParent); // Include updated data if needed
+
+	    return ResponseEntity.ok(response);
 	}
+
 }

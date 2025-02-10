@@ -9,9 +9,9 @@ const SocialworkerSlider = () => {
         <Link
           id="admin_slider_link"
           className="nav-link"
-          to="/socialWorkerProfile"
+          to="/socialworkerChangeStatus"
         >
-          Approve Requests
+          Requests
         </Link>
 
         <Link id="admin_slider_link" className="nav-link" to="/social/edit">

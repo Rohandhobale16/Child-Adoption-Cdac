@@ -14,4 +14,6 @@ public interface ParentDao extends JpaRepository<Parent, Long> {
 
 	@Query("SELECT p FROM Parent p WHERE p.u.id = :userId")
 	Optional<Parent> findByUserId(@Param("userId") Long userId);
+
+	List<Parent> findByStatus(boolean b);
 }

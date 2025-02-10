@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.dto.AddChildHomeRequestDto;
 import com.app.service.AdminService;
 import com.app.service.UserService;
-@CrossOrigin(origins = "http:/localhost:3000/")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000/")
 public class AdminController {
 	@Autowired
 	private AdminService adminService;
@@ -35,10 +35,20 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(adminService.getRequestData());
 	}
-	@GetMapping("/admin/{id}")
+	@GetMapping("/admin/feedback/{id}")
 	public ResponseEntity<?> getFeedback(@PathVariable Long id){
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(adminService.getFeedback(id));
+	}
+	@GetMapping("/admin/child")
+	public ResponseEntity<?> getChildHome(){
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(adminService.getChildHome());
+	}
+	@GetMapping("/admin/parent")
+	public ResponseEntity<?> getParent(){
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(adminService.getParent());
 	}
 	
 }

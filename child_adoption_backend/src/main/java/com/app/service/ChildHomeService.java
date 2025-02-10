@@ -2,7 +2,7 @@ package com.app.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.app.dto.ChildDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +24,7 @@ import com.app.dto.AddRequestDto;
 import com.app.dto.ApiResponse;
 import com.app.dto.ChildHomeResponseDto;
 import com.app.dto.EmployeeResponseDto;
+import com.app.dto.EventResponseDto;
 import com.app.dto.RequestDto;
 import com.app.dto.UpdateChildHomeRequestDto;
 import com.app.pojos.Address;
@@ -97,6 +98,13 @@ public class ChildHomeService {
 		eventsDao.save(obj);
 
 		return new ApiResponse("success");
+	}
+
+	public List<EventResponseDto> getAllEventDetails() {
+		List<Events> l = eventsDao.findAll();
+		List<EventResponseDto> li = l.stream().map(e -> mapper.map(e, EventResponseDto.class))
+				.collect(Collectors.toList());
+		return li;
 	}
 
 	public ApiResponse addSocialWorker(AddEmployeeRequestDto dto) {
@@ -184,7 +192,8 @@ public class ChildHomeService {
 	}
 
 	public Long countChildHomeDetails() {
-		Long s = childDao.count();
+		Long s = childHomeDao.count();
+
 		return s;
 	}
 

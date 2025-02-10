@@ -129,12 +129,12 @@ public class ParentService {
         return dto;
     }
 
-    public ParentDTO updateParentDetails(Long parentId, ParentDTO parentDTO) {
-        Parent parent = parentRepository.findById(parentId)
+    public ParentDTO updateParentDetails(Long userId, ParentDTO parentDTO) {
+        Parent parent = parentRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Parent not found"));
 
         // Update User Details
-        User user = parent.getU();
+        User user = userRepository.getById(userId);
         user.setFname(parentDTO.getFname());
         user.setLname(parentDTO.getLname());
         user.setEmail(parentDTO.getEmail());
@@ -196,3 +196,5 @@ public class ParentService {
         return updatedDTO;
     }
 }
+
+

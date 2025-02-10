@@ -1,29 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchEvents } from "../../services/Eventservice";
 
 const Events = () => {
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      title: "Tech Conference 2025",
-      date: "March 15, 2025",
-      description: "A conference on emerging technologies and innovations.",
-      image: "/images/Kids.jpg",
-    },
-    {
-      id: 2,
-      title: "Music Fest 2025",
-      date: "April 10, 2025",
-      description: "An exciting festival featuring top artists and bands.",
-      image: "/images/image.jpg",
-    },
-    {
-      id: 3,
-      title: "Art Exhibition 2025",
-      date: "May 20, 2025",
-      description: "A showcase of modern and classic artworks.",
-      image: "/images/Children_img_event.jpg",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchEvents();
+        console.log("API Response:", response);
+
+        if (Array.isArray(response)) {
+          const formattedEvents = response.map((event) => ({
+            id: event.id,
+            title: event.eventName || "No Title",
+            date: event.eventDate || "Unknown Date",
+            description: event.eventDescription || "No description available",
+          }));
+
+          setEvents(formattedEvents);
+        } else {
+          console.error("Unexpected response format:", response);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="container mt-4">
@@ -32,12 +37,6 @@ const Events = () => {
         {events.map((event) => (
           <div key={event.id} className="col-md-4 mb-4">
             <div className="card">
-              <img
-                src={event.image}
-                className="card-img-top"
-                alt={event.title}
-                onError={(e) => (e.target.src = "/images/default.jpg")} // Fallback image
-              />
               <div className="card-body">
                 <h5 className="card-title">{event.title}</h5>
                 <p className="card-text">{event.description}</p>
