@@ -1,9 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Parent_Slider from "./Parent_Slider";
 import "../Parent/Parent_Slider.css";
+import { useAuth } from "../Authenticate/AuthContext";
+import { createUrl } from "../../util";
 
 const BookingSlot = () => {
+  const url = createUrl(`api/parent/childhomes`);
+  const { user } = useAuth();
+  const [childHomes, setChildHomes] = useState([]);
   const [selectedChildHome, setSelectedChildHome] = useState(null);
+
+  useEffect(() => {
+    fetchChildHomes();
+  }, []);
+
+  const fetchChildHomes = async () => {
+    try {
+      if (!user.jwt) {
+        console.error("No token found, please log in.");
+        return;
+      }
+
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${user.jwt}`,
+        },
+        withCredentials: true,
+      });
+
+      setChildHomes(response.data);
+    } catch (error) {
+      console.error(
+        "Error fetching child homes:",
+        error.response?.data || error.message
+      );
+    }
+  };
 
   const openModal = (childHome) => {
     setSelectedChildHome(childHome);
@@ -16,11 +49,11 @@ const BookingSlot = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-2 ">
+        <div className="col-2">
           <Parent_Slider />
         </div>
         <div className="col-10 ms-auto p-4">
-          <BookSlotTable onBookSlot={openModal} />
+          <BookSlotTable childHomes={childHomes} onBookSlot={openModal} />
         </div>
       </div>
 
@@ -30,7 +63,7 @@ const BookingSlot = () => {
   );
 };
 
-const BookSlotTable = ({ onBookSlot }) => {
+const BookSlotTable = ({ childHomes, onBookSlot }) => {
   return (
     <div>
       <table className="table table-bordered text-center">
@@ -45,23 +78,29 @@ const BookSlotTable = ({ onBookSlot }) => {
           </tr>
         </thead>
         <tbody>
-          {[1, 2, 3, 4].map((num) => (
-            <tr key={num}>
-              <td>{num}</td>
-              <td>Child Home {num}</td>
-              <td>State {num}</td>
-              <td>Address {num}</td>
-              <td>Contact {num}</td>
-              <td>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => onBookSlot(`Child Home ${num}`)}
-                >
-                  Book Slot
-                </button>
-              </td>
+          {childHomes.length > 0 ? (
+            childHomes.map((home, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{home.houseName}</td>
+                <td>{home.state}</td>
+                <td>{`${home.street}, ${home.city}, ${home.district}, ${home.pincode}`}</td>
+                <td>{home.userMobile}</td>
+                <td>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => onBookSlot(home.houseName)}
+                  >
+                    Book Slot
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6">No Child Homes Available</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
@@ -69,6 +108,8 @@ const BookSlotTable = ({ onBookSlot }) => {
 };
 
 const BookSlotModal = ({ selectedChildHome }) => {
+  const { user } = useAuth();
+  const url = createUrl(`api/parent/parent/bookSlot/${user.id}`);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedSlot, setSelectedSlot] = useState("");
 
@@ -82,10 +123,36 @@ const BookSlotModal = ({ selectedChildHome }) => {
     return dates;
   };
 
-  const handleSubmit = () => {
-    console.log("Child Home:", selectedChildHome);
-    console.log("Selected Date:", selectedDate);
-    console.log("Selected Slot:", selectedSlot);
+  const handleSubmit = async () => {
+    try {
+      if (!user.jwt) {
+        console.error("No token found, please log in.");
+        return;
+      }
+
+      const bookingData = {
+        childHomeName: selectedChildHome,
+        date: selectedDate,
+        slot: selectedSlot.toUpperCase(),
+      };
+
+      console.log("Booking Data:", bookingData);
+      console.log("JWT Token:", user.jwt);
+
+      await axios.post(url, bookingData, {
+        headers: {
+          Authorization: `Bearer ${user.jwt}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      alert("Slot booked successfully!");
+    } catch (error) {
+      console.error(
+        "Error booking slot:",
+        error.response?.data || error.message
+      );
+    }
   };
 
   return (
@@ -133,7 +200,6 @@ const BookSlotModal = ({ selectedChildHome }) => {
               </select>
             </div>
 
-            {/* Slot Selection */}
             <div className="mb-3">
               <label className="form-label">Select Slot</label>
               <select
