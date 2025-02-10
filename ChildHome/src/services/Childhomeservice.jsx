@@ -88,3 +88,18 @@ export async function AddEvents(data, user) {
     return error.response;
   }
 }
+
+export async function getChildren(user, childHomeId) {
+  const url = createUrl("childhome/getchilds/1");
+  try {
+    const response = await axios.get(url, {
+      headers: { Authorization: `Bearer ${user.jwt}` },
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.error("Error fetching children:", error);
+    return error.response;
+  }
+}
