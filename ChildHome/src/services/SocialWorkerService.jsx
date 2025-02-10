@@ -55,7 +55,7 @@ export async function getSocialworkerProfile(user) {
 
 export async function updateSocialworker(socialWorkeDdata, user) {
   try {
-    const url = createUrl(`/employee/updateemployee/${user.id}`);
+    const url = createUrl(`employee/updateemployee/${user.id}`);
     const response = await axios.put(url, socialWorkeDdata, {
       headers: {
         Authorization: `Bearer ${user.jwt}`,
