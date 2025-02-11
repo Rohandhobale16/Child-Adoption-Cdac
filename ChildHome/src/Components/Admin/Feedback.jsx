@@ -5,7 +5,7 @@ import { feedback } from "../../services/admin_services";
 import "../Admin/Admin_Slider.css";
 import { useAuth } from "../Authenticate/AuthContext";
 import AdminSidebar from "./AdminSidebar";
-import { useNavigate } from "react-router-dom";
+
 // import './card.css'; // Optional: For styling
 
 const Feedback = () => {
@@ -38,18 +38,14 @@ const CardComponent = () => {
   const [items, setItems] = useState([]);
   const { id } = useParams();
   const { user } = useAuth();
-  const navigate = useNavigate();
+
   const onLoadItems = async () => {
-    const result = await feedback(id, user);
+    const result = await feedback(id,user);
     if (result.message === "success") {
       setItems(result);
     } else {
       toast.error(result["error"]);
     }
-  };
-
-  const eventFetch = () => {
-    navigate("/admin");
   };
   useEffect(() => {
     console.log(id);
@@ -59,9 +55,6 @@ const CardComponent = () => {
     <div className="card ">
       <h2>Request ID: {items.id}</h2>
       <p>Description: {items.feedback}</p>
-      <button className="btn" onClick={eventFetch}>
-        Back
-      </button>
     </div>
   );
 };

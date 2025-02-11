@@ -12,7 +12,7 @@ const AdminHome = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-2">
-          <AdminSidebar />
+          <AdminSidebar/>
         </div>
 
         <div className="col-10 ms-auto p-4">
@@ -28,24 +28,23 @@ const AdminHome = () => {
 // Separated Form Component
 function SucessTable() {
   const [items, setItems] = useState([]);
-  const { user } = useAuth();
-
+    const { user } = useAuth();
+  
   const navigate = useNavigate();
   const onLoadItems = async () => {
     const result = await viewSucess(user);
-    if (result != null) {
+    if (result!=null) {
       setItems(result);
       console.log(result);
     } else {
       toast.error(result["error"]);
-    }
-  };
-
+    }};
+  
   const book = async (id) => {
     navigate(`/admin/feedback/${id}`);
   };
   useEffect(() => {
-    onLoadItems();
+     onLoadItems();
     // const result = await viewSucess();
     // if (result["status"] === "success") {
     //   setItems(result["users"]);
@@ -78,17 +77,16 @@ function SucessTable() {
                 <tr key={index}>
                   <td>{item.id}</td>
                   <td>{item.p.u.fname}</td>
-                  <td>{item.c}</td>
-                  <td>{item.ch.houseName}</td>
+                  <td>{item.c.name}</td>
+                  <td>{item.c.ch.houseName}</td>
                   <td>{item.status}</td>
                   <td>
-                    <button
-                      onClick={() => book(item["id"])}
-                      className="btn btn-sm ms-2"
-                    >
-                      Feedback
-                    </button>
-                  </td>
+                  <button
+                    onClick={() => book(item["id"])}
+                    className="btn btn-sm ms-2"
+                  >
+                    Feedback
+                  </button></td>
                 </tr>
               );
             })}
@@ -97,6 +95,7 @@ function SucessTable() {
       }
     </div>
   );
-}
+};
+
 
 export default AdminHome;
