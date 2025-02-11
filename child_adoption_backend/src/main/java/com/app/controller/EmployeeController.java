@@ -22,10 +22,10 @@ import com.app.service.EmployeeService;
 public class EmployeeController {
 	@Autowired
 	 private EmployeeService employeeService;
-	@PostMapping("/employee/updateemployee")
-    public ResponseEntity<?> updateSocialWorker(@RequestBody UpdateEmployeeRequestDto dto) {
+	@PostMapping("/employee/updateemployee/{id}")
+    public ResponseEntity<?> updateSocialWorker(@PathVariable Long id,@RequestBody UpdateEmployeeRequestDto dto) {
         try {
-            ApiResponse response = employeeService.updateSocialWorker(dto);
+            ApiResponse response = employeeService.updateSocialWorker(id,dto);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace(); // Use proper logging in production

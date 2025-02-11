@@ -15,6 +15,7 @@ const EditRequestStatus = () => {
       const fecthData = async () => {
         const response = await getAllRequest(user);
         console.log(response);
+        // console.log(response.id);
         setAllData(response);
       };
 
@@ -22,10 +23,11 @@ const EditRequestStatus = () => {
     }
   }, [user]);
 
-  const changeStatu = async (id) => {
+  const changeStatu = async (id, status) => {
     try {
       console.log(id);
-      const response = await changeStatus(id, chStatus, user);
+      console.log(chStatus);
+      const response = await changeStatus(id, status, user);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -70,8 +72,7 @@ const EditRequestStatus = () => {
                     <td className="text-center">
                       <button
                         onClick={() => {
-                          changeStatu(request.p.id);
-                          setChStatus("verified");
+                          changeStatu(request.id, "verified");
                         }}
                         className="btn btn-primary mx-2 p-2 btn-sm"
                       >
@@ -79,8 +80,7 @@ const EditRequestStatus = () => {
                       </button>
                       <button
                         onClick={() => {
-                          changeStatus(request.p.id);
-                          setChStatus("rejected");
+                          changeStatu(request.id, "rejected");
                         }}
                         className="btn btn-danger mx-2 p-2 btn-sm"
                       >

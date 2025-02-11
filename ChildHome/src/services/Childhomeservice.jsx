@@ -122,3 +122,20 @@ export async function getParents(user) {
     return error.response;
   }
 }
+
+export async function updateRequestStatus(data, user) {
+  const url = createUrl("childhome/updatestatus");
+
+  try {
+    const response = await axios.put(url, data, {
+      headers: { Authorization: `Bearer ${user.jwt} ` },
+    });
+
+    if (response.status === 200) {
+      return response.data; // Return success message
+    }
+  } catch (error) {
+    console.error("Error updating request status:", error);
+    return error.response?.data || "Error occurred";
+  }
+}

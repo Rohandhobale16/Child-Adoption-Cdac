@@ -100,8 +100,9 @@ export async function getAllRequest(user) {
 
 export async function changeStatus(id, status, user) {
   try {
+    console.log(status);
     const url = createUrl(`employee/updaterequest/${id}`);
-    const response = await axios.put(url, status, {
+    const response = await axios.post(url, status, {
       headers: {
         Authorization: `Bearer ${user.jwt}`,
         "Content-Type": "application/json",

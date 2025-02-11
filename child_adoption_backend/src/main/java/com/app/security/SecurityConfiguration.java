@@ -41,12 +41,12 @@ public class SecurityConfiguration {
 								"/admin/deleteperent/{id}", "/admin/child", "/admin/parent")
 						.hasRole("ADMIN")
 						.requestMatchers("/employee/getrequestdetails", "/employee/updaterequest/{id}",
-								"/employee/getemployeedetails/{id}", "/employee/updateemployee")
+								"/employee/getemployeedetails/{id}", "/employee/updateemployee/{id}")
 						.hasRole("EMPLOYEE")
 						.requestMatchers("/childhome/addchild", "/childhome/addevents", "/childhome/addemployee",
 								"/childhome/addrequest", "/childhome/getchildhomedetails/{id}",
 								"/childhome/updatechildhome/{id}", "/employee/getrequest/{id}",
-								"/childhome/childhomecount", "/childhome/employeecount")
+								"/childhome/childhomecount", "/childhome/employeecount","/childhome/updatestatus")
 						.hasRole("CHILDHOME")
 						.requestMatchers("/parent")
 						.hasRole("PARENT")

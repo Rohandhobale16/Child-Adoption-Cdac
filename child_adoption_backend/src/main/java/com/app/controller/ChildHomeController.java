@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import com.app.dto.AddRequestDto;
 import com.app.service.ChildHomeService;
 import java.util.*;
 import com.app.dto.ChildDto;
+import com.app.dto.StatusDto;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -192,5 +194,11 @@ public class ChildHomeController {
             return new ResponseEntity<>(new ApiResponse("Failed to update employee: " + e.getMessage()),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    
+    @PutMapping("/childhome/updatestatus")
+    public String updateRequestStatus(@RequestBody StatusDto std) {
+        return childHomeService.updateRequestStatus(std);
     }
 }

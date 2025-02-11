@@ -33,7 +33,8 @@ public class EmployeeService {
 	private RequestDao requestDao;
 	@Autowired
 	private ModelMapper mapper;
-	public ApiResponse updateSocialWorker(UpdateEmployeeRequestDto dto) {
+	public ApiResponse updateSocialWorker(Long id,UpdateEmployeeRequestDto dto) {
+		System.out.println(dto);
 		 Employee e = employeeDao.findById(dto.getId()) // Use getChId()
 	                .orElseThrow(() -> new RuntimeException("ChildHome not found"));
 		 e.u.setEmail(dto.getEmail());
@@ -58,11 +59,13 @@ public class EmployeeService {
 		//add message to show success
 	}
 	public List<RequestDto> getRequestDetails() {
-		List<Request> l=requestDao.findByStatus("initiated");
+		List<Request> l=requestDao.findByStatus("booked");
 		List<RequestDto> li=l.stream().map(r->mapper.map(r,RequestDto.class)).collect(Collectors.toList());
 		return li;
 	}
 	public ApiResponse updateRequestStatus(Long id, String status) {
+		System.out.println("..............................");
+		System.out.println(status);
 		Request r=requestDao.findById(id) .orElseThrow(() -> new RuntimeException("request not found"));
 		r.setStatus(status);
 		return new ApiResponse("success");

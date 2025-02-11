@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ChildhomeSlider from "./Childhome_Slider";
 import { useAuth } from "../Authenticate/AuthContext";
-import { getChildren, getParents } from "../../services/Childhomeservice";
+import {
+  getChildren,
+  getParents,
+  updateRequestStatus,
+} from "../../services/Childhomeservice";
 
 const InitiateAdoptionRequest = () => {
   return (
@@ -22,37 +26,13 @@ const InitiateAdoptionRequest = () => {
 
 const Content = () => {
   const { user } = useAuth();
-  const [requests, setRequests] = useState([
-    {
-      id: 1,
-      parentName: "John Doe",
-      email: "john@example.com",
-      phone: "123-456-7890",
-    },
-    {
-      id: 2,
-      parentName: "Jane Smith",
-      email: "jane@example.com",
-      phone: "987-654-3210",
-    },
-    {
-      id: 3,
-      parentName: "Michael Brown",
-      email: "michael@example.com",
-      phone: "456-789-0123",
-    },
-    {
-      id: 4,
-      parentName: "Emily Davis",
-      email: "emily@example.com",
-      phone: "321-654-0987",
-    },
-  ]);
   const [children, setChildren] = useState([]);
   const [parents, setParents] = useState([]);
+  const [selectedChildren, setSelectedChildren] = useState({});
+
   useEffect(() => {
     if (user) {
-      const parentData = async () => {
+      const fetchParents = async () => {
         try {
           const parentData = await getParents(user);
           console.log(parentData);
@@ -61,14 +41,15 @@ const Content = () => {
           } else {
             console.error("Unexpected response format:", parentData);
           }
-        } catch (error) {}
+        } catch (error) {
+          console.error("Error fetching parents:", error);
+        }
       };
 
       const fetchChildren = async () => {
         try {
           const data = await getChildren(user);
-
-          console.log("Children Data :", data);
+          console.log("Children Data:", data);
           if (Array.isArray(data)) {
             setChildren(data);
           } else {
@@ -80,16 +61,44 @@ const Content = () => {
       };
 
       fetchChildren();
-      parentData();
+      fetchParents();
     }
   }, [user]);
 
-  // useEffect(() => {
-  //   //  console.log("Updated Children State:", children);
-  // }, [children]);
+  const handleChildSelection = (parentId, childId) => {
+    setSelectedChildren((prev) => ({
+      ...prev,
+      [parentId]: childId,
+    }));
+  };
 
-  const handleSubmit = (id) => {
-    console.log("Submit clicked for Request ID:", id);
+  const handleSubmit = async (request) => {
+    const childId = selectedChildren[request.id];
+
+    if (!childId) {
+      alert("Please select a child before submitting.");
+      return;
+    }
+
+    const requestData = {
+      email: request.p.u.email,
+      childHomeId: user.id, // Child Home ID comes from logged-in user
+      childId: childId,
+    };
+
+    try {
+      const response = await updateRequestStatus(requestData, user);
+      console.log("Update Response:", response);
+
+      if (response) {
+        alert("Request status updated successfully!");
+      } else {
+        alert("Failed to update request status.");
+      }
+    } catch (error) {
+      console.error("Error updating request status:", error);
+      alert("An error occurred while updating request status.");
+    }
   };
 
   return (
@@ -118,7 +127,13 @@ const Content = () => {
                 <td>{request.p.u.email}</td>
                 <td>{request.p.u.mobile}</td>
                 <td>
-                  <select className="form-select" style={{ width: "200px" }}>
+                  <select
+                    className="form-select"
+                    style={{ width: "200px" }}
+                    onChange={(e) =>
+                      handleChildSelection(request.id, e.target.value)
+                    }
+                  >
                     <option value="">Select a child</option>
                     {children.map((child) => (
                       <option key={child.id} value={child.id}>
@@ -129,7 +144,7 @@ const Content = () => {
                 </td>
                 <td className="text-center">
                   <button
-                    onClick={() => handleSubmit(request.id)}
+                    onClick={() => handleSubmit(request)}
                     className="btn btn-primary btn-sm"
                   >
                     Submit

@@ -38,7 +38,7 @@ const Content = () => {
     state: "",
     pincode: "",
     city: "",
-    chId: "",
+    id: "",
   });
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const Content = () => {
             state: data.u.address.state,
             pincode: data.u.address.pincode,
             city: data.u.address.city,
-            chId: data.id,
+            id: data.id,
           }));
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -86,7 +86,7 @@ const Content = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await updateSocialworker(formData, user);
+      const response = await updateSocialworker(formData.id, formData, user);
       toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);

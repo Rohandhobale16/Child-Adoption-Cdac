@@ -27,6 +27,7 @@ import com.app.dto.EmployeeResponseDto;
 import com.app.dto.EventResponseDto;
 import com.app.dto.ParentResponseDto;
 import com.app.dto.RequestDto;
+import com.app.dto.StatusDto;
 import com.app.dto.UpdateChildHomeRequestDto;
 import com.app.pojos.Address;
 import com.app.pojos.Child;
@@ -70,14 +71,24 @@ public class ChildHomeService {
 	
 	@Autowired
 	private AdminService adminservice;
+	
+	
+	@Autowired
+	private UserDao userRepo;
+
+	@Autowired
+	private ParentDao parentRepo;
+
+	@Autowired
+	private RequestDao requestRepo;
 
 	public ApiResponse addChild(AddChildRequestDto dto) {
 		// Fetch the User by ID
-		User user = userDao.findById(dto.getCh())
-				.orElseThrow(() -> new RuntimeException("User not found"));
+//		User user = userDao.findById(dto.getCh())
+//				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		// Fetch ChildHome associated with the User
-		ChildHome childHome = childHomeDao.findByU(user);
+		ChildHome childHome = childHomeDao.findById(dto.getCh()).orElseThrow();
 
 		// Create a new Child entity
 		Child obj = new Child();
@@ -253,6 +264,45 @@ public class ChildHomeService {
 		List<RequestDto> li = l.stream().map(r -> mapper.map(r, RequestDto.class)).collect(Collectors.toList());
 		return li;
 	}
+	
+	public String updateRequestStatus(StatusDto std) {
+		// Extract values from DTO
+		String email = std.getEmail();
+		Long childHomeId = std.getChildHomeId();
+		Long childId = std.getChildId();
+
+		// Find User by Email
+		User user = userRepo.findByEmail(email).orElse(null);
+		if (user == null) {
+			return "User not found";
+		}
+
+		// Find Parent by User
+		Parent parent = parentRepo.findByU(user);
+		if (parent == null) {
+			return "Parent not found";
+		}
+
+		// Find Request by Parent ID and ChildHome ID
+		Request request = requestRepo.findByPIdAndChId(parent.getId(), childHomeId).orElse(null);
+		if (request == null) {
+			return "Request not found";
+		}
+
+		// Find Child by Child ID
+		Child child = childDao.findById(childId).orElse(null);
+		if (child == null) {
+			return "Child not found";
+		}
+
+		// Update Request entity with Child and Status
+		request.setC(child);
+		request.setStatus("success");
+		requestRepo.save(request);
+
+		return "Request status updated successfully";
+	}
+	
 }
 
 
