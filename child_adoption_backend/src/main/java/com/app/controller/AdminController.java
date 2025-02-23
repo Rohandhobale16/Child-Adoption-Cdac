@@ -16,7 +16,7 @@ import com.app.dto.AddChildHomeRequestDto;
 import com.app.service.AdminService;
 import com.app.service.UserService;
 @RestController
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://13.61.244.68/")
 public class AdminController {
 	@Autowired
 	private AdminService adminService;

@@ -26,7 +26,7 @@ import com.app.dto.ChildDto;
 import com.app.dto.StatusDto;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://13.61.244.68")
 public class ChildHomeController {
     @Autowired
     private ChildHomeService childHomeService;

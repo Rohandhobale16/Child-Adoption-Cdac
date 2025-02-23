@@ -33,7 +33,7 @@ import com.app.security.JwtUtils;
 import com.app.service.UserService;
 import com.app.dto.*;
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://13.61.244.68")
 public class UserController {
 	@Autowired
 	private UserService userService;

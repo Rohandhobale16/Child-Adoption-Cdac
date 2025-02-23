@@ -18,7 +18,7 @@ import com.app.service.ChildHomeService;
 import com.app.service.EmployeeService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://13.61.244.68")
 public class EmployeeController {
 	@Autowired
 	 private EmployeeService employeeService;

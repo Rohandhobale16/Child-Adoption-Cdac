@@ -18,7 +18,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/parent")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://13.61.244.68")
 public class ParentController {
 
 	@Autowired
