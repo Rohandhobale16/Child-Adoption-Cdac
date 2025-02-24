@@ -15,7 +15,7 @@ const RazorpayPayment = () => {
     try {
       setLoading(true);
       // Create an order on the backend
-      const response = await fetch("http://localhost:8080/api/create-order", {
+      const response = await fetch("http://13.49.132.61:8080/api/create-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const RazorpayPayment = () => {
         name: "Child Home Adoption",
         description: "Donation for Child Home Adoption",
         order_id: order.id,
-        callback_url: "http://localhost:8080/api/payment-success",
+        callback_url: "http://13.49.132.61:8080/api/payment-success",
         prefill: {
           name: "Your Name",
           email: "your.email@example.com",
@@ -48,7 +48,7 @@ const RazorpayPayment = () => {
         handler: async function (response) {
           try {
             const verificationResponse = await fetch(
-              "http://localhost:8080/api/verify-payment",
+              "http://13.49.132.61:8080/api/verify-payment",
               {
                 method: "POST",
                 headers: {
